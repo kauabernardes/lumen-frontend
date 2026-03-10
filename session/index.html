@@ -1,0 +1,188 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title id="page-title">25:00 - Sessão de Estudos | Lumen</title>
+    <meta
+      name="description"
+      content="Gerencie seu tempo e foque nos estudos com a Sessão de Pomodoro da Lumen."
+    />
+    <meta name="keywords" content="estudos, pomodoro, foco, lumen, educação" />
+
+    <meta property="og:title" content="Lumen - Sessão de Estudos Coletiva" />
+    <meta
+      property="og:description"
+      content="Entre na minha sala de estudos e vamos focar juntos!"
+    />
+    <meta property="og:type" content="website" />
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="../css/global.css" />
+  </head>
+  <body class="bg-session">
+    <header class="mb-4">
+      <nav
+        class="container d-flex justify-content-between align-items-center py-3"
+      >
+        <button class="btn btn-null">Voltar</button>
+        <div class="d-flex align-items-center gap-3">
+          <img
+            src="https://img.icons8.com/?size=100&id=p8UFrp2VUgHR&format=png&color=000000"
+            alt="Foto de perfil do Usuário"
+            class="rounded-circle"
+            style="width: 40px; height: 40px"
+          />
+          <p class="m-0 fw-semibold">Usuário</p>
+        </div>
+      </nav>
+    </header>
+
+    <div class="container">
+      <div class="row">
+        <main
+          class="col-lg-auto mx-auto d-flex flex-column align-items-center h-100"
+        >
+          <div
+            class="bg-session-2 p-4 rounded-4 d-flex d-lg-none w-100 flex-column mb-4"
+          >
+            <h2 class="h4 mb-3"><i class="fa-solid fa-book-open"></i> Temas</h2>
+          </div>
+
+          <h1 class="mb-3">
+            <i class="fa-regular fa-clock"></i> Sessão de Estudos
+          </h1>
+
+          <section
+            class="d-flex flex-column align-items-center bg-session-2 p-4 rounded-4 container position-relative"
+          >
+            <div
+              id="join-container"
+              class="w-100 d-flex flex-column align-items-center"
+            >
+              <input
+                type="text"
+                id="session-input"
+                class="form-control mb-3 text-center"
+                placeholder="Cole o ID da sessão aqui"
+              />
+              <div class="d-flex gap-3">
+                <button id="btn-create" class="btn btn-dark px-4">
+                  Minha Sessão
+                </button>
+                <button id="btn-join" class="btn btn-outline-light px-4">
+                  Entrar
+                </button>
+              </div>
+            </div>
+
+            <div class="gap-2 mb-3 timer-component d-none">
+              <button
+                class="btn btn-success text-white px-4 p-1 rounded-4"
+                id="btn-study"
+              >
+                <i class="fa-solid fa-book"></i> Estudar
+              </button>
+              <button
+                class="btn btn-success text-white px-4 p-1 rounded-4"
+                id="btn-short-break"
+              >
+                <i class="fa-solid fa-mug-saucer"></i> Pausa Curta
+              </button>
+              <button
+                class="btn btn-success text-white px-4 p-1 rounded-4"
+                id="btn-long-break"
+              >
+                <i class="fa-solid fa-mug-hot"></i> Pausa Longa
+              </button>
+            </div>
+
+            <div
+              class="align-items-center justify-content-center display-1 fw-bold timer-component d-none mx-5"
+            >
+              <div
+                class="p-4 bg-session-3 text-light rounded-4 monospace"
+                id="minutes"
+              >
+                25
+              </div>
+              <span class="mx-3 text-light">:</span>
+              <div
+                class="p-4 bg-session-3 text-light rounded-4 monospace"
+                id="seconds"
+              >
+                00
+              </div>
+            </div>
+            <button
+              class="btn btn-success px-4 p-1 rounded-4 timer-component d-none mt-3"
+              id="btn-resume"
+            >
+              <i class="fa-solid fa-play"></i> Retomar
+            </button>
+
+            <button
+              id="btn-copy-link"
+              class="btn btn-null fs-4 position-absolute end-0 bottom-0 me-2 mb-2 opacity-50"
+            >
+              <i class="fa-solid fa-link p-0 m-0"></i>
+            </button>
+          </section>
+        </main>
+
+        <aside class="col-lg-5 mt-4 mt-lg-0 d-flex flex-column">
+          <div
+            class="bg-session-2 p-4 rounded-4 d-none d-lg-flex flex-column mb-4"
+          >
+            <h2 class="h4 mb-3"><i class="fa-solid fa-book-open"></i> Temas</h2>
+          </div>
+
+          <div
+            class="bg-session-2 p-4 rounded-4 flex-grow-1 d-flex flex-column"
+          >
+            <h2 class="h4 mb-3"><i class="fa-solid fa-robot"></i> Luminha</h2>
+
+            <div
+              id="chat"
+              class="flex-grow-1 mb-3 pe-2"
+              style="max-height: 400px; overflow-y: auto"
+              aria-live="polite"
+            >
+              <p
+                class="text-center text-muted small mt-2"
+                id="chat-placeholder"
+              >
+                Converse com a Luminha!
+              </p>
+            </div>
+
+            <form id="chat-form" class="input-group mt-auto">
+              <input
+                type="text"
+                id="chat-input"
+                class="form-control"
+                placeholder="Digite uma mensagem..."
+                aria-label="Mensagem para o chat"
+                autocomplete="off"
+                required
+              />
+              <button type="submit" class="btn btn-success" id="btn-send">
+                <i class="fa-solid fa-paper-plane"></i> Enviar
+              </button>
+            </form>
+          </div>
+        </aside>
+      </div>
+    </div>
+
+    <script
+      src="https://kit.fontawesome.com/6a041dcb5c.js"
+      crossorigin="anonymous"
+    ></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.socket.io/4.7.4/socket.io.min.js"></script>
+    <script src="../js/session/main.js"></script>
+  </body>
+</html>

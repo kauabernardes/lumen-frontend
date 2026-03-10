@@ -1,0 +1,75 @@
+@import url("https://fonts.googleapis.com/css2?family=Google+Sans:ital,opsz,wght@0,17..18,400..700;1,17..18,400..700&display=swap");
+
+* {
+  padding: 0;
+  margin: 0;
+
+  box-sizing: border-box;
+
+  font-family: "Google Sans", sans-serif;
+  font-optical-sizing: auto;
+  font-variation-settings: "GRAD" 0;
+}
+
+:root {
+  --bg-main: #c4e5c3;
+  --bg-card: #a7d7a8;
+  --bg-timer-box: #8cbe8d;
+  --btn-dark: #124317;
+  --text-dark: #4a674b;
+  --text-muted: #f1f8f1;
+}
+
+body {
+  min-height: 100dnv;
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+}
+
+.btn-null {
+  background: none;
+  outline: none;
+  border: none;
+  cursor: pointer;
+  transition: 0.2s ease-in-out;
+}
+
+.btn-null:hover {
+  color: gray;
+  transition: 0.2s ease-in-out;
+}
+
+.bg-session {
+  background-color: var(--bg-main);
+}
+
+.bg-session-2 {
+  background-color: var(--bg-card);
+}
+
+.bg-session-3 {
+  background-color: var(--bg-timer-box);
+}
+
+.monospace {
+  font-family:
+    "SFMono-Regular", Consolas, "Liberation Mono", Menlo, Courier, monospace;
+}
+
+.shake {
+  animation: shake 0.2s infinite;
+}
+
+@keyframes shake {
+  0%,
+  100% {
+    transform: translate(0, 0);
+  }
+  25% {
+    transform: translate(-5px, 0);
+  }
+  75% {
+    transform: translate(5px, 0);
+  }
+}
