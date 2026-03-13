@@ -1,0 +1,219 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Inter', sans-serif;
+}
+
+body {
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #84a9ff;
+}
+
+/* Fundo com listras diagonais */
+.background-pattern {
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(45deg, #84a9ff 25%, #7696e6 25%, #7696e6 50%, #84a9ff 50%, #84a9ff 75%, #7696e6 75%, #7696e6 100%);
+    background-size: 100px 100px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+}
+
+.main-container {
+    display: flex;
+    width: 100%;
+    max-width: 1200px;
+    height: 600px;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 80px;
+    margin: 0 auto;
+    gap: 100px;
+    z-index: 1;
+}
+
+.brand-side {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.logo-img {
+    max-width: 150%;
+    height: auto;
+    filter: drop-shadow(2px 4px 10px rgba(0,0,0,0.1));
+}
+
+/* Cartão de Login */
+.login-card {
+    background: #f1f3f8;
+    padding: 45px;
+    border-radius: 30px;
+    width: 550px;
+    height: auto;
+    box-shadow: 0 15px 35px rgba(0,0,0,0.1);
+}
+
+h2 {
+    font-size: 48px;
+    margin-bottom: 10px;
+    color: #1e3a8a;
+    font-weight: 800;
+}
+
+.subtitle {
+    font-size: 13px;
+    color: #8da2c0;
+    margin-bottom: 25px;
+    text-align: left;
+}
+
+.subtitle a {
+    color: #5b8dfa; 
+    text-decoration: none;
+    border-bottom: 2px solid #5b8dfa;
+    font-weight: bold;
+    display: inline-block;
+}
+
+/* Formulário */
+.input-group {
+    margin-bottom: 15px;
+    position: relative;
+}
+
+label {
+    display: block;
+    font-size: 13px;
+    color: #8da2c0;
+    margin-bottom: 6px;
+}
+
+input {
+  width: 100%;
+  height: 50px;          /* altura fixa para padronizar */
+  padding: 0 15px;       /* padding lateral padrão */
+  border: none;
+  border-radius: 10px;
+  background-color: #e5ebf5;
+  font-size: 14px;
+  color: #556b8d;
+  box-sizing: border-box; /* garante que padding não altere tamanho */
+}
+
+/* Visualização da senha */
+.password-wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+  width: auto
+}
+
+.password-wrapper input {
+  flex: 1;
+  padding-right: 4px; /* espaço para o ícone */
+  width: 100%;
+}
+
+.toggle-password {
+  position: absolute;
+  right: 10px;           /* encosta na borda direita */
+  top: 50%;
+  transform: translateY(-50%);
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: #5b8dfa;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.toggle-password:hover {
+  color: #1e3a8a;
+}
+
+.icon-eye {
+  pointer-events: none; /* evita capturar clique no SVG */
+}
+
+
+
+/* Link de Esqueceu a Senha */
+.forgot-password {
+    text-align: center;
+    font-size: 13px;
+    color: #8da2c0;
+    margin: 20px 0;
+}
+
+.forgot-password a {
+    color: #5b8dfa; 
+    text-decoration: none;
+    border-bottom: 2px solid #5b8dfa;
+    font-weight: bold;
+    display: inline-block;
+}
+
+.btn-login {
+    width: 100%;
+    padding: 16px;
+    border: none;
+    border-radius: 12px;
+    background-color: #7ba2ff;
+    color: white;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.btn-login:hover {
+    background-color: #5b8dfa;
+    transform: translateY(-2px);
+}
+
+/* Mensagens de erro */
+.error-message {
+    display: none;
+    background-color: #ffe0e0;
+    color: #b00020;
+    font-size: 13px;
+    margin-top: 2px;
+    padding: 8px;
+    border-radius: 8px;
+    border: 1px solid #f5a5a5;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+    animation: fadeIn 0.3s ease-in-out;
+    
+}
+
+.error-message.active {
+    display: block;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(-5px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+input.error {
+    border: 2px solid red;
+}
+
+input.valid {
+    border: 2px solid green;
+}
+
+/* Mobile */
+@media (max-width: 900px) {
+    .brand-side { display: none; }
+    .main-container { justify-content: center; padding: 20px; }
+}

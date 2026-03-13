@@ -1,0 +1,174 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Inter', sans-serif;
+}
+
+body {
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #d187c5; /* Rosa base */
+}
+
+/* Fundo com as listras (usando os tons de rosa da imagem) */
+.background-pattern {
+    width: 100%;
+    height: 100%;
+    /* Substituí o amarelo pelos tons de rosa: #d187c5 e o tom mais claro #c375b6 */
+    background: linear-gradient(45deg, #d187c5 25%, #c375b6 25%, #c375b6 50%, #d187c5 50%, #d187c5 75%, #c375b6 75%, #c375b6 100%);
+    background-size: 100px 100px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    overflow: hidden;
+}
+
+.main-container {
+    display: flex;
+    width: 100%;
+    max-width: 1200px;
+    height: 600px;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 80px;
+    margin: 0 auto;
+    gap: 100px;
+    z-index: 1;
+}
+
+.brand-side {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.logo-img {
+    max-width: 150%;
+    height: auto;
+    filter: drop-shadow(2px 4px 10px rgba(0,0,0,0.1));
+}
+
+/* Cartão de Recuperar Senha */
+.login-card {
+    background: #ffffff; /* Branco puro como na rosa */
+    padding: 50px 45px;
+    border-radius: 35px; /* Cantos bem redondos */
+    width: 550px;
+    height: auto;
+    box-shadow: 0 15px 35px rgba(0,0,0,0.15);
+}
+
+h2 {
+    font-size: 48px;
+    margin-bottom: 10px;
+    color: #991868; /* Cor escura do título na rosa */
+    font-weight: 800;
+}
+
+/* Pequena descrição que existe na tela rosa */
+.description {
+    color: #888;
+    font-size: 16px;
+    margin-bottom: 30px;
+    line-height: 1.4;
+}
+
+.subtitle {
+    font-size: 14px;
+    color: #777;
+    margin-bottom: 30px;
+    text-align: center;
+}
+
+.subtitle a {
+    color: #d147ca; 
+    text-decoration: none; /* Remove o sublinhado padrão */
+    border-bottom: 2px solid #d147ca; /* Cria a linha manual */
+    font-weight: bold;
+    display: inline-block; /* Garante que o padding funcione bem */
+}
+
+/* Formulário */
+.input-group {
+    margin-bottom: 20px;
+}
+
+label {
+    display: block;
+    font-size: 14px;
+    color: #bbb;
+    margin-bottom: 8px;
+}
+
+input {
+    width: 100%;
+    padding: 18px;
+    border: none;
+    border-radius: 12px;
+    background-color: #f3e6f2; /* Lilás clarinho dos inputs rosa */
+    font-size: 16px;
+    color: #555;
+}
+
+input::placeholder {
+    color: #cbb4ca;
+}
+
+.btn-login {
+    width: 100%;
+    padding: 18px;
+    border: none;
+    border-radius: 40px; /* Botão ovalado estilo imagem rosa */
+    background-color: #f06ff0; /* Rosa vibrante do botão */
+    color: white;
+    font-size: 18px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: 0.3s;
+    margin-top: 10px;
+}
+
+.btn-login:hover {
+    background-color: #d147ca;
+    transform: translateY(-2px);
+}
+
+/* Mensagens de erro como caixinhas */
+.error-message {
+    display: none;
+    background-color: #ffe0e0;   /* fundo vermelho claro */
+    color: #b00020;              /* texto vermelho */
+    font-size: 13px;
+    margin-top: 2px;             /* cola no input */
+    margin-bottom: 0;            /* não empurra nada para baixo */
+    padding: 6px 10px;           /* caixinha compacta */
+    border-radius: 6px;
+    border: 1px solid #f5a5a5;
+    box-sizing: border-box;
+    width: 100%;
+    animation: fadeIn 0.3s ease-in-out;
+}
+
+.error-message.active {
+    display: block;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(-5px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* Estados visuais dos inputs */
+input.error {
+    border: 2px solid red;
+}
+
+input.valid {
+    border: 2px solid green;
+}
+

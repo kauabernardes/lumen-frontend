@@ -1,0 +1,235 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Inter', sans-serif;
+}
+
+body {
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #f7d37e; /* Amarelo base */
+}
+
+/* Fundo com padrão diagonal amarelo */
+.background-pattern {
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(45deg, #f7d37e 25%, #fce6a9 25%, #fce6a9 50%, #f7d37e 50%, #f7d37e 75%, #fce6a9 75%, #fce6a9 100%);
+    background-size: 100px 100px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+}
+
+.main-container {
+    display: flex;
+    width: 100%;
+    max-width: 1200px;
+    height: 600px;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 80px;
+    margin: 0 auto;
+    gap: 100px;
+    z-index: 1;
+}
+
+.brand-side {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.logo-img {
+    max-width: 150%;
+    height: auto;
+    filter: drop-shadow(2px 4px 10px rgba(0,0,0,0.1));
+}
+
+/* Cartão de Criar Conta */
+.login-card {
+    background: #fffdf7;
+    padding: 40px;
+    border-radius: 30px;
+    width: 550px;
+    height: auto;
+    box-shadow: 0 15px 35px rgba(0,0,0,0.1);
+}
+
+h2 {
+    font-size: 48px;
+    margin-bottom: 20px;
+    color: #e6a901;
+    font-weight: 800;
+}
+
+.subtitle {
+    font-size: 14px;
+    color: #b0a382;
+    margin-bottom: 30px;
+    text-align: center;
+}
+
+.subtitle a {
+    color: #e6b845; 
+    text-decoration: none;
+    border-bottom: 2px solid #e6b845;
+    font-weight: bold;
+    display: inline-block;
+}
+
+/* Formulário */
+.input-group {
+    margin-bottom: 15px;
+}
+
+label {
+    display: block;
+    font-size: 14px;
+    color: #b0a382;
+    margin-bottom: 6px;
+}
+
+input {
+    width: 100%;
+    padding: 15px;
+    border: none;
+    border-radius: 12px;
+    background-color: #fef5d9;
+    font-size: 14px;
+    color: #8a7b5e;
+}
+
+.btn-login {
+    width: 100%;
+    padding: 18px;
+    border: none;
+    border-radius: 20px;
+    background-color: #f7d37e;
+    color: white;
+    font-size: 18px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: 0.3s;
+    margin-top: 10px;
+}
+
+.btn-login:hover {
+    background-color: #e6b845;
+}
+
+/* Mensagens de erro como caixinhas */
+.error-message {
+    display: none;
+    background-color: #ffe0e0;
+    color: #b00020;
+    font-size: 13px;
+    margin-top: 8px;
+    padding: 8px 12px;
+    border-radius: 8px;
+    border: 1px solid #f5a5a5;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+    animation: fadeIn 0.3s ease-in-out;
+}
+
+.error-message.active {
+    display: block;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(-5px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+input.error {
+    border: 2px solid red;
+}
+
+input.valid {
+    border: 2px solid green;
+}
+
+
+
+/* Responsividade */
+@media (max-width: 1024px) {
+  .main-container {
+    flex-direction: column;
+    gap: 40px;
+    padding: 20px;
+    height: auto;
+  }
+
+  .brand-side {
+    display: none; /* esconde a logo lateral em telas menores */
+  }
+
+  .login-card {
+    width: 100%;
+    max-width: 500px;
+    padding: 30px;
+  }
+
+  h2 {
+    font-size: 36px;
+  }
+}
+
+@media (max-width: 768px) {
+  .login-card {
+    max-width: 90%;
+    padding: 25px;
+    border-radius: 20px;
+  }
+
+  h2 {
+    font-size: 28px;
+    margin-bottom: 15px;
+  }
+
+  .subtitle {
+    font-size: 13px;
+    margin-bottom: 20px;
+  }
+
+  input {
+    padding: 12px;
+    font-size: 13px;
+  }
+
+  .btn-login {
+    padding: 14px;
+    font-size: 16px;
+    border-radius: 16px;
+  }
+}
+
+@media (max-width: 480px) {
+  .login-card {
+    max-width: 95%;
+    padding: 20px;
+  }
+
+  h2 {
+    font-size: 24px;
+  }
+
+  .subtitle {
+    font-size: 12px;
+  }
+
+  input {
+    padding: 10px;
+    font-size: 12px;
+  }
+
+  .btn-login {
+    padding: 12px;
+    font-size: 14px;
+  }
+}

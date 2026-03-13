@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Recuperar Senha - Lumen</title>
+    <!-- Fontes Inter e Poppins para combinar com os designs -->
+    <link href="https://fonts.googleapis.com" rel="stylesheet">
+    <link rel="stylesheet" href="css/RecSenha.css">
+</head>
+<body>
+    <div class="background-pattern">
+        <div class="main-container">
+            
+            <div class="brand-side">
+                <!-- Imagem do "Lumen" manuscrito na lateral esquerda -->
+                <img src="img/LogoLumen.svg" alt="Lumen Logo" class="logo-img">
+            </div>
+
+            <div class="login-card">
+                <h2>Recuperar Senha</h2>
+                <p class="description">Enviaremos um link para recuperação de senha.</p>
+                
+                <form>
+                    <div class="input-group">
+                        <label for="emailField">E-mail:</label>
+                        <input type="email" id="emailField" placeholder="maria@gmail.com">
+                        <span class="error-message" id="emailError"></span>
+                    </div>
+
+                    <p class="subtitle">Não tem uma conta? <a href="CriarCont.html">Criar conta</a></p>
+
+                    <button type="button" class="btn-login">Enviar</button>
+                </form>
+            </div>
+
+        </div>
+    </div>
+    <!-- Importa o JS de validação -->
+    <script src="js/RecSenha.js"></script>
+</body>
+</html>
