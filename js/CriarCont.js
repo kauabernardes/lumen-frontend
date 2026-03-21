@@ -1,13 +1,13 @@
-const usernameInput = document.getElementById('username');
-const emailInput = document.getElementById('email');
-const passwordInput = document.getElementById('password');
-const confirmPasswordInput = document.getElementById('confirmPassword');
-const registerBtn = document.querySelector('.btn-login');
+const usernameInput = document.getElementById("username");
+const emailInput = document.getElementById("email");
+const passwordInput = document.getElementById("password");
+const confirmPasswordInput = document.getElementById("confirmPassword");
+const registerBtn = document.querySelector(".btn-login");
 
-const usernameError = document.getElementById('usernameError');
-const emailError = document.getElementById('emailError');
-const passwordError = document.getElementById('passwordError');
-const confirmPasswordError = document.getElementById('confirmPasswordError');
+const usernameError = document.getElementById("usernameError");
+const emailError = document.getElementById("emailError");
+const passwordError = document.getElementById("passwordError");
+const confirmPasswordError = document.getElementById("confirmPasswordError");
 
 function validarEmail(email) {
   const regex = /^[^@]+@[^@]+\.[^@]+$/;
@@ -98,10 +98,61 @@ emailInput.addEventListener("input", validarCampos);
 passwordInput.addEventListener("input", validarCampos);
 confirmPasswordInput.addEventListener("input", validarCampos);
 
-registerBtn.addEventListener("click", function(e) {
-  e.preventDefault();
+// Função que será chamada pelo onsubmit do form
+async function handleRegister(event) {
+  event.preventDefault(); // Impede a página de recarregar
+
+  // Executa a validação uma última vez antes de enviar
+  validarCampos();
+
+  // Se o botão não estiver desabilitado (ou seja, campos estão válidos)
   if (!registerBtn.disabled) {
-    alert("Conta criada com sucesso!");
-    window.location.href = "Home.html";
+    const username = usernameInput.value;
+    const email = emailInput.value;
+    const password = passwordInput.value;
+
+    try {
+      registerBtn.textContent = "Cadastrando...";
+      registerBtn.disabled = true;
+
+      const response = await fetch("http://localhost:3000/auth/register", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          email: email,
+          username: username,
+          name: username,
+          password: password,
+        }),
+      });
+
+      const data = await response.json();
+
+      // Verifica se a requisição foi um sucesso (Status 200-299)
+      if (response.ok) {
+        // Redireciona o usuário para a tela de login sem o alert
+        window.location.href = "/";
+      } else {
+        console.error("Erro no cadastro:", data);
+        emailError.textContent =
+          data.message || "Erro ao criar conta. Verifique os dados.";
+        emailError.classList.add("active");
+        emailInput.classList.add("error");
+
+        passwordError.textContent =
+          data.message || "Erro ao criar conta. Verifique os dados.";
+        passwordError.classList.add("active");
+        passwordInput.classList.add("error");
+      }
+    } catch (error) {
+      console.error("Erro de conexão com o servidor:", error);
+      emailError.textContent =
+        "Erro de conexão com o servidor. Tente mais tarde.";
+      emailError.classList.add("active");
+    } finally {
+      registerBtn.textContent = "Entrar";
+    }
   }
-});
+}

@@ -17,16 +17,13 @@ const btnStudy = document.getElementById("btn-study");
 
 const btnCopyLink = document.getElementById("btn-copy-link");
 
-// Elementos de Entrada
 const elSessionInput = document.getElementById("session-input");
 const btnCreate = document.getElementById("btn-create");
 const btnJoin = document.getElementById("btn-join");
 const joinContainer = document.getElementById("join-container");
 const timerComponents = document.getElementsByClassName("timer-component");
 
-// ==========================================
-// FUNÇÕES DE INTERFACE (UI)
-// ==========================================
+// interface
 
 function notificar() {
   notificacao.play().catch((error) => console.error(error));
@@ -73,22 +70,30 @@ function showTimerUI() {
   });
 }
 
-// ==========================================
-// LÓGICA DE CONEXÃO (SOCKET.IO)
-// ==========================================
+// logica websocket
 
 socket.on("connect", () => {
   console.info("Conectado ao servidor Socket.io com ID:", socket.id);
 });
 
-// O ingresso na sala continua via Socket (já que você manteve o @SubscribeMessage no Gateway)
 function requestJoinSession(sessionId = null) {
-  const payload = { userId: myUser };
+  const token = localStorage.getItem("access_token");
+
+  if (!token) {
+    alert("Você precisa estar logado para acessar as sessões.");
+    window.location.href = "telalogin.html";
+    return;
+  }
+
+  const payload = { token: token };
   if (sessionId) payload.sessionId = sessionId;
 
   socket.emit("join_session", payload, (response) => {
     if (response.error) {
       alert("Erro: " + response.error);
+      if (response.error.includes("Acesso negado")) {
+        window.location.href = "/";
+      }
       return;
     }
 
@@ -100,32 +105,38 @@ function requestJoinSession(sessionId = null) {
   });
 }
 
-// Escuta o único evento que o back-end emite agora
 socket.on("timer_state", (data) => {
   updateTimerDisplay(data.timeLeft);
-
-  // Se você adicionar o 'status' no payload do back-end, pode descomentar a linha abaixo:
-  // updateResumeButton(data.status);
 });
 
-// ==========================================
-// AÇÕES DO USUÁRIO (REST API COM FETCH)
-// ==========================================
+// acoes usuario
 
-// Função auxiliar para não repetir o fetch toda hora
 async function sendCommand(endpoint, bodyData = {}) {
   if (!currentSessionId) return null;
+
+  const token = localStorage.getItem("access_token");
 
   try {
     const response = await fetch(`${API_URL}/${currentSessionId}/${endpoint}`, {
       method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ userId: myUser, ...bodyData }),
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+      body: JSON.stringify(bodyData),
     });
 
-    if (!response.ok) throw new Error("Falha na requisição");
-    return await response?.json();
-  } catch (error) {}
+    if (!response.ok) {
+      if (response.status === 401) {
+        alert("Sua sessão expirou. Faça login novamente.");
+        window.location.href = "telalogin.html";
+      }
+      throw new Error("Falha na requisição");
+    }
+    return await response.json();
+  } catch (error) {
+    console.error(`Erro ao enviar comando ${endpoint}:`, error);
+  }
 }
 
 function updateResumeButton(status) {
@@ -139,8 +150,6 @@ function updateResumeButton(status) {
 btnResume.addEventListener("click", async () => {
   const result = await sendCommand("toggle");
 
-  // O seu Controller deve retornar { status: 'running' } ou { status: 'paused' }
-  // baseado na função toggleTimer do Service.
   if (result && result.status) {
     updateResumeButton(result.status);
     triggerShake();
@@ -176,10 +185,6 @@ btnStudy.addEventListener("click", async () => {
     notificar();
   }
 });
-
-// ==========================================
-// OUTROS EVENTOS DA TELA
-// ==========================================
 
 btnCreate.addEventListener("click", () => requestJoinSession());
 

@@ -1,9 +1,9 @@
-const loginField = document.getElementById('loginField');
-const passwordInput = document.getElementById('password');
-const loginBtn = document.querySelector('.btn-login');
-const loginError = document.getElementById('loginError');
-const passwordError = document.getElementById('passwordError');
-const togglePassword = document.getElementById('togglePassword');
+const loginField = document.getElementById("loginField");
+const passwordInput = document.getElementById("password");
+const loginBtn = document.querySelector(".btn-login");
+const loginError = document.getElementById("loginError");
+const passwordError = document.getElementById("passwordError");
+const togglePassword = document.getElementById("togglePassword");
 
 // Regex para validar e-mail
 function validarEmail(email) {
@@ -21,7 +21,8 @@ function validarCampos() {
     loginField.classList.add("error");
     valido = false;
   } else if (!validarEmail(loginField.value) && loginField.value.length < 4) {
-    loginError.textContent = "Digite um e-mail válido ou um usuário com pelo menos 4 caracteres";
+    loginError.textContent =
+      "Digite um e-mail válido ou um usuário com pelo menos 4 caracteres";
     loginError.classList.add("active");
     loginField.classList.add("error");
     valido = false;
@@ -53,18 +54,64 @@ function validarCampos() {
   loginBtn.disabled = !valido;
 }
 
-// Eventos de digitação
 loginField.addEventListener("input", validarCampos);
 passwordInput.addEventListener("input", validarCampos);
 
-// Evento de clique no botão de login
-loginBtn.addEventListener("click", function(e) {
-  e.preventDefault();
+async function handleLogin(event) {
+  event.preventDefault();
+
+  validarCampos();
+
   if (!loginBtn.disabled) {
-    alert("Login realizado com sucesso!");
-    window.location.href = "Home.html";
+    const identifier = loginField.value;
+    const password = passwordInput.value;
+
+    const textoOriginal = loginBtn.textContent;
+    try {
+      loginBtn.textContent = "Entrando...";
+      loginBtn.disabled = true;
+      passwordInput.disabled = true;
+      loginField.disabled = true;
+
+      const response = await fetch("http://localhost:3000/auth/login", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          identifier: identifier,
+          password: password,
+        }),
+      });
+
+      const data = await response.json();
+
+      if (response.ok) {
+        localStorage.setItem("access_token", data.access_token);
+        window.location.href = "Home.html";
+      } else {
+        loginError.textContent =
+          data.message || "E-mail, usuário ou senha incorretos.";
+        loginError.classList.add("active");
+        loginField.classList.add("error");
+        passwordError.textContent =
+          data.message || "E-mail, usuário ou senha incorretos.";
+        passwordError.classList.add("active");
+        passwordInput.classList.add("error");
+      }
+    } catch (error) {
+      console.error("Erro ao conectar com o servidor:", error);
+      loginError.textContent =
+        "Erro de conexão com o servidor. Tente novamente mais tarde.";
+      loginError.classList.add("active");
+    } finally {
+      loginBtn.textContent = textoOriginal;
+      loginBtn.disabled = true;
+      passwordInput.disabled = false;
+      loginField.disabled = false;
+    }
   }
-});
+}
 
 // Ícone inicial do olho (senha oculta)
 togglePassword.innerHTML = `
@@ -76,7 +123,8 @@ togglePassword.innerHTML = `
 
 // Alternar visualização da senha com olhinho SVG
 togglePassword.addEventListener("click", function () {
-  const type = passwordInput.getAttribute("type") === "password" ? "text" : "password";
+  const type =
+    passwordInput.getAttribute("type") === "password" ? "text" : "password";
   passwordInput.setAttribute("type", type);
 
   // Alterna o ícone entre olho aberto e fechado
