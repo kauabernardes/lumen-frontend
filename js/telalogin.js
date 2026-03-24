@@ -88,7 +88,7 @@ async function handleLogin(event) {
 
       if (response.ok) {
         localStorage.setItem("access_token", data.access_token);
-        window.location.href = "Home.html";
+        window.location.href = "home.html";
       } else {
         loginError.textContent =
           data.message || "E-mail, usuário ou senha incorretos.";

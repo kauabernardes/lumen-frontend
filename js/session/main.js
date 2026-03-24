@@ -214,3 +214,7 @@ btnCopyLink.addEventListener("click", () => {
     alert("Link da sessão copiado! Mande para seus amigos.");
   });
 });
+
+function goTo(path) {
+  window.location.href = path;
+}
