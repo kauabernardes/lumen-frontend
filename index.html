@@ -1,17 +1,51 @@
 <!doctype html>
-<html lang="en">
+<html lang="pt-br">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Document</title>
-    <link
-      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css"
-      rel="stylesheet"
-      integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB"
-      crossorigin="anonymous"
-    />
+    <title>Entrar - Lumen</title>
+    <link rel="stylesheet" href="css/stylelogin.css" />
   </head>
   <body>
-    ASAS
+    <div class="background-pattern">
+      <div class="main-container">
+        <div class="brand-side">
+          <img src="img/logoLumen.svg" alt="Lumen Logo" class="logo-img" />
+        </div>
+
+        <div class="login-card">
+          <h2>Entrar</h2>
+          <p class="subtitle">
+            Não tem uma conta? <a href="CriarCont.html">Criar conta</a>
+          </p>
+
+          <form onsubmit="handleLogin(event)">
+            <div class="input-group">
+              <label for="loginField">E-mail ou Usuário:</label>
+              <input
+                type="text"
+                id="loginField"
+                placeholder="maria@gmail.com / MariaSilva29"
+              />
+              <span class="error-message" id="loginError"></span>
+            </div>
+
+            <div class="input-group password-group">
+              <label for="password">Senha:</label>
+              <input type="password" id="password" placeholder="••••••••••••" />
+              <span class="error-message" id="passwordError"></span>
+            </div>
+
+            <p class="forgot-password">
+              Esqueceu sua senha? <a href="RecSenha.html">Recuperar senha</a>
+            </p>
+
+            <button type="submit" class="btn-login">Entrar</button>
+          </form>
+        </div>
+      </div>
+    </div>
+
+    <script src="js/telalogin.js"></script>
   </body>
 </html>

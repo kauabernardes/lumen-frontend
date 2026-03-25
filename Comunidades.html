@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Comunidades Web</title>
 
-  <link rel="stylesheet" href="css/Comunidades.css">
+  <link rel="stylesheet" href="../css/comunidades.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 </head>
 
@@ -14,13 +14,13 @@
 <header class="topbar">
 
   <div class="brand-side">
-    <img src="img/LogoLumen2.svg" class="logo-img">
+    <img src="/img/LogoLumen2.svg" class="logo-img">
   </div>
 
   <nav>
-    <a href="Home.html">home</a>
-    <a href="Comunidades.html" class="active">comunidades</a>
-    <a href="Agenda.html">agenda</a>
+    <a href="home.html">home</a>
+    <a href="#" class="active">comunidades</a>
+    <a href="#">agenda</a>
   </nav>
 
   <div class="divisao-header">
@@ -34,9 +34,9 @@
       <i class="fa-regular fa-bell icon-bell"></i>
       <span class="badge" id="badgeNotif">1</span>
 
-      <div class="dropdown" id="dropdownNotificacao">
-        <div class="dropdown-header">Notificações</div>
-
+     <div class="dropdown" id="dropdownNotificacao">
+    <div class="dropdown-header">Notificações</div>
+    <div id="emptyNotif" style="display: none;">Não há notificações</div> </div>
         <div class="item">
           <span class="dot"></span>
           <p>Alguém curtiu seu conteúdo</p>
@@ -85,25 +85,9 @@
 <main class="container">
 
   <!-- ESQUERDA -->
-  <div class="left">
+  <div class="left" id="comunidades-container">
 
-    <div class="card">
-      <img src="img/loucosdoenem.webp">
-      <h2>Loucos do Enem</h2>
-      <button>Acessar</button>
-    </div>
-
-    <div class="card">
-      <img src="img/alucinadosFUVEST.webp">
-      <h2>Alucinados <br> pela FUVEST</h2>
-      <button>Acessar</button>
-    </div>
-
-    <div class="card">
-      <img src="img/estudaquepassa.jpg">
-      <h2>Estuda que passa</h2>
-      <button>Acessar</button>
-    </div>
+    
 
   </div>
 
@@ -114,7 +98,7 @@
       <div class="icon">
         <i class="fa-regular fa-pen-to-square"></i>
       </div>
-      <span>Nova comunidade</span>
+      <a href="./comunidade/criar.html">Nova comunidade</a>
     </div>
 
     <!-- POSTS -->
@@ -280,7 +264,7 @@
   <!-- DIREITA -->
   <div class="right">
     <div class="ad-card">
-      <img id="adImage" src="img/anuncio1.jpg">
+      <img id="adImage" src="../img/anuncio1.jpg">
 
       <div class="ad-content">
         <button id="adButton">Assistir Agora</button>
@@ -290,7 +274,7 @@
 
 </main>
 
-<script src="js/Comunidades.js"></script>
+<script src="../js/Comunidades.js"></script>
 
 </body>
 </html>
