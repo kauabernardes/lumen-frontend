@@ -6,57 +6,56 @@
   <title>Comunidades Web</title>
 
   <link rel="stylesheet" href="../css/comunidades.css">
+  <link rel="stylesheet" href="../css/header.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 </head>
 
 <body>
 
 <header class="topbar">
-
   <div class="brand-side">
-    <img src="/img/LogoLumen2.svg" class="logo-img">
+    <img src="../img/LogoLumen2.svg" class="logo-img">
   </div>
 
   <nav>
     <a href="home.html">home</a>
-    <a href="#" class="active">comunidades</a>
-    <a href="#">agenda</a>
+    <a href="comunidades.html" class="active">comunidades</a>
+    <a href="Agenda.html">agenda</a>
   </nav>
 
   <div class="divisao-header">
-
     <div class="pesquisa">
       <i class="fa-solid fa-magnifying-glass"></i>
-      <input type="text" placeholder="Procurar..."> 
+      <input type="text" placeholder="Procurar..." />
     </div>
 
     <div class="notif">
       <i class="fa-regular fa-bell icon-bell"></i>
-      <span class="badge" id="badgeNotif">1</span>
+      <span class="badge" id="badgeNotif">0</span>
 
-     <div class="dropdown" id="dropdownNotificacao">
-    <div class="dropdown-header">Notificações</div>
-    <div id="emptyNotif" style="display: none;">Não há notificações</div> </div>
+      <div class="dropdown" id="dropdownNotificacao">
+        <div class="dropdown-header">Notificações</div>
+
+        <div class="empty" id="emptyNotif">
+          Você não possui notificações
+        </div>
+
         <div class="item">
           <span class="dot"></span>
           <p>Alguém curtiu seu conteúdo</p>
         </div>
       </div>
     </div>
-
   </div>
 
-  <!-- USUÁRIO -->
   <div class="right">
     <div class="user-menu">
-      
       <div class="user-trigger">
         <i class="fa-regular fa-circle-user avatar"></i>
         <span class="username">João A B</span>
       </div>
 
       <div class="user-dropdown" id="userDropdown">
-
         <div class="user-info">
           <i class="fa-regular fa-circle-user avatar"></i>
           <span>João A B</span>
@@ -71,25 +70,15 @@
           <i class="fa-solid fa-right-from-bracket"></i>
           <span>Sair</span>
         </div>
-
       </div>
-
     </div>
   </div>
-
 </header>
 
-</header>
-
-<!-- CONTAINER 3 COLUNAS -->
 <main class="container">
 
   <!-- ESQUERDA -->
-  <div class="left" id="comunidades-container">
-
-    
-
-  </div>
+  <div class="left" id="comunidades-container"></div>
 
   <!-- CENTRO -->
   <div class="center">
@@ -101,14 +90,12 @@
       <a href="./comunidade/criar.html">Nova comunidade</a>
     </div>
 
-    <!-- POSTS -->
-
     <!-- POST 1 -->
     <div class="post">
       <div class="post-header">
         <i class="fa-regular fa-circle-user user-icon"></i>
 
-        <div class="user-info">
+        <div class="post-user-info">
           <strong>Vinicius Lima</strong>
           <span>@vinilimaswt</span>
         </div>
@@ -119,9 +106,7 @@
         </div>
       </div>
 
-      <p class="post-text">
-        Pessoal, como ficou aquela questão de log desse enem?
-      </p>
+      <p class="post-text">Pessoal, como ficou aquela questão de log desse enem?</p>
 
       <div class="post-actions">
         <span><i class="fa-regular fa-thumbs-up"></i> 210</span>
@@ -134,7 +119,7 @@
       <div class="post-header">
         <i class="fa-regular fa-circle-user user-icon"></i>
 
-        <div class="user-info">
+        <div class="post-user-info">
           <strong>Lara Dias</strong>
           <span>@larastudiesdias</span>
         </div>
@@ -145,9 +130,7 @@
         </div>
       </div>
 
-      <p class="post-text">
-        Apostila gratuita da FUVEST aqui!
-      </p>
+      <p class="post-text">Apostila gratuita da FUVEST aqui!</p>
 
       <div class="post-actions">
         <span><i class="fa-regular fa-thumbs-up"></i> 30</span>
@@ -160,7 +143,7 @@
       <div class="post-header">
         <i class="fa-regular fa-circle-user user-icon"></i>
 
-        <div class="user-info">
+        <div class="post-user-info">
           <strong>Alexandre Kaue</strong>
           <span>@alexk</span>
         </div>
@@ -171,9 +154,7 @@
         </div>
       </div>
 
-      <p class="post-text">
-        Questão de linguagens foi insana!
-      </p>
+      <p class="post-text">Questão de linguagens foi insana!</p>
 
       <div class="post-actions">
         <span><i class="fa-regular fa-thumbs-up"></i> 30</span>
@@ -186,7 +167,7 @@
       <div class="post-header">
         <i class="fa-regular fa-circle-user user-icon"></i>
 
-        <div class="user-info">
+        <div class="post-user-info">
           <strong>Mariana Souza</strong>
           <span>@maristudies</span>
         </div>
@@ -197,9 +178,7 @@
         </div>
       </div>
 
-      <p class="post-text">
-        Como melhorar conclusão?
-      </p>
+      <p class="post-text">Como melhorar conclusão?</p>
 
       <div class="post-actions">
         <span><i class="fa-regular fa-thumbs-up"></i> 85</span>
@@ -212,7 +191,7 @@
       <div class="post-header">
         <i class="fa-regular fa-circle-user user-icon"></i>
 
-        <div class="user-info">
+        <div class="post-user-info">
           <strong>Lucas Pereira</strong>
           <span>@lucasdev</span>
         </div>
@@ -223,9 +202,7 @@
         </div>
       </div>
 
-      <p class="post-text">
-        ArrayList finalmente entendi 😭🔥
-      </p>
+      <p class="post-text">ArrayList finalmente entendi 😭🔥</p>
 
       <div class="post-actions">
         <span><i class="fa-regular fa-thumbs-up"></i> 120</span>
@@ -238,7 +215,7 @@
       <div class="post-header">
         <i class="fa-regular fa-circle-user user-icon"></i>
 
-        <div class="user-info">
+        <div class="post-user-info">
           <strong>Camila Rocha</strong>
           <span>@camilastudy</span>
         </div>
@@ -249,9 +226,7 @@
         </div>
       </div>
 
-      <p class="post-text">
-        5h de estudo hoje 🙌
-      </p>
+      <p class="post-text">5h de estudo hoje 🙌</p>
 
       <div class="post-actions">
         <span><i class="fa-regular fa-thumbs-up"></i> 200</span>
@@ -265,7 +240,6 @@
   <div class="right">
     <div class="ad-card">
       <img id="adImage" src="../img/anuncio1.jpg">
-
       <div class="ad-content">
         <button id="adButton">Assistir Agora</button>
       </div>
@@ -275,6 +249,7 @@
 </main>
 
 <script src="../js/Comunidades.js"></script>
+<script src="../js/header.js"></script>
 
 </body>
 </html>
