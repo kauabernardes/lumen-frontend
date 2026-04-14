@@ -1,0 +1,311 @@
+/* HEADER */
+.topbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: #ffffff;
+  padding: 0 40px;
+  height: 80px;
+  gap: 20px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+  position: relative;
+  z-index: 10;
+ 
+
+}
+
+/* LOGO */
+.brand-side {
+  display: flex;
+  align-items: center;
+  margin-left: 50px;
+}
+
+.logo-img {
+  width: 120px;
+  cursor: pointer;
+}
+
+/* MENU */
+.topbar nav {
+  display: flex;
+  gap: 30px;
+  flex: 1;
+  justify-content: center;
+}
+
+.topbar nav a {
+  color: #626262;
+  text-decoration: none;
+  font-size: 18px;
+  font-family: sans-serif;
+  font-weight: bold;
+}
+
+.topbar nav a:hover {
+  color: black;
+}
+
+.topbar nav a.active {
+  color: #0090f8;
+}
+
+.topbar nav a.active:hover {
+  color: #006ab6;
+}
+
+/* DIREITA */
+.divisao-header {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  
+}
+
+/* PESQUISA */
+.pesquisa {
+  display: flex;
+  align-items: center;
+  background: #f5f5f5;
+  border-radius: 999px;
+  padding: 8px 15px;
+  width: 260px;
+}
+
+.pesquisa input {
+  border: none;
+  outline: none;
+  background: transparent;
+  flex: 1;
+  font-size: 14px;
+  font-family: sans-serif;
+}
+
+.pesquisa i {
+  color: #888;
+  font-size: 14px;
+  margin-right: 8px;
+
+}
+
+/* NOTIF */
+.notif {
+  position: relative;
+  cursor: pointer;
+}
+
+.icon-bell {
+  font-size: 22px;
+  color: #626262;
+}
+
+.icon-bell:hover {
+  color: black;
+}
+
+/* BADGE */
+.badge {
+  position: absolute;
+  top: -5px;
+  right: -5px;
+  background: #006ab6;
+  color: white;
+  font-size: 10px;
+  border-radius: 50%;
+  padding: 3px 6px;
+  font-family: sans-serif;
+  font-weight: bold;
+
+}
+
+/* DROPDOWN NOTIF */
+.dropdown {
+  display: none;
+  position: absolute;
+  top: 40px;
+  right: 0;
+  width: 260px;
+  background: #fff;
+  border-radius: 12px;
+  padding: 10px;
+  box-shadow: 0 15px 40px rgba(0, 0, 0, 0.35);
+  z-index: 100;
+  font-family: sans-serif;
+  
+
+  opacity: 0;
+  transform: translateY(-10px);
+  transition: 0.25s;
+}
+
+.dropdown.ativo {
+  display: block;
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.dropdown-header {
+  font-weight: bold;
+  font-size: 16px;
+  color: #006ab6;
+  margin-bottom: 8px;
+  font-family: sans-serif;
+}
+
+/* ITEM NOTIF */
+.item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px;
+  border-radius: 8px;
+  transition: 0.2s;
+}
+
+.item:hover {
+  background: #eaf4ff;
+  transform: scale(1.03);
+}
+
+.item p {
+  font-size: 14px;
+  color: #333;
+}
+
+.dot {
+  width: 8px;
+  height: 8px;
+  background: #0090f8;
+  border-radius: 50%;
+}
+
+/* EMPTY */
+.empty {
+  display: none;
+  text-align: center;
+  font-size: 13px;
+  color: #888;
+  padding: 15px;
+}
+
+/* USUÁRIO */
+.right {
+  display: flex;
+  align-items: center;
+  margin-right: 50px;
+}
+
+.avatar {
+  font-size: 35px;
+  color: #626262;
+  cursor: pointer;
+}
+
+.avatar:hover {
+  color: black;
+}
+
+.username {
+  font-family: sans-serif;
+  color: #626262;
+  margin-left: 8px;
+  cursor: pointer;
+}
+
+.username:hover {
+    color: black;
+}
+
+/* MENU USUÁRIO */
+.user-menu {
+  position: relative;
+}
+
+
+.user-dropdown {
+  display: none;
+  position: absolute;
+  top: 50px;
+  right: 0px;
+  width: 220px;
+  background: #fff;
+  border-radius: 12px;
+  padding: 10px;
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.3);
+  z-index: 100;
+  opacity: 0;
+  transform: translateY(-10px);
+  transition: 0.25s;
+  font-family: sans-serif;
+  
+}
+
+.user-dropdown.ativo {
+  display: block;
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.user-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px;
+  border-radius: 8px;
+  text-decoration: none;
+  color: inherit;
+  color: #626262;
+  padding: 10px;
+}
+
+.user-item:hover {
+  background: #f5f7fa;
+  color: black;
+}
+
+/* HEADER USER */
+.user-trigger {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px;
+  border-radius: 8px;
+  text-decoration: none;
+  color: inherit;
+  color: #626262;
+  padding: 10px;
+
+ 
+  
+}
+
+.username {
+  font-family: sans-serif;
+  color: #626262;
+  margin-left: 8px;
+  font-size: 16px;
+}
+
+.username:hover {
+  color: black;
+}
+
+/* DROPDOWN USER INFO */
+.user-dropdown .user-info {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding-left: 6px;
+  padding-bottom: 5px;
+  
+}
+
+.user-dropdown .user-info span {
+  font-size: 14px;
+  color: #333;
+  display: inline; /* OU inline-block */
+}
+
+.user-dropdown .user-info i {
+  font-size: 22px;
+}

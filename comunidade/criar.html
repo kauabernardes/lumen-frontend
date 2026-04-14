@@ -4,38 +4,79 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Lumen | Criar Comunidade</title>
-    <link
-      rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
-    />
+    <link rel="stylesheet"href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"/>
     <link rel="stylesheet" href="/css/criarcomunidades.css" />
+    <link rel="stylesheet" href="/css/header.css" />
   </head>
   <body>
     <header class="topbar">
+      <!-- LOGO -->
       <div class="brand-side">
-        <img src="/img/LogoLumen2.svg" alt="Lumen Logo" class="logo-img" />
+        <img src="../img/LogoLumen2.svg" alt="Lumen Logo" class="logo-img" />
       </div>
 
-      <nav class="main-nav">
-        <a href="../home.html">home</a>
-        <a href="../comunidades.html" class="active">comunidades</a>
-        <a href="Agenda.html">agenda</a>
+      <!-- MENU -->
+      <nav>
+        <a href="/home.html" >home</a>
+        <a href="/Comunidades.html"class="active">comunidades</a>
+        <a href="/Agenda.html">agenda</a>
+
       </nav>
 
-      <div class="right-side">
+      <!-- DIREITA -->
+      <div class="divisao-header">
+        <!-- PESQUISA -->
         <div class="pesquisa">
           <i class="fa-solid fa-magnifying-glass"></i>
           <input type="text" placeholder="Procurar..." />
         </div>
 
+        <!-- NOTIFICAÇÃO -->
         <div class="notif">
           <i class="fa-regular fa-bell icon-bell"></i>
-          <span class="badge">2</span>
-        </div>
+          <span class="badge" id="badgeNotif">0</span>
 
-        <div class="user-trigger">
-          <span class="username">João A B</span>
-          <i class="fa-regular fa-circle-user avatar"></i>
+          <div class="dropdown" id="dropdownNotificacao">
+            <div class="dropdown-header">Notificações</div>
+
+            <!-- mensagem quando vazio -->
+            <div class="empty" id="emptyNotif">
+              Você não possui notificações
+            </div>
+
+            <!-- notificações entram aqui -->
+            <div class="item">
+              <span class="dot"></span>
+              <p>Alguém curtiu seu conteúdo</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- USUÁRIO -->
+      <div class="right">
+        <div class="user-menu">
+          <div class="user-trigger">
+            <i class="fa-regular fa-circle-user avatar"></i>
+            <span class="username">João A B</span>
+          </div>
+
+          <div class="user-dropdown" id="userDropdown">
+            <div class="user-info">
+              <i class="fa-regular fa-circle-user avatar"></i>
+              <span>João A B</span>
+            </div>
+
+            <div class="user-item">
+              <i class="fa-solid fa-gear"></i>
+              <span>Configurações</span>
+            </div>
+
+            <div class="user-item" id="btnSair">
+              <i class="fa-solid fa-right-from-bracket"></i>
+              <span>Sair</span>
+            </div>
+          </div>
         </div>
       </div>
     </header>
@@ -155,5 +196,6 @@
     </main>
 
     <script src="../js/criarcomunidades.js"></script>
+    <script src="../js/header.js"></script>
   </body>
 </html>

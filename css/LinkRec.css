@@ -19,7 +19,7 @@ body {
     height: 100%;
     /* Dois tons de verde menta para criar as listras */
     background: linear-gradient(45deg, #8ecbb4 25%, #7eb6a1 25%, #7eb6a1 50%, #8ecbb4 50%, #8ecbb4 75%, #7eb6a1 75%, #7eb6a1 100%);
-    background-size: 120px 120px;
+    background-size: 100px 100px;
     display: flex;
     align-items: center;
     justify-content: center;
