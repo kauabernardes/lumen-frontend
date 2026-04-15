@@ -13,6 +13,7 @@
 </head>
 <body>
 
+<!-- ===== HEADER (não mexa aqui) ===== -->
 <header class="topbar">
     <div class="brand-side">
         <img src="../img/LogoLumen2.svg" class="logo-img" alt="Logo">
@@ -58,10 +59,109 @@
     </div>
 </header>
 
+<!-- ===== MAIN 3 COLUNAS ===== -->
 <main class="main-content">
-    <div class="post-card">
+
+    <!-- COLUNA ESQUERDA: Comunidades -->
+    <aside class="sidebar-communities">
+        <div class="sidebar-title">
+            <i class="fa-solid fa-people-group"></i>
+            Suas Comunidades
+        </div>
+
+        <div class="community-search">
+            <i class="fa-solid fa-magnifying-glass"></i>
+            <input type="text" id="communitySearchInput" placeholder="Buscar comunidade...">
+        </div>
+
+        <div class="community-list" id="communityList">
+
+            <div class="community-item" data-name="Tecnologia & Dev" data-emoji="💻" onclick="selectCommunity(this)">
+                <div class="community-avatar">💻</div>
+                <div class="community-info">
+                    <div class="community-name">Tecnologia &amp; Dev</div>
+                    <div class="community-members">2.4k membros</div>
+                </div>
+                <i class="fa-solid fa-check community-check"></i>
+            </div>
+
+            <div class="community-item" data-name="Arte & Design" data-emoji="🎨" onclick="selectCommunity(this)">
+                <div class="community-avatar">🎨</div>
+                <div class="community-info">
+                    <div class="community-name">Arte &amp; Design</div>
+                    <div class="community-members">1.8k membros</div>
+                </div>
+                <i class="fa-solid fa-check community-check"></i>
+            </div>
+
+            <div class="community-item" data-name="Fotografia" data-emoji="📷" onclick="selectCommunity(this)">
+                <div class="community-avatar">📷</div>
+                <div class="community-info">
+                    <div class="community-name">Fotografia</div>
+                    <div class="community-members">3.1k membros</div>
+                </div>
+                <i class="fa-solid fa-check community-check"></i>
+            </div>
+
+            <div class="community-item" data-name="Música" data-emoji="🎵" onclick="selectCommunity(this)">
+                <div class="community-avatar">🎵</div>
+                <div class="community-info">
+                    <div class="community-name">Música</div>
+                    <div class="community-members">5.2k membros</div>
+                </div>
+                <i class="fa-solid fa-check community-check"></i>
+            </div>
+
+            <div class="community-item" data-name="Esportes" data-emoji="⚽" onclick="selectCommunity(this)">
+                <div class="community-avatar">⚽</div>
+                <div class="community-info">
+                    <div class="community-name">Esportes</div>
+                    <div class="community-members">4.7k membros</div>
+                </div>
+                <i class="fa-solid fa-check community-check"></i>
+            </div>
+
+            <div class="community-item" data-name="Games" data-emoji="🎮" onclick="selectCommunity(this)">
+                <div class="community-avatar">🎮</div>
+                <div class="community-info">
+                    <div class="community-name">Games</div>
+                    <div class="community-members">6.0k membros</div>
+                </div>
+                <i class="fa-solid fa-check community-check"></i>
+            </div>
+
+            <div class="community-item" data-name="Culinária" data-emoji="🍕" onclick="selectCommunity(this)">
+                <div class="community-avatar">🍕</div>
+                <div class="community-info">
+                    <div class="community-name">Culinária</div>
+                    <div class="community-members">2.9k membros</div>
+                </div>
+                <i class="fa-solid fa-check community-check"></i>
+            </div>
+
+            <div class="community-item" data-name="Viagens" data-emoji="✈️" onclick="selectCommunity(this)">
+                <div class="community-avatar">✈️</div>
+                <div class="community-info">
+                    <div class="community-name">Viagens</div>
+                    <div class="community-members">3.5k membros</div>
+                </div>
+                <i class="fa-solid fa-check community-check"></i>
+            </div>
+
+        </div>
+    </aside>
+
+    <!-- COLUNA CENTRAL: Formulário de publicação -->
+    <section class="post-card">
         <div class="header-badge">
             <span>Fazer publicação</span>
+        </div>
+
+        <!-- Tag da comunidade selecionada -->
+        <div class="selected-community-tag" id="selectedCommunityTag">
+            <i class="fa-solid fa-people-group"></i>
+            <span id="selectedCommunityName">Nenhuma comunidade selecionada</span>
+            <i class="fa-solid fa-xmark tag-remove" onclick="clearCommunity()" title="Remover seleção"></i>
         </div>
 
         <div class="input-group">
@@ -72,7 +172,7 @@
         <div class="input-group">
             <label>Adicionar mídia</label>
             <input type="file" id="fileInput" style="display: none;" accept="image/*">
-            
+
             <div class="media-upload" id="dropArea">
                 <button id="btnRemoveImage" class="remove-image-btn" title="Remover imagem">
                     <i class="fa-solid fa-xmark"></i>
@@ -80,19 +180,161 @@
 
                 <div class="upload-content" id="uploadContent">
                     <div class="upload-icon">
-                        <svg width="60" height="60" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <path d="M19 3H5C3.89 3 3 3.9 3 5V19C3 20.1 3.89 21 5 21H19C20.11 21 21 20.1 21 19V5C21 3.9 20.11 3 19 3ZM19 19H5V5H19V19ZM13.96 12.29L11.21 15.83L9.25 13.47L6.5 17H17.5L13.96 12.29Z" fill="#CCCCCC"/>
+                        <svg width="56" height="56" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M19 3H5C3.89 3 3 3.9 3 5V19C3 20.1 3.89 21 5 21H19C20.11 21 21 20.1 21 19V5C21 3.9 20.11 3 19 3ZM19 19H5V5H19V19ZM13.96 12.29L11.21 15.83L9.25 13.47L6.5 17H17.5L13.96 12.29Z" fill="#C5DBF7"/>
                         </svg>
                     </div>
+                    <p class="upload-hint">Clique ou arraste uma imagem aqui</p>
                 </div>
-                <img src="" id="imagePreview">
+
+                <img src="" id="imagePreview" alt="Preview">
             </div>
         </div>
 
-        <button class="btn-postar" id="btnPostar">Postar</button>
-    </div>
+        <!-- Chips de opções extras -->
+        <div class="post-options">
+            <button class="option-chip" id="chipEmoji">
+                <i class="fa-regular fa-face-smile"></i> Humor
+            </button>
+            <button class="option-chip" id="chipLocation">
+                <i class="fa-solid fa-location-dot"></i> Localização
+            </button>
+            <button class="option-chip" id="chipTag">
+                <i class="fa-solid fa-tag"></i> Marcar pessoas
+            </button>
+        </div>
+
+        <button class="btn-postar" id="btnPostar">
+            <i class="fa-solid fa-paper-plane" style="margin-right: 8px;"></i>Postar
+        </button>
+    </section>
+
+    <!-- COLUNA DIREITA: Anúncios -->
+    <aside class="sidebar-ads">
+        <div class="ad-label">Patrocinado</div>
+
+        <!-- Anúncio 1 -->
+        <div class="ad-card">
+            <div class="ad-banner ad-banner-1">
+                <span style="font-size:36px; z-index:1; position:relative;">🚀</span>
+            </div>
+            <div class="ad-body">
+                <div class="ad-title">Lumen Premium</div>
+                <div class="ad-desc">Publique sem limites e alcance muito mais pessoas na sua comunidade.</div>
+                <a href="#" class="ad-btn">Saiba mais</a>
+            </div>
+        </div>
+
+        <!-- Anúncio 2 -->
+        <div class="ad-card">
+            <div class="ad-banner ad-banner-2">
+                <span style="font-size:36px; z-index:1; position:relative;">🎓</span>
+            </div>
+            <div class="ad-body">
+                <div class="ad-title">Cursos Online</div>
+                <div class="ad-desc">Aprenda habilidades novas e compartilhe seu progresso com a comunidade.</div>
+                <a href="#" class="ad-btn">Ver cursos</a>
+            </div>
+        </div>
+
+        <!-- Dica -->
+        <div class="tip-card">
+            <div class="tip-icon">💡</div>
+            <div class="tip-title">Dica de publicação</div>
+            <div class="tip-text">Publicações com imagens recebem até 3x mais engajamento. Adicione uma foto para se destacar!</div>
+        </div>
+
+        <!-- Anúncio 3 -->
+        <div class="ad-card">
+            <div class="ad-banner ad-banner-3">
+                <span style="font-size:36px; z-index:1; position:relative;">🛒</span>
+            </div>
+            <div class="ad-body">
+                <div class="ad-title">Marketplace Lumen</div>
+                <div class="ad-desc">Compre e venda dentro das suas comunidades favoritas.</div>
+                <a href="#" class="ad-btn">Explorar</a>
+            </div>
+        </div>
+    </aside>
+
 </main>
 
 <script src="js/novapublicacao.js"></script>
+<script>
+    // ===== SELEÇÃO DE COMUNIDADE =====
+    function selectCommunity(el) {
+        document.querySelectorAll('.community-item').forEach(i => i.classList.remove('selected'));
+        el.classList.add('selected');
+
+        const name = el.dataset.name;
+        const tag = document.getElementById('selectedCommunityTag');
+        document.getElementById('selectedCommunityName').textContent = name;
+        tag.classList.add('visible');
+    }
+
+    function clearCommunity() {
+        document.querySelectorAll('.community-item').forEach(i => i.classList.remove('selected'));
+        document.getElementById('selectedCommunityTag').classList.remove('visible');
+    }
+
+    // ===== BUSCA DE COMUNIDADE =====
+    document.getElementById('communitySearchInput').addEventListener('input', function () {
+        const q = this.value.toLowerCase();
+        document.querySelectorAll('.community-item').forEach(item => {
+            const name = item.dataset.name.toLowerCase();
+            item.style.display = name.includes(q) ? 'flex' : 'none';
+        });
+    });
+
+    // ===== UPLOAD DE MÍDIA =====
+    const dropArea = document.getElementById('dropArea');
+    const fileInput = document.getElementById('fileInput');
+    const imagePreview = document.getElementById('imagePreview');
+    const uploadContent = document.getElementById('uploadContent');
+    const btnRemoveImage = document.getElementById('btnRemoveImage');
+
+    dropArea.addEventListener('click', () => fileInput.click());
+
+    fileInput.addEventListener('change', function () {
+        if (this.files && this.files[0]) showPreview(this.files[0]);
+    });
+
+    dropArea.addEventListener('dragover', e => { e.preventDefault(); dropArea.classList.add('dragover'); });
+    dropArea.addEventListener('dragleave', () => dropArea.classList.remove('dragover'));
+    dropArea.addEventListener('drop', e => {
+        e.preventDefault();
+        dropArea.classList.remove('dragover');
+        if (e.dataTransfer.files[0]) showPreview(e.dataTransfer.files[0]);
+    });
+
+    function showPreview(file) {
+        const reader = new FileReader();
+        reader.onload = e => {
+            imagePreview.src = e.target.result;
+            imagePreview.style.display = 'block';
+            uploadContent.style.display = 'none';
+            btnRemoveImage.style.display = 'flex';
+        };
+        reader.readAsDataURL(file);
+    }
+
+    btnRemoveImage.addEventListener('click', e => {
+        e.stopPropagation();
+        imagePreview.src = '';
+        imagePreview.style.display = 'none';
+        uploadContent.style.display = 'flex';
+        btnRemoveImage.style.display = 'none';
+        fileInput.value = '';
+    });
+
+    // ===== CHIPS OPCIONAIS =====
+    document.querySelectorAll('.option-chip').forEach(chip => {
+        chip.addEventListener('click', function () {
+            this.style.background = this.style.background ? '' : '#eaf2ff';
+            this.style.borderColor = this.style.borderColor === '#4a90e2' ? '' : '#4a90e2';
+            this.style.color = this.style.color === '#4a90e2' ? '' : '#4a90e2';
+        });
+    });
+</script>
 </body>
 </html>

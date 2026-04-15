@@ -29,8 +29,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Remover Imagem
     btnRemove.addEventListener('click', (e) => {
-        e.stopPropagation(); // Previne abrir o seletor de arquivos
-        fileInput.value = ""; // Limpa o input
+        e.stopPropagation(); 
+        fileInput.value = ""; 
         imagePreview.src = "";
         imagePreview.style.display = 'none';
         uploadContent.style.display = 'block';
