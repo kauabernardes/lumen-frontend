@@ -4,21 +4,21 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Lumen | Loucos do ENEM</title>
-    <link rel="stylesheet" href="../css/feedcomun.css" />
-    <link rel="stylesheet" href="../css/header.css" />
+    <link rel="stylesheet" href="../../css/feedcomun.css" />
+    <link rel="stylesheet" href="../../css/header.css" />
     <link rel="stylesheet"href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
 </head>
 <body>
 
     <header class="topbar">
         <div class="brand-side">
-            <img src="../img/LogoLumen2.svg" alt="Lumen Logo" class="logo-img" />
+            <img src="../../img/LogoLumen2.svg" alt="Lumen Logo" class="logo-img" />
         </div>
 
         <nav>
-            <a href="home.html">home</a>
-            <a href="comunidades.html" class="active">comunidades</a>
-            <a href="Agenda.html">agenda</a>
+            <a href="../../home.html">home</a>
+            <a href="../../comunidades.html" class="active">comunidades</a>
+            <a href="../../Agenda.html">agenda</a>
         </nav>
 
         <div class="divisao-header">
@@ -57,37 +57,38 @@
                 <a href="Comunidades.html" class="btn-voltar"><i class="fa-solid fa-arrow-left"></i> Voltar</a>
                 
                 <div class="card-info">
-                    <div class="banner-enem">
-                        <img src="../img/loucosdoenem.webp" alt="Capa ENEM">
+                    <div id="banner" class="banner">
+                        <img id="comunidade-capa" alt="Capa">
                     </div>
-                    <h2>Loucos do ENEM</h2>
-                    <p class="description">Para quem quer enlouquecer de estudar para a prova do enemmmm. Vamos juntos ocupar as universidades.</p>
+                    <h2 id="comunidade-nome">Carregando...</h2>
+                    <p class="description" id="comunidade-desc">Carregando descrição...</p>
                     <div class="meta">
-                        <small>Criado por: <strong>@mulienemm</strong></small>
-                        <small>Em 12 de março de 2025</small>
+                        <small>Criado por: <strong id="comunidade-autor">@...</strong></small>
+                        <small id="comunidade-data">Em ...</small>
                     </div>
                 </div>
 
+           
                 <div class="ad-sidebar">
-                    <img src="../img/promoengov.webp" alt="Anúncio Engov" class="ad-image">
+                    <img src="../../img/promoengov.webp"alt="Anúncio Engov" class="ad-image">
                 </div>
             </aside>
 
             <main class="feed">
-                <div class="post-redirect-card">
+                
+                <form class="new-post-card   ">
                     <div class="user-mini-avatar">
                         <i class="fa-regular fa-circle-user"></i>
                     </div>
-                    <a href="criar-post.html" class="fake-input">
-                        No que você está pensando, João?
-                    </a>
+                    <input class="post-input" type="textarea" rows="3" placeholder="O que você quer compartilhar?" id="post-input" />
+                    <input type="submit" value="Postar" class="btn-postar" />
                     <div class="post-icons">
                         <i class="fa-regular fa-image"></i>
                         <i class="fa-solid fa-video"></i>
                     </div>
-                </div>
+                </form>
 
-                <div class="timeline">
+                <div class="timeline" id="timeline-posts">
                     <article class="post">
                         <div class="post-user">
                             <i class="fa-regular fa-circle-user avatar"></i>
@@ -168,8 +169,8 @@
         </div>
     </div>
 
-    <script src="../js/feedcomun.js"></script>
-    <script src="../js/header.js"></script>
+    <script src="../../js/feedcomun.js"></script>
+    <script src="../../js/header.js"></script>
 
 </body>
 </html>

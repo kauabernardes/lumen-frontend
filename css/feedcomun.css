@@ -15,7 +15,7 @@
 
 body {
     margin: 0;
-    font-family: 'Segoe UI', sans-serif;
+    font-family: 'Segoe UI', sancs-serif;
     background: #f3f3f3;
     overflow: hidden;
 }
@@ -56,12 +56,14 @@ body {
     margin-bottom: 20px;
 }
 
-.banner-enem img {
+.banner {
+    display: flex;
     width: 100%;
-    border-radius: 20px;
+    height: 200px;
+     border-radius: 20px;
     margin-bottom: 20px;
-    height: 300px;
 }
+
 
 .card-info h2 { 
     margin: 0 0 10px 0; 
@@ -84,7 +86,7 @@ body {
     padding: 5px;
 }
 
-.post-redirect-card {
+.new-post-card {
     background: #fff;
     border: 1px solid #e0e0e0;
     border-radius: 15px;
@@ -97,10 +99,6 @@ body {
     transition:  0.2s;
 }
 
-.post-redirect-card:hover {
-    background-color: #f9f9f9;
-}
-
 .user-mini-avatar {
     font-size: 35px;
     color: #ccc;
@@ -108,7 +106,7 @@ body {
     align-items: center;
 }
 
-.fake-input {
+.post-input {
     flex: 1;
     background-color: #f0f2f5;
     color: #65676b;
@@ -119,9 +117,26 @@ body {
     transition:  0.2s;
     border: none;
     text-align: left;
+
 }
 
-.fake-input:hover {
+.btn-postar {
+    background-color: var(--lumen-blue);
+    color: #fff;
+    border: none;
+    padding: 8px 16px;
+    border-radius: 20px;
+    cursor: pointer;
+    font-size: 14px;
+    transition: background-color 0.3s ease;
+}
+
+.post-input:hover {
+    background-color: #e4e6e9;
+}
+
+.post-input:focus {
+    outline: none;
     background-color: #e4e6e9;
 }
 

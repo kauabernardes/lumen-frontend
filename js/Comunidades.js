@@ -35,14 +35,19 @@ async function fetchRecommends() {
       comunidadesContainer.innerHTML = "<p>Nenhuma comunidade recomendada.</p>";
       return;
     }
-    comunidades.forEach((comu) => {
+comunidades.forEach((comu) => {
       const card = document.createElement("div");
       card.classList.add("card");
       card.style.backgroundColor = gerarCorPastel();
+      
+      // Aqui você já pode usar o isMember que configuramos no backend!
+      const botaoAcao = comu.isMember 
+        ? `<button onclick="acessarComunidade('${comu.id}')">Acessar (Você já participa)</button>`
+        : `<button onclick="acessarComunidade('${comu.id}')">Entrar</button>`;
+
       card.innerHTML = `
-        
         <h2>${comu.name}</h2>
-        <button onclick="acessarComunidade('${comu.id}')">Acessar</button>
+        ${botaoAcao}
       `;
 
       comunidadesContainer.appendChild(card);
@@ -57,7 +62,7 @@ async function fetchRecommends() {
 
 // Função auxiliar para o botão acessar
 function acessarComunidade(id) {
-  window.location.href = `/comunidade/?id=${id}`;
+  window.location.href = `/comunidade/feed/?id=${id}`;
 }
 
 fetchRecommends();
