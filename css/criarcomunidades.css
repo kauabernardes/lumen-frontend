@@ -1,6 +1,6 @@
 :root {
   --bg: #f5f6f8;
-  --accent-blue: #0090f8;
+  --accent-blue: #2f6f95;
   --accent-pink: #ff85e1;
   --accent-purple: #6a0dad;
   --input-bg: #f0f2f5;
@@ -158,7 +158,7 @@ label {
 
 .btn-save:hover {
   transform: translateY(-3px);
-  box-shadow: 0 5px 15px rgba(0, 144, 248, 0.3);
+  box-shadow: 0 5px 15px #2f6f95;
 }
 
 /* --- DIREITA --- */
