@@ -7,7 +7,6 @@ document.addEventListener('DOMContentLoaded', () => {
     const btnPostar = document.getElementById('btnPostar');
     const textarea = document.getElementById('desc');
 
-
     dropArea.addEventListener('click', (e) => {
         if (e.target.closest('#btnRemoveImage')) return;
         fileInput.click();
@@ -21,43 +20,58 @@ document.addEventListener('DOMContentLoaded', () => {
                 imagePreview.src = e.target.result;
                 imagePreview.style.display = 'block';
                 uploadContent.style.display = 'none';
-                btnRemove.style.display = 'flex'; 
+                btnRemove.style.display = 'flex';
             }
             reader.readAsDataURL(file);
         }
     });
 
-    // Remover Imagem
     btnRemove.addEventListener('click', (e) => {
-        e.stopPropagation(); 
-        fileInput.value = ""; 
+        e.stopPropagation();
+        fileInput.value = "";
         imagePreview.src = "";
         imagePreview.style.display = 'none';
         uploadContent.style.display = 'block';
-        btnRemove.style.display = 'none'; 
+        btnRemove.style.display = 'none';
     });
 
-  
-    btnPostar.addEventListener('click', () => {
+    btnPostar.addEventListener('click', async () => {
+        const urlParams = new URLSearchParams(window.location.search);
+        const communityId = urlParams.get('id') || urlParams.get('communityId');
+
+        if (!communityId) {
+            alert("Erro: ID da comunidade não encontrado na URL!");
+            return;
+        }
+
         if (textarea.value.trim() === "") {
             alert("Escreve uma descrição para a tua publicação!");
             textarea.focus();
             return;
         }
 
+        const textoOriginal = btnPostar.innerHTML;
         btnPostar.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Publicando...';
-        btnPostar.style.pointerEvents = "none";
+        btnPostar.disabled = true;
 
-        setTimeout(() => {
+        try {
+            // Chamada ao serviço global
+            await window.postService.create(textarea.value.trim(), communityId);
+
             alert("Publicado com sucesso no Lumen!");
-        
+
             textarea.value = "";
             fileInput.value = "";
             imagePreview.style.display = 'none';
             uploadContent.style.display = 'block';
             btnRemove.style.display = 'none';
-            btnPostar.innerHTML = 'Postar';
-            btnPostar.style.pointerEvents = "auto";
-        }, 1500);
+            btnPostar.innerHTML = textoOriginal;
+            btnPostar.disabled = false;
+        } catch (error) {
+            console.error("Erro ao publicar:", error);
+            alert("Erro ao publicar: " + (error.message || "Tente novamente mais tarde."));
+            btnPostar.innerHTML = textoOriginal;
+            btnPostar.disabled = false;
+        }
     });
 });

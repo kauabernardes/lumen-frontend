@@ -1,176 +1,121 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="pt-br">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Lumen | Loucos do ENEM</title>
     <link rel="stylesheet" href="../../css/feedcomun.css" />
     <link rel="stylesheet" href="../../css/header.css" />
-    <link rel="stylesheet"href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
-</head>
-<body>
-
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
+    />
+  </head>
+  <body>
     <header class="topbar">
-        <div class="brand-side">
-            <img src="../../img/LogoLumen2.svg" alt="Lumen Logo" class="logo-img" />
+      <div class="brand-side">
+        <img src="../../img/LogoLumen2.svg" alt="Lumen Logo" class="logo-img" />
+      </div>
+
+      <nav>
+        <a href="../../home.html">home</a>
+        <a href="../../comunidades.html" class="active">comunidades</a>
+        <a href="../../Agenda.html">agenda</a>
+      </nav>
+
+      <div class="divisao-header">
+        <div class="pesquisa">
+          <i class="fa-solid fa-magnifying-glass"></i>
+          <input type="text" placeholder="Procurar..." />
         </div>
 
-        <nav>
-            <a href="../../home.html">home</a>
-            <a href="../../comunidades.html" class="active">comunidades</a>
-            <a href="../../Agenda.html">agenda</a>
-        </nav>
-
-        <div class="divisao-header">
-            <div class="pesquisa">
-                <i class="fa-solid fa-magnifying-glass"></i>
-                <input type="text" placeholder="Procurar..." />
+        <div class="notif">
+          <i class="fa-regular fa-bell icon-bell"></i>
+          <span class="badge" id="badgeNotif">2</span>
+          <div class="dropdown" id="dropdownNotificacao">
+            <div class="dropdown-header">Notificações</div>
+            <div class="item">
+              <span class="dot"></span>
+              <p>Alguém curtiu seu conteúdo</p>
             </div>
-
-            <div class="notif">
-                <i class="fa-regular fa-bell icon-bell"></i>
-                <span class="badge" id="badgeNotif">2</span>
-                <div class="dropdown" id="dropdownNotificacao">
-                    <div class="dropdown-header">Notificações</div>
-                    <div class="item">
-                        <span class="dot"></span>
-                        <p>Alguém curtiu seu conteúdo</p>
-                    </div>
-                </div>
-            </div>
+          </div>
         </div>
+      </div>
 
-        <div class="right">
-            <div class="user-menu">
-                <div class="user-trigger">
-                    <i class="fa-regular fa-circle-user avatar"></i>
-                    <span class="username">João A B</span>
-                </div>
-            </div>
+      <div class="right">
+        <div class="user-menu">
+          <div class="user-trigger">
+            <i class="fa-regular fa-circle-user avatar"></i>
+            <span class="username">João A B</span>
+          </div>
         </div>
+      </div>
     </header>
 
     <div class="main-wrapper">
-        <div class="container-comunidade">
-            
-            <aside class="sidebar">
-                <a href="Comunidades.html" class="btn-voltar"><i class="fa-solid fa-arrow-left"></i> Voltar</a>
-                
-                <div class="card-info">
-                    <div id="banner" class="banner">
-                        <img id="comunidade-capa" alt="Capa">
-                    </div>
-                    <h2 id="comunidade-nome">Carregando...</h2>
-                    <p class="description" id="comunidade-desc">Carregando descrição...</p>
-                    <div class="meta">
-                        <small>Criado por: <strong id="comunidade-autor">@...</strong></small>
-                        <small id="comunidade-data">Em ...</small>
-                    </div>
-                </div>
+      <div class="container-comunidade">
+        <aside class="sidebar">
+          <a href="javascript:history.back();" class="btn-voltar"
+            ><i class="fa-solid fa-arrow-left"></i> Voltar</a
+          >
 
-           
-                <div class="ad-sidebar">
-                    <img src="../../img/promoengov.webp"alt="Anúncio Engov" class="ad-image">
-                </div>
-            </aside>
+          <div class="card-info">
+            <div id="banner" class="banner">
+              <img id="comunidade-capa" alt="Capa" />
+            </div>
+            <h2 id="comunidade-nome">Carregando...</h2>
+            <p class="description" id="comunidade-desc">
+              Carregando descrição...
+            </p>
+            <div class="meta">
+              <small
+                >Criado por: <strong id="comunidade-autor">@...</strong></small
+              >
+              <small id="comunidade-data">Em ...</small>
+            </div>
+          </div>
 
-            <main class="feed">
-                
-                <form class="new-post-card   ">
-                    <div class="user-mini-avatar">
-                        <i class="fa-regular fa-circle-user"></i>
-                    </div>
-                    <input class="post-input" type="textarea" rows="3" placeholder="O que você quer compartilhar?" id="post-input" />
-                    <input type="submit" value="Postar" class="btn-postar" />
-                    <div class="post-icons">
-                        <i class="fa-regular fa-image"></i>
-                        <i class="fa-solid fa-video"></i>
-                    </div>
-                </form>
+          <div class="ad-sidebar">
+            <img
+              src="../../img/promoengov.webp"
+              alt="Anúncio Engov"
+              class="ad-image"
+            />
+          </div>
+        </aside>
 
-                <div class="timeline" id="timeline-posts">
-                    <article class="post">
-                        <div class="post-user">
-                            <i class="fa-regular fa-circle-user avatar"></i>
-                            <div class="user-data">
-                                <strong>Vinicius Lima</strong>
-                                <span>@vinilimaswt</span>
-                            </div>
-                            <div class="post-info">
-                                <span>Postado às 11h48m em</span><br>
-                                <a href="#">Loucos do ENEM</a>
-                            </div>
-                        </div>
-                        <p class="post-text">Pessoal, como ficou aquela questão de log desse enem? Deu ambiguidade? Vi uns gabaritos bem diferentes.</p>
-                        <div class="post-stats">
-                            <span><i class="fa-regular fa-thumbs-up"></i> 210</span>
-                            <span><i class="fa-regular fa-comment"></i> 32</span>
-                        </div>
-                    </article>
+        <main class="feed">
+          <form class="new-post-card">
+            <div class="user-mini-avatar">
+              <i class="fa-regular fa-circle-user"></i>
+            </div>
+            <input
+              class="post-input"
+              type="textarea"
+              rows="3"
+              placeholder="O que você quer compartilhar?"
+              id="post-input"
+            />
+            <input type="submit" value="Postar" class="btn-postar" />
+            <div class="post-icons">
+              <i class="fa-regular fa-image"></i>
+              <i class="fa-solid fa-video"></i>
+            </div>
+          </form>
 
-                    <article class="post">
-                        <div class="post-user">
-                            <i class="fa-regular fa-circle-user avatar"></i>
-                            <div class="user-data">
-                                <strong>Vinicius Lima</strong>
-                                <span>@vinilimaswt</span>
-                            </div>
-                            <div class="post-info">
-                                <span>Postado às 11h48m em</span><br>
-                                <a href="#">Loucos do ENEM</a>
-                            </div>
-                        </div>
-                        <p class="post-text">Pessoal, como ficou aquela questão de log desse enem? Deu ambiguidade? Vi uns gabaritos bem diferentes.</p>
-                        <div class="post-stats">
-                            <span><i class="fa-regular fa-thumbs-up"></i> 210</span>
-                            <span><i class="fa-regular fa-comment"></i> 32</span>
-                        </div>
-                    </article>
-
-                    <article class="post">
-                        <div class="post-user">
-                            <i class="fa-regular fa-circle-user avatar"></i>
-                            <div class="user-data">
-                                <strong>Vinicius Lima</strong>
-                                <span>@vinilimaswt</span>
-                            </div>
-                            <div class="post-info">
-                                <span>Postado às 11h48m em</span><br>
-                                <a href="#">Loucos do ENEM</a>
-                            </div>
-                        </div>
-                        <p class="post-text">Pessoal, como ficou aquela questão de log desse enem? Deu ambiguidade? Vi uns gabaritos bem diferentes.</p>
-                        <div class="post-stats">
-                            <span><i class="fa-regular fa-thumbs-up"></i> 210</span>
-                            <span><i class="fa-regular fa-comment"></i> 32</span>
-                        </div>
-                    </article>
-
-                    <article class="post">
-                        <div class="post-user">
-                            <i class="fa-regular fa-circle-user avatar"></i>
-                            <div class="user-data">
-                                <strong>Vinicius Lima</strong>
-                                <span>@vinilimaswt</span>
-                            </div>
-                            <div class="post-info">
-                                <span>Postado às 11h48m em</span><br>
-                                <a href="#">Loucos do ENEM</a>
-                            </div>
-                        </div>
-                        <p class="post-text">Pessoal, como ficou aquela questão de log desse enem? Deu ambiguidade? Vi uns gabaritos bem diferentes.</p>
-                        <div class="post-stats">
-                            <span><i class="fa-regular fa-thumbs-up"></i> 210</span>
-                            <span><i class="fa-regular fa-comment"></i> 32</span>
-                        </div>
-                    </article>
-                </div>
-            </main>
-        </div>
+          <div class="timeline" id="timeline-posts"></div>
+        </main>
+      </div>
     </div>
 
+    <!-- 1. CARREGA A BASE (CLIENTE E SERVIÇOS) -->
+    <script src="../../js/api/client.js"></script>
+    <script src="../../js/api/services/authService.js"></script>
+    <script src="../../js/api/services/communityService.js"></script>
+    <script src="../../js/api/services/postService.js"></script>
+
+    <!-- 2. CARREGA A LÓGICA DA TELA -->
     <script src="../../js/feedcomun.js"></script>
     <script src="../../js/header.js"></script>
-
-</body>
+  </body>
 </html>

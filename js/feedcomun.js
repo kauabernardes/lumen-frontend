@@ -1,173 +1,172 @@
 // ==========================================
 // 1. CONFIGURAÇÕES E UTILITÁRIOS GERAIS
 // ==========================================
-const API_URL = 'http://localhost:3000'; 
-const token = localStorage.getItem('access_token'); 
-
 const urlParams = new URLSearchParams(window.location.search);
-const comunidadeId = urlParams.get('id');
-
-const fetchConfig = {
-    headers: {
-        'Authorization': `Bearer ${token}`,
-        'Content-Type': 'application/json'
-    }
-};
+const comunidadeId = urlParams.get("id");
 
 function gerarCorPastel() {
-    const r = Math.floor(Math.random() * 127 + 128);
-    const g = Math.floor(Math.random() * 127 + 128);
-    const b = Math.floor(Math.random() * 127 + 128);
-    return `#${r.toString(16).padStart(2, "0")}${g.toString(16).padStart(2, "0")}${b.toString(16).padStart(2, "0")}`;
+  const r = Math.floor(Math.random() * 127 + 128);
+  const g = Math.floor(Math.random() * 127 + 128);
+  const b = Math.floor(Math.random() * 127 + 128);
+  return `#${r.toString(16).padStart(2, "0")}${g.toString(16).padStart(2, "0")}${b.toString(16).padStart(2, "0")}`;
 }
 
 // ==========================================
 // 2. INTERFACE DO USUÁRIO (MENU DROPDOWN)
 // ==========================================
-const userTrigger = document.querySelector('.user-trigger');
-const userDropdown = document.getElementById('dropdownNotificacao'); // Ajustado para bater com o ID do seu HTML (ou crie um id="userDropdown" no menu do usuário)
+const userTrigger = document.querySelector(".user-trigger");
+const userDropdown = document.getElementById("dropdownNotificacao");
 
 if (userTrigger && userDropdown) {
-    userTrigger.addEventListener('click', () => {
-        userDropdown.classList.toggle('active');
-    });
+  userTrigger.addEventListener("click", () => {
+    userDropdown.classList.toggle("active");
+  });
 }
 
 // ==========================================
 // 3. LÓGICA DE POSTAGEM (EVENTO DE FORMULÁRIO)
 // ==========================================
-const formPost = document.querySelector('.new-post-card'); // Pegamos o formulário
-const postInput = document.getElementById('post-input');
-const btnPostar = document.querySelector('.btn-postar'); // Pegamos pela classe, como está no HTML
-const timeline = document.getElementById('timeline-posts');
+const formPost = document.querySelector(".new-post-card");
+const postInput = document.getElementById("post-input");
+const btnPostar = document.querySelector(".btn-postar");
+const timeline = document.getElementById("timeline-posts");
 
 if (formPost && postInput && timeline) {
-    // Usamos o evento de 'submit' no formulário em vez de clique no botão
-    formPost.addEventListener('submit', async (event) => {
-        event.preventDefault(); // ISSO É CRÍTICO: Impede a página de recarregar!
+  formPost.addEventListener("submit", async (event) => {
+    event.preventDefault();
 
-        const conteudo = postInput.value.trim();
-        
-        if (conteudo === "") return;
-        
-        // Como o botão é um <input>, pegamos o texto dele por ".value"
-        const textoOriginalBotao = btnPostar.value;
-        btnPostar.value = "Postando...";
-        btnPostar.disabled = true;
+    const conteudo = postInput.value.trim();
 
-        try {
-            const response = await fetch(`${API_URL}/posts`, {
-                method: 'POST',
-                headers: fetchConfig.headers,
-                body: JSON.stringify({
-                    content: conteudo,
-                    communityId: comunidadeId
-                })
-            });
+    if (conteudo === "") return;
 
-            if (!response.ok) {
-                const erro = await response.json();
-                throw new Error(erro.message || "Erro ao criar o post.");
-            }
+    const textoOriginalBotao = btnPostar.value;
+    btnPostar.value = "Postando...";
+    btnPostar.disabled = true;
 
-            // Injeta o post no topo da tela visualmente
-            const novoPost = document.createElement('article');
-            novoPost.className = 'post';
-            novoPost.innerHTML = `
+    try {
+      // Chamada ao serviço de postagem via window
+      const novoPost = await window.postService.create(conteudo, comunidadeId);
+
+      // Criação do elemento visual do post
+      const article = document.createElement("article");
+      article.className = "post";
+      article.setAttribute("data-id", novoPost.id);
+      article.innerHTML = `
                 <div class="post-user">
                     <i class="fa-regular fa-circle-user avatar"></i>
                     <div class="user-data">
-                        <strong>Você</strong>
-                        <span>@seu_usuario</span>
+                        <strong>${novoPost.user?.username || "Usuário"}</strong>
+                        <span>@${novoPost.user?.username || "usuario"}</span>
                     </div>
                     <div class="post-info">
-                        <span>Postado agora</span>
+                        <span>Postado agora</span><br>
+                        <a href="#">${novoPost.community?.name || "Comunidade"}</a>
                     </div>
                 </div>
                 <p class="post-text">${conteudo}</p>
                 <div class="post-stats">
-                    <span><i class="fa-regular fa-thumbs-up"></i> 0</span>
+                    <span class="btn-like" style="cursor:pointer;">
+                        <i class="fa-regular fa-thumbs-up"></i>
+                        <span class="like-count"> 0</span>
+                     </span>
                     <span><i class="fa-regular fa-comment"></i> 0</span>
                 </div>
             `;
-            
-            // Se a timeline só tiver a mensagem de "nenhum post", limpamos ela
-            if (timeline.querySelector('p') && timeline.children.length === 1) {
-                timeline.innerHTML = '';
-            }
 
-            timeline.prepend(novoPost); 
-            postInput.value = ""; // Limpa o input
+      article
+        .querySelector(".btn-like")
+        .addEventListener("click", () => handleLike(novoPost.id, article));
 
-        } catch (error) {
-            console.error("Falha ao postar:", error);
-            alert(`Não foi possível enviar o post: ${error.message}`);
-        } finally {
-            btnPostar.value = textoOriginalBotao;
-            btnPostar.disabled = false;
-        }
-    });
+      if (timeline.querySelector("p") && timeline.children.length === 1) {
+        timeline.innerHTML = "";
+      }
+
+      timeline.prepend(article);
+      postInput.value = "";
+    } catch (error) {
+      console.error("Falha ao postar:", error);
+      alert(`Não foi possível enviar o post: ${error.message}`);
+    } finally {
+      btnPostar.value = textoOriginalBotao;
+      btnPostar.disabled = false;
+    }
+  });
 }
 
 // ==========================================
 // 4. BUSCA DE DADOS (COMUNIDADE E FEED)
 // ==========================================
 async function carregarComunidade() {
-    if (!comunidadeId) return;
+  if (!comunidadeId) return;
 
-    try {
-        const response = await fetch(`${API_URL}/community/${comunidadeId}`, fetchConfig);
-        if (!response.ok) throw new Error('Erro ao buscar comunidade');
-        
-        const comunidade = await response.json();
+  mostrarSkeletonComunidade();
 
-        document.getElementById('comunidade-nome').textContent = comunidade.name;
-        document.getElementById('comunidade-desc').textContent = comunidade.description;
-        document.getElementById('comunidade-autor').textContent = `@${comunidade.author?.username || 'desconhecido'}`;
-        
-        // Aplica a cor pastel na tag <img> caso ela não tenha src
-        const capaImg = document.getElementById('comunidade-capa');
-        if(capaImg) {
-            capaImg.style.backgroundColor = gerarCorPastel();
-        }
-        
-        const dataCriacao = new Date(comunidade.createdAt).toLocaleDateString('pt-BR', {
-            day: '2-digit', month: 'long', year: 'numeric'
-        });
-        document.getElementById('comunidade-data').textContent = `Em ${dataCriacao}`;
+  try {
+    // Chamada ao serviço de comunidade via window
+    const comunidade = await window.communityService.getById(comunidadeId);
 
-    } catch (error) {
-        console.error("Erro ao carregar os dados da comunidade:", error);
-    }
+    const dataCriacao = new Date(comunidade.createdAt).toLocaleDateString(
+      "pt-BR",
+      {
+        day: "2-digit",
+        month: "long",
+        year: "numeric",
+      },
+    );
+
+    const cardInfo = document.querySelector(".card-info");
+    cardInfo.innerHTML = `
+            <div id="banner" class="banner">
+                <img id="comunidade-capa" alt="Capa" style="background-color: ${gerarCorPastel()}; width: 100%; border-radius: 20px;">
+            </div>
+            <h2 id="comunidade-nome">${comunidade.name}</h2>
+            <p class="description" id="comunidade-desc">${comunidade.description}</p>
+            <div class="meta">
+                <small>Criado por: <strong id="comunidade-autor">@${comunidade.author?.username || "desconhecido"}</strong></small>
+                <small id="comunidade-data">Em ${dataCriacao}</small>
+            </div>
+        `;
+  } catch (error) {
+    console.error("Erro ao carregar comunidade:", error);
+    document.querySelector(".card-info").innerHTML =
+      "<p>Erro ao carregar dados.</p>";
+  }
 }
 
 async function carregarPosts(pagina = 1) {
-    if (!comunidadeId) return;
+  if (!comunidadeId) return;
 
-    try {
-        const response = await fetch(`${API_URL}/community/${comunidadeId}/posts?page=${pagina}&limit=10`, fetchConfig);
-        if (!response.ok) throw new Error('Erro ao buscar posts');
+  mostrarSkeletons();
 
-        const result = await response.json();
-        
-        // Quando carregar com sucesso, limpa os posts falsos/hardcoded do HTML
-        if (pagina === 1) timeline.innerHTML = '';
+  try {
+    // Chamada ao serviço de comunidade via window
+    const result = await window.communityService.getPosts(
+      comunidadeId,
+      pagina,
+      10,
+    );
 
-        if (result.data.length === 0) {
-            timeline.innerHTML = '<p style="text-align: center; color: #666; padding: 20px;">Nenhum post encontrado nesta comunidade.</p>';
-            return;
-        }
+    if (pagina === 1) timeline.innerHTML = "";
 
-        result.data.forEach(post => {
-            const dataHora = new Date(post.createdAt).toLocaleTimeString('pt-BR', {
-                hour: '2-digit', minute:'2-digit'
-            });
+    if (result.data.length === 0) {
+      timeline.innerHTML =
+        '<p style="text-align: center; color: #666; padding: 20px;">Nenhum post encontrado nesta comunidade.</p>';
+      return;
+    }
 
-            const authorName = post.user ? post.user.username : 'Usuário Oculto';
+    result.data.forEach((post) => {
+      const dataHora = new Date(post.createdAt).toLocaleTimeString("pt-BR", {
+        hour: "2-digit",
+        minute: "2-digit",
+      });
 
-            const article = document.createElement('article');
-            article.className = 'post';
-            article.innerHTML = `
+      const authorName = post.user ? post.user.username : "Usuário Oculto";
+      const communityName = post.community ? post.community.name : "Comunidade";
+
+      const article = document.createElement("article");
+      article.className = "post";
+      article.setAttribute("data-id", post.id);
+      article.innerHTML = `
                 <div class="post-user">
                     <i class="fa-regular fa-circle-user avatar"></i>
                     <div class="user-data">
@@ -176,33 +175,99 @@ async function carregarPosts(pagina = 1) {
                     </div>
                     <div class="post-info">
                         <span>Postado às ${dataHora}</span><br>
+                        <a href="#">${communityName}</a>
                     </div>
                 </div>
                 <p class="post-text">${post.content}</p>
                 <div class="post-stats">
-                    <span><i class="fa-regular fa-thumbs-up"></i> 0</span>
+                    <span class="btn-like" style="cursor:pointer;">
+                        <i class="${post.isLiked ? "fa-solid" : "fa-regular"} fa-thumbs-up"></i>
+                        <span class="like-count">${post.likesCount || 0}</span>
+                     </span>
                     <span><i class="fa-regular fa-comment"></i> 0</span>
                 </div>
             `;
-            timeline.appendChild(article);
-        });
-
-    } catch (error) {
-        console.error("Erro ao carregar o feed:", error);
-        timeline.innerHTML = '<p style="text-align: center;">Erro ao carregar o feed.</p>';
-    }
+      article
+        .querySelector(".btn-like")
+        .addEventListener("click", () => handleLike(post.id, article));
+      timeline.appendChild(article);
+    });
+  } catch (error) {
+    console.error("Erro ao carregar o feed:", error);
+    timeline.innerHTML =
+      '<p style="text-align: center;">Erro ao carregar o feed.</p>';
+  }
 }
 
 // ==========================================
 // 5. INICIALIZAÇÃO DA PÁGINA
 // ==========================================
-document.addEventListener('DOMContentLoaded', () => {
-    if (!comunidadeId) {
-        console.warn('Nenhum ID de comunidade detectado na URL.');
-        // Opcional: window.location.href = 'comunidades.html';
-        return; 
-    }
-    
-    carregarComunidade();
-    carregarPosts(1);
+document.addEventListener("DOMContentLoaded", () => {
+  if (!comunidadeId) {
+    console.warn("Nenhum ID de comunidade detectado na URL.");
+    return;
+  }
+
+  carregarComunidade();
+  carregarPosts(1);
 });
+
+function mostrarSkeletons() {
+  const timeline = document.getElementById("timeline-posts");
+  timeline.innerHTML = "";
+
+  for (let i = 0; i < 3; i++) {
+    const skel = document.createElement("div");
+    skel.className = "skeleton-post";
+    skel.innerHTML = `
+            <div class="post-user" style="display: flex; gap: 12px; align-items: center; margin-bottom: 15px;">
+                <div class="skeleton skeleton-avatar"></div>
+                <div class="user-data">
+                    <div class="skeleton skeleton-title"></div>
+                    <div class="skeleton" style="width: 80px; height: 12px;"></div>
+                </div>
+            </div>
+            <div class="skeleton skeleton-text"></div>
+            <div class="skeleton skeleton-text"></div>
+            <div class="skeleton skeleton-text short"></div>
+        `;
+    timeline.appendChild(skel);
+  }
+}
+
+function mostrarSkeletonComunidade() {
+  const cardInfo = document.querySelector(".card-info");
+  cardInfo.innerHTML = `
+        <div class="skeleton skeleton-banner"></div>
+        <div class="skeleton skeleton-title-lg"></div>
+        <div class="skeleton skeleton-desc"></div>
+        <div class="skeleton skeleton-desc"></div>
+        <div class="meta">
+            <div class="skeleton skeleton-meta"></div>
+            <div class="skeleton skeleton-meta"></div>
+        </div>
+    `;
+}
+
+async function handleLike(postId, postElement) {
+  const likeIcon = postElement.querySelector(".btn-like i");
+  const likeCountSpan = postElement.querySelector(".like-count");
+
+  try {
+    // Chamada ao serviço de postagem via window
+    const data = await window.postService.toggleLike(postId);
+
+    if (data.liked) {
+      likeIcon.classList.replace("fa-regular", "fa-solid");
+      likeIcon.style.color = "var(--lumen-blue)";
+    } else {
+      likeIcon.classList.replace("fa-solid", "fa-regular");
+      likeIcon.style.color = "";
+    }
+
+    likeCountSpan.textContent = data.totalLikes;
+  } catch (error) {
+    console.error("Erro ao curtir:", error);
+    alert(error.message || "Erro ao processar curtida.");
+  }
+}

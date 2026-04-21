@@ -1,255 +1,260 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="pt-br">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Comunidades Web</title>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Comunidades Web</title>
 
-  <link rel="stylesheet" href="../css/comunidades.css">
-  <link rel="stylesheet" href="../css/header.css">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
-</head>
+    <link rel="stylesheet" href="./css/comunidades.css" />
+    <link rel="stylesheet" href="./css/header.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
+    />
+  </head>
 
-<body>
-
-<header class="topbar">
-  <div class="brand-side">
-    <img src="../img/LogoLumen2.svg" class="logo-img">
-  </div>
-
-  <nav>
-    <a href="home.html">home</a>
-    <a href="comunidades.html" class="active">comunidades</a>
-    <a href="Agenda.html">agenda</a>
-  </nav>
-
-  <div class="divisao-header">
-    <div class="pesquisa">
-      <i class="fa-solid fa-magnifying-glass"></i>
-      <input type="text" placeholder="Procurar..." />
-    </div>
-
-    <div class="notif">
-      <i class="fa-regular fa-bell icon-bell"></i>
-      <span class="badge" id="badgeNotif">0</span>
-
-      <div class="dropdown" id="dropdownNotificacao">
-        <div class="dropdown-header">Notificações</div>
-
-        <div class="empty" id="emptyNotif">
-          Você não possui notificações
-        </div>
-
-        <div class="item">
-          <span class="dot"></span>
-          <p>Alguém curtiu seu conteúdo</p>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <div class="right">
-    <div class="user-menu">
-      <div class="user-trigger">
-        <i class="fa-regular fa-circle-user avatar"></i>
-        <span class="username">João A B</span>
+  <body>
+    <header class="topbar">
+      <div class="brand-side">
+        <img src="../img/LogoLumen2.svg" class="logo-img" />
       </div>
 
-      <div class="user-dropdown" id="userDropdown">
-        <div class="user-info">
-          <i class="fa-regular fa-circle-user avatar"></i>
-          <span>João A B</span>
+      <nav>
+        <a href="home.html">home</a>
+        <a href="comunidades.html" class="active">comunidades</a>
+        <a href="Agenda.html">agenda</a>
+      </nav>
+
+      <div class="divisao-header">
+        <div class="pesquisa">
+          <i class="fa-solid fa-magnifying-glass"></i>
+          <input type="text" placeholder="Procurar..." />
         </div>
 
-        <div class="user-item">
-          <i class="fa-solid fa-gear"></i>
-          <span>Configurações</span>
-        </div>
+        <div class="notif">
+          <i class="fa-regular fa-bell icon-bell"></i>
+          <span class="badge" id="badgeNotif">0</span>
 
-        <div class="user-item" id="btnSair">
-          <i class="fa-solid fa-right-from-bracket"></i>
-          <span>Sair</span>
-        </div>
-      </div>
-    </div>
-  </div>
-</header>
+          <div class="dropdown" id="dropdownNotificacao">
+            <div class="dropdown-header">Notificações</div>
 
-<main class="container">
+            <div class="empty" id="emptyNotif">
+              Você não possui notificações
+            </div>
 
-  <!-- ESQUERDA -->
-  <div class="left" id="comunidades-container"></div>
-
-  <!-- CENTRO -->
-  <div class="center">
-
-    <div class="create-community">
-      <div class="icon">
-        <i class="fa-regular fa-pen-to-square"></i>
-      </div>
-      <a href="./comunidade/criar.html">Nova comunidade</a>
-    </div>
-
-    <!-- POST 1 -->
-    <div class="post">
-      <div class="post-header">
-        <i class="fa-regular fa-circle-user user-icon"></i>
-
-        <div class="post-user-info">
-          <strong>Vinicius Lima</strong>
-          <span>@vinilimaswt</span>
-        </div>
-
-        <div class="post-info">
-          <span>11h48m</span><br>
-          <a href="#">Loucos do ENEM</a>
+            <div class="item">
+              <span class="dot"></span>
+              <p>Alguém curtiu seu conteúdo</p>
+            </div>
+          </div>
         </div>
       </div>
 
-      <p class="post-text">Pessoal, como ficou aquela questão de log desse enem?</p>
+      <div class="right">
+        <div class="user-menu">
+          <div class="user-trigger">
+            <i class="fa-regular fa-circle-user avatar"></i>
+            <span class="username">João A B</span>
+          </div>
 
-      <div class="post-actions">
-        <span><i class="fa-regular fa-thumbs-up"></i> 210</span>
-        <span><i class="fa-regular fa-comment"></i> 32</span>
-      </div>
-    </div>
+          <div class="user-dropdown" id="userDropdown">
+            <div class="user-info">
+              <i class="fa-regular fa-circle-user avatar"></i>
+              <span>João A B</span>
+            </div>
 
-    <!-- POST 2 -->
-    <div class="post">
-      <div class="post-header">
-        <i class="fa-regular fa-circle-user user-icon"></i>
+            <div class="user-item">
+              <i class="fa-solid fa-gear"></i>
+              <span>Configurações</span>
+            </div>
 
-        <div class="post-user-info">
-          <strong>Lara Dias</strong>
-          <span>@larastudiesdias</span>
-        </div>
-
-        <div class="post-info">
-          <span>18h10m</span><br>
-          <a href="#">FUVEST</a>
-        </div>
-      </div>
-
-      <p class="post-text">Apostila gratuita da FUVEST aqui!</p>
-
-      <div class="post-actions">
-        <span><i class="fa-regular fa-thumbs-up"></i> 30</span>
-        <span><i class="fa-regular fa-comment"></i> 57</span>
-      </div>
-    </div>
-
-    <!-- POST 3 -->
-    <div class="post">
-      <div class="post-header">
-        <i class="fa-regular fa-circle-user user-icon"></i>
-
-        <div class="post-user-info">
-          <strong>Alexandre Kaue</strong>
-          <span>@alexk</span>
-        </div>
-
-        <div class="post-info">
-          <span>10h32m</span><br>
-          <a href="#">ENEM</a>
+            <div class="user-item" id="btnSair">
+              <i class="fa-solid fa-right-from-bracket"></i>
+              <span>Sair</span>
+            </div>
+          </div>
         </div>
       </div>
+    </header>
 
-      <p class="post-text">Questão de linguagens foi insana!</p>
+    <main class="container">
+      <!-- ESQUERDA -->
+      <div class="left" id="comunidades-container"></div>
 
-      <div class="post-actions">
-        <span><i class="fa-regular fa-thumbs-up"></i> 30</span>
-        <span><i class="fa-regular fa-comment"></i> 57</span>
-      </div>
-    </div>
-
-    <!-- POST 4 -->
-    <div class="post">
-      <div class="post-header">
-        <i class="fa-regular fa-circle-user user-icon"></i>
-
-        <div class="post-user-info">
-          <strong>Mariana Souza</strong>
-          <span>@maristudies</span>
+      <!-- CENTRO -->
+      <div class="center">
+        <div class="create-community">
+          <div class="icon">
+            <i class="fa-regular fa-pen-to-square"></i>
+          </div>
+          <a href="./comunidade/criar.html">Nova comunidade</a>
         </div>
 
-        <div class="post-info">
-          <span>09h15m</span><br>
-          <a href="#">Redação</a>
+        <!-- POST 1 -->
+        <div class="post">
+          <div class="post-header">
+            <i class="fa-regular fa-circle-user user-icon"></i>
+
+            <div class="post-user-info">
+              <strong>Vinicius Lima</strong>
+              <span>@vinilimaswt</span>
+            </div>
+
+            <div class="post-info">
+              <span>11h48m</span><br />
+              <a href="#">Loucos do ENEM</a>
+            </div>
+          </div>
+
+          <p class="post-text">
+            Pessoal, como ficou aquela questão de log desse enem?
+          </p>
+
+          <div class="post-actions">
+            <span><i class="fa-regular fa-thumbs-up"></i> 210</span>
+            <span><i class="fa-regular fa-comment"></i> 32</span>
+          </div>
+        </div>
+
+        <!-- POST 2 -->
+        <div class="post">
+          <div class="post-header">
+            <i class="fa-regular fa-circle-user user-icon"></i>
+
+            <div class="post-user-info">
+              <strong>Lara Dias</strong>
+              <span>@larastudiesdias</span>
+            </div>
+
+            <div class="post-info">
+              <span>18h10m</span><br />
+              <a href="#">FUVEST</a>
+            </div>
+          </div>
+
+          <p class="post-text">Apostila gratuita da FUVEST aqui!</p>
+
+          <div class="post-actions">
+            <span><i class="fa-regular fa-thumbs-up"></i> 30</span>
+            <span><i class="fa-regular fa-comment"></i> 57</span>
+          </div>
+        </div>
+
+        <!-- POST 3 -->
+        <div class="post">
+          <div class="post-header">
+            <i class="fa-regular fa-circle-user user-icon"></i>
+
+            <div class="post-user-info">
+              <strong>Alexandre Kaue</strong>
+              <span>@alexk</span>
+            </div>
+
+            <div class="post-info">
+              <span>10h32m</span><br />
+              <a href="#">ENEM</a>
+            </div>
+          </div>
+
+          <p class="post-text">Questão de linguagens foi insana!</p>
+
+          <div class="post-actions">
+            <span><i class="fa-regular fa-thumbs-up"></i> 30</span>
+            <span><i class="fa-regular fa-comment"></i> 57</span>
+          </div>
+        </div>
+
+        <!-- POST 4 -->
+        <div class="post">
+          <div class="post-header">
+            <i class="fa-regular fa-circle-user user-icon"></i>
+
+            <div class="post-user-info">
+              <strong>Mariana Souza</strong>
+              <span>@maristudies</span>
+            </div>
+
+            <div class="post-info">
+              <span>09h15m</span><br />
+              <a href="#">Redação</a>
+            </div>
+          </div>
+
+          <p class="post-text">Como melhorar conclusão?</p>
+
+          <div class="post-actions">
+            <span><i class="fa-regular fa-thumbs-up"></i> 85</span>
+            <span><i class="fa-regular fa-comment"></i> 19</span>
+          </div>
+        </div>
+
+        <!-- POST 5 -->
+        <div class="post">
+          <div class="post-header">
+            <i class="fa-regular fa-circle-user user-icon"></i>
+
+            <div class="post-user-info">
+              <strong>Lucas Pereira</strong>
+              <span>@lucasdev</span>
+            </div>
+
+            <div class="post-info">
+              <span>14h22m</span><br />
+              <a href="#">Java</a>
+            </div>
+          </div>
+
+          <p class="post-text">ArrayList finalmente entendi 😭🔥</p>
+
+          <div class="post-actions">
+            <span><i class="fa-regular fa-thumbs-up"></i> 120</span>
+            <span><i class="fa-regular fa-comment"></i> 34</span>
+          </div>
+        </div>
+
+        <!-- POST 6 -->
+        <div class="post">
+          <div class="post-header">
+            <i class="fa-regular fa-circle-user user-icon"></i>
+
+            <div class="post-user-info">
+              <strong>Camila Rocha</strong>
+              <span>@camilastudy</span>
+            </div>
+
+            <div class="post-info">
+              <span>21h05m</span><br />
+              <a href="#">Estudos</a>
+            </div>
+          </div>
+
+          <p class="post-text">5h de estudo hoje 🙌</p>
+
+          <div class="post-actions">
+            <span><i class="fa-regular fa-thumbs-up"></i> 200</span>
+            <span><i class="fa-regular fa-comment"></i> 41</span>
+          </div>
         </div>
       </div>
 
-      <p class="post-text">Como melhorar conclusão?</p>
-
-      <div class="post-actions">
-        <span><i class="fa-regular fa-thumbs-up"></i> 85</span>
-        <span><i class="fa-regular fa-comment"></i> 19</span>
-      </div>
-    </div>
-
-    <!-- POST 5 -->
-    <div class="post">
-      <div class="post-header">
-        <i class="fa-regular fa-circle-user user-icon"></i>
-
-        <div class="post-user-info">
-          <strong>Lucas Pereira</strong>
-          <span>@lucasdev</span>
-        </div>
-
-        <div class="post-info">
-          <span>14h22m</span><br>
-          <a href="#">Java</a>
+      <!-- DIREITA -->
+      <div class="right">
+        <div class="ad-card">
+          <img id="adImage" src="../img/anuncio1.jpg" />
+          <div class="ad-content">
+            <button id="adButton">Assistir Agora</button>
+          </div>
         </div>
       </div>
+    </main>
 
-      <p class="post-text">ArrayList finalmente entendi 😭🔥</p>
+    <!-- 1. CARREGA A BASE (CLIENTE E SERVIÇOS) -->
+    <script src="js/api/client.js"></script>
+    <script src="js/api/services/authService.js"></script>
+    <script src="js/api/services/communityService.js"></script>
+    <script src="js/api/services/postService.js"></script>
 
-      <div class="post-actions">
-        <span><i class="fa-regular fa-thumbs-up"></i> 120</span>
-        <span><i class="fa-regular fa-comment"></i> 34</span>
-      </div>
-    </div>
-
-    <!-- POST 6 -->
-    <div class="post">
-      <div class="post-header">
-        <i class="fa-regular fa-circle-user user-icon"></i>
-
-        <div class="post-user-info">
-          <strong>Camila Rocha</strong>
-          <span>@camilastudy</span>
-        </div>
-
-        <div class="post-info">
-          <span>21h05m</span><br>
-          <a href="#">Estudos</a>
-        </div>
-      </div>
-
-      <p class="post-text">5h de estudo hoje 🙌</p>
-
-      <div class="post-actions">
-        <span><i class="fa-regular fa-thumbs-up"></i> 200</span>
-        <span><i class="fa-regular fa-comment"></i> 41</span>
-      </div>
-    </div>
-
-  </div>
-
-  <!-- DIREITA -->
-  <div class="right">
-    <div class="ad-card">
-      <img id="adImage" src="../img/anuncio1.jpg">
-      <div class="ad-content">
-        <button id="adButton">Assistir Agora</button>
-      </div>
-    </div>
-  </div>
-
-</main>
-
-<script src="../js/Comunidades.js"></script>
-<script src="../js/header.js"></script>
-
-</body>
+    <!-- 2. CARREGA A LÓGICA DA TELA -->
+    <script src="js/Comunidades.js"></script>
+  </body>
 </html>
