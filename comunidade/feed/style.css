@@ -1,0 +1,352 @@
+:root {
+  --bg-color: #e9eaee;
+  --card-white: #ffffff;
+  --lumen-blue: #4a90e2;
+  --text-main: #333;
+  --text-muted: #777;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Segoe UI", sans-serif;
+}
+
+body {
+  background: #f3f3f3;
+  /* Removido o overflow: hidden fixo para permitir ajustes nas media queries */
+  overflow: hidden;
+}
+
+.main-wrapper {
+  display: flex;
+  justify-content: center;
+  height: calc(100vh - 70px);
+  padding: 20px;
+  /* Margens relativas para não espremer em telas menores */
+  margin: 0 50px;
+  max-width: 1600px;
+}
+
+/* LAYOUT DA PÁGINA */
+.container-comunidade {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  background: #fdfdfd;
+  border-radius: 25px;
+  overflow: hidden;
+}
+
+/* SIDEBAR */
+.sidebar {
+  flex: 0 0 45%;
+  max-width: 450px;
+  min-width: 300px;
+  padding: 40px;
+  border-right: 1px solid #eee;
+  overflow-y: auto; /* Permite scroll na sidebar se houver muito conteúdo */
+}
+
+.btn-voltar {
+  text-decoration: none;
+  color: var(--text-muted);
+  display: inline-block;
+  margin-bottom: 20px;
+  transition: 0.2s;
+}
+
+.btn-voltar:hover {
+  color: var(--lumen-blue);
+}
+
+.banner {
+  display: flex;
+  width: 100%;
+  height: 200px;
+  border-radius: 20px;
+  margin-bottom: 20px;
+  background-color: #eee;
+  overflow: hidden;
+}
+
+.banner img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover; /* Garante que a capa não distorça */
+}
+
+.card-info h2 {
+  margin: 0 0 10px 0;
+  font-size: 1.8rem;
+}
+
+.description {
+  color: var(--text-muted);
+  line-height: 1.4;
+  margin-bottom: 20px;
+}
+
+.meta {
+  display: flex;
+  flex-direction: column;
+  color: #999;
+  gap: 5px;
+}
+
+/* FEED */
+.feed {
+  display: flex;
+
+  flex-direction: column;
+  flex: 1;
+  padding: 40px;
+  background: #ffffff;
+  overflow-y: auto;
+}
+
+.user-mini-avatar {
+  font-size: 35px;
+  color: #ccc;
+  display: flex;
+  align-items: center;
+}
+
+.post-input {
+  flex: 1;
+  background-color: #f0f2f5;
+  color: #65676b;
+  padding: 10px 20px;
+  border-radius: 25px;
+  font-size: 15px;
+  transition: 0.2s;
+  border: none;
+  text-align: left;
+}
+
+.post-input:hover,
+.post-input:focus {
+  outline: none;
+  background-color: #e4e6e9;
+}
+
+.btn-postar {
+  background-color: var(--lumen-blue);
+  color: #fff;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 20px;
+  cursor: pointer;
+  font-weight: 600;
+  transition: background-color 0.3s ease;
+  margin-left: auto;
+  margin-bottom: 15px;
+}
+
+.btn-postar:hover {
+  background-color: #357abd;
+}
+
+.post-icons {
+  display: flex;
+  gap: 15px;
+  color: #888;
+  font-size: 18px;
+  cursor: pointer;
+}
+
+.post-icons i:hover {
+  color: #4a90e2;
+}
+
+/* CARDS DE POST */
+.post {
+  flex: 1;
+  border: 1px solid #eee;
+  border-radius: 20px;
+  padding: 20px;
+  margin-bottom: 20px;
+}
+
+.post-user {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 15px;
+}
+
+.post-user i.avatar {
+  font-size: 45px;
+  color: #cccccc;
+}
+
+.user-thumb {
+  width: 45px;
+  height: 45px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.user-data {
+  display: flex;
+  flex-direction: column;
+  color: #65676b;
+}
+
+.user-data span {
+  font-size: 0.8rem;
+  color: #999;
+}
+
+.time {
+  margin-left: auto;
+  font-size: 0.8rem;
+  color: #bbb;
+}
+
+.post-info {
+  text-align: right;
+  font-size: 12px;
+  color: #888;
+  margin-left: auto;
+}
+
+.post-info a {
+  color: #0090f8;
+  text-decoration: none;
+  font-weight: bold;
+}
+
+.post-stats {
+  margin-top: 15px;
+  display: flex;
+  gap: 20px;
+  color: var(--text-muted);
+  font-size: 0.9rem;
+  justify-content: flex-end;
+}
+
+.btn-like {
+  cursor: pointer;
+  background: none;
+  border: none;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  color: var(--text-muted);
+}
+
+.btn-like i.fa-solid {
+  color: var(--lumen-blue);
+  transform: scale(1.1);
+  transition: transform 0.2s ease;
+}
+
+.btn-like:hover {
+  opacity: 0.7;
+}
+
+.ad-sidebar {
+  margin-top: 25px;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+
+.ad-image {
+  width: 100%;
+  max-width: 600px;
+  height: auto;
+  aspect-ratio: 4/1;
+  object-fit: cover;
+  border-radius: 20px;
+  cursor: pointer;
+  transition: transform 0.3s ease;
+}
+
+/* --- MEDIA QUERIES --- */
+
+/* Laptops menores e Tablets na horizontal */
+@media (max-width: 1199px) {
+  .main-wrapper {
+    padding: 25px;
+  }
+  .sidebar {
+    padding: 25px;
+    flex: 0 0 30%;
+    min-width: 250px;
+  }
+  .feed {
+    padding: 25px;
+  }
+}
+
+/* Tablets na vertical e Celulares grandes */
+@media (max-width: 767px) {
+  body {
+    overflow: auto; /* Destrava o scroll do body para celular */
+  }
+
+  .main-wrapper {
+    height: auto; /* Deixa a altura crescer com o conteúdo */
+    min-height: calc(100vh - 70px);
+    padding: 10px;
+  }
+
+  .container-comunidade {
+    flex-direction: column;
+    height: auto;
+    border-radius: 15px;
+  }
+
+  .sidebar {
+    width: 100%;
+    max-width: 100%;
+    border-right: none;
+    border-bottom: 1px solid #eee;
+    padding: 20px;
+  }
+
+  .banner {
+    height: 150px; /* Capa menor no mobile */
+  }
+
+  .feed {
+    padding: 20px;
+    overflow-y: visible; /* O scroll agora é feito na página inteira */
+  }
+}
+
+/* Celulares pequenos */
+@media (max-width: 599px) {
+  .new-post-card {
+    flex-wrap: wrap; /* Permite que os itens quebrem linha */
+    justify-content: space-between;
+    padding: 15px;
+    gap: 10px;
+  }
+
+  .post-input {
+    width: 100%;
+    order: 1; /* Joga o input para a linha de baixo na quebra */
+  }
+
+  .user-mini-avatar {
+    order: 0;
+  }
+
+  .post-icons {
+    order: 2;
+  }
+
+  .btn-postar {
+    order: 3;
+    width: 100%; /* Botão ocupa a linha inteira para facilitar o clique */
+    margin-top: 5px;
+  }
+
+  .ad-image {
+    display: none; /* Opcional: Esconder anúncios em telas muito pequenas para focar no conteúdo */
+  }
+}

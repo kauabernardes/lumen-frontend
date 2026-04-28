@@ -35,9 +35,16 @@ async function fetchRecommends() {
 
   try {
     // 2. Chama a API via serviço
+    comunidadesContainer.innerHTML = "";
+
+    [0, 1, 2, 3, 4, 5].forEach(() => {
+      const loading = document.createElement("div");
+      loading.classList.add("skeleton", "skeleton-box");
+      comunidadesContainer.append(loading);
+    });
+
     const result = await window.communityService.getRecommended(1, 5);
     const comunidades = result.data;
-
     comunidadesContainer.innerHTML = "";
 
     if (!comunidades || comunidades.length === 0) {
@@ -63,7 +70,8 @@ async function fetchRecommends() {
     });
   } catch (error) {
     console.error("Erro ao buscar recomendações:", error);
-    comunidadesContainer.innerHTML = "<p>Erro ao carregar comunidades recomendadas.</p>";
+    comunidadesContainer.innerHTML =
+      "<p>Erro ao carregar comunidades recomendadas.</p>";
   }
 }
 

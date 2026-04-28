@@ -4,8 +4,9 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Lumen | Loucos do ENEM</title>
-    <link rel="stylesheet" href="../../css/feedcomun.css" />
+    <link rel="stylesheet" href="./style.css" />
     <link rel="stylesheet" href="../../css/header.css" />
+    <link rel="stylesheet" href="../../css/loadingSkeleton.css" />
     <link
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
@@ -59,21 +60,7 @@
             ><i class="fa-solid fa-arrow-left"></i> Voltar</a
           >
 
-          <div class="card-info">
-            <div id="banner" class="banner">
-              <img id="comunidade-capa" alt="Capa" />
-            </div>
-            <h2 id="comunidade-nome">Carregando...</h2>
-            <p class="description" id="comunidade-desc">
-              Carregando descrição...
-            </p>
-            <div class="meta">
-              <small
-                >Criado por: <strong id="comunidade-autor">@...</strong></small
-              >
-              <small id="comunidade-data">Em ...</small>
-            </div>
-          </div>
+          <div class="card-info"></div>
 
           <div class="ad-sidebar">
             <img
@@ -85,37 +72,20 @@
         </aside>
 
         <main class="feed">
-          <form class="new-post-card">
-            <div class="user-mini-avatar">
-              <i class="fa-regular fa-circle-user"></i>
-            </div>
-            <input
-              class="post-input"
-              type="textarea"
-              rows="3"
-              placeholder="O que você quer compartilhar?"
-              id="post-input"
-            />
-            <input type="submit" value="Postar" class="btn-postar" />
-            <div class="post-icons">
-              <i class="fa-regular fa-image"></i>
-              <i class="fa-solid fa-video"></i>
-            </div>
-          </form>
-
+          <button class="btn-postar" onclick="newPost()">
+            Fazer nova publicação
+          </button>
           <div class="timeline" id="timeline-posts"></div>
         </main>
       </div>
     </div>
 
-    <!-- 1. CARREGA A BASE (CLIENTE E SERVIÇOS) -->
     <script src="../../js/api/client.js"></script>
     <script src="../../js/api/services/authService.js"></script>
     <script src="../../js/api/services/communityService.js"></script>
     <script src="../../js/api/services/postService.js"></script>
 
-    <!-- 2. CARREGA A LÓGICA DA TELA -->
-    <script src="../../js/feedcomun.js"></script>
+    <script src="./main.js"></script>
     <script src="../../js/header.js"></script>
   </body>
 </html>

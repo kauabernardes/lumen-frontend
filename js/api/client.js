@@ -55,15 +55,20 @@ async function apiRequest(endpoint, options = {}) {
     // Verifica se há conteúdo para ler antes de tentar converter para JSON
     const contentType = response.headers.get("content-type");
     if (contentType && contentType.includes("application/json")) {
-        return await response.json();
+      return await response.json();
     }
 
     return null;
   } catch (error) {
+    console.log(error);
     console.error(
       `[API Error] ${config.method || "GET"} ${endpoint}:`,
       error.message,
+      error.status,
     );
+    if (error.status == 401) {
+      location.href = location.origin;
+    }
     throw error;
   }
 }

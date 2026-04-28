@@ -12,10 +12,9 @@ const authService = {
    */
   async login(identifier, password) {
     const payload = { identifier, password };
-    // Usa o api global (definido no client.js via window)
+
     const data = await window.api.post("/auth/login", payload);
 
-    // Assumindo que o backend retorna um objeto contendo o token
     if (data && data.access_token) {
       sessionStorage.setItem("auth_token", data.access_token);
     }

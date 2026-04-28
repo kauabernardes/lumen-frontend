@@ -171,7 +171,9 @@
 
         <div class="step-card" id="step3" data-step="3">
           <div class="step-badge">03</div>
-          <label class="step-label">O que você vai estudar hoje?</label>
+          <label for="estudaHoje" class="step-label"
+            >O que você vai estudar hoje?</label
+          >
           <textarea
             id="estudaHoje"
             class="step-textarea"
@@ -182,7 +184,9 @@
 
         <div class="step-card" id="step4" data-step="4">
           <div class="step-badge">04</div>
-          <label class="step-label">Como está seu humor hoje?</label>
+          <label for="mood-group" class="step-label"
+            >Como está seu humor hoje?</label
+          >
           <div class="mood-group">
             <button class="mood-btn" data-mood="1" title="Péssimo">😩</button>
             <button class="mood-btn" data-mood="2" title="Ruim">😔</button>
@@ -245,7 +249,7 @@
         </div>
       </aside>
     </main>
-
-    <script src="js/Daily.js"></script>
+    <script src="../js/api/client.js"></script>
+    <script src="js/daily.js"></script>
   </body>
 </html>

@@ -56,6 +56,10 @@ const communityService = {
       params: { page, limit },
     });
   },
+
+  async getIn() {
+    return await window.api.get(`/community/in`);
+  },
 };
 
 // Disponibiliza o serviço globalmente

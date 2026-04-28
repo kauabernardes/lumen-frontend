@@ -31,66 +31,8 @@ const postInput = document.getElementById("post-input");
 const btnPostar = document.querySelector(".btn-postar");
 const timeline = document.getElementById("timeline-posts");
 
-if (formPost && postInput && timeline) {
-  formPost.addEventListener("submit", async (event) => {
-    event.preventDefault();
-
-    const conteudo = postInput.value.trim();
-
-    if (conteudo === "") return;
-
-    const textoOriginalBotao = btnPostar.value;
-    btnPostar.value = "Postando...";
-    btnPostar.disabled = true;
-
-    try {
-      // Chamada ao serviço de postagem via window
-      const novoPost = await window.postService.create(conteudo, comunidadeId);
-
-      // Criação do elemento visual do post
-      const article = document.createElement("article");
-      article.className = "post";
-      article.setAttribute("data-id", novoPost.id);
-      article.innerHTML = `
-                <div class="post-user">
-                    <i class="fa-regular fa-circle-user avatar"></i>
-                    <div class="user-data">
-                        <strong>${novoPost.user?.username || "Usuário"}</strong>
-                        <span>@${novoPost.user?.username || "usuario"}</span>
-                    </div>
-                    <div class="post-info">
-                        <span>Postado agora</span><br>
-                        <a href="#">${novoPost.community?.name || "Comunidade"}</a>
-                    </div>
-                </div>
-                <p class="post-text">${conteudo}</p>
-                <div class="post-stats">
-                    <span class="btn-like" style="cursor:pointer;">
-                        <i class="fa-regular fa-thumbs-up"></i>
-                        <span class="like-count"> 0</span>
-                     </span>
-                    <span><i class="fa-regular fa-comment"></i> 0</span>
-                </div>
-            `;
-
-      article
-        .querySelector(".btn-like")
-        .addEventListener("click", () => handleLike(novoPost.id, article));
-
-      if (timeline.querySelector("p") && timeline.children.length === 1) {
-        timeline.innerHTML = "";
-      }
-
-      timeline.prepend(article);
-      postInput.value = "";
-    } catch (error) {
-      console.error("Falha ao postar:", error);
-      alert(`Não foi possível enviar o post: ${error.message}`);
-    } finally {
-      btnPostar.value = textoOriginalBotao;
-      btnPostar.disabled = false;
-    }
-  });
+function newPost() {
+  location.href = `${location.origin}/comunidade/post/new/?id=${comunidadeId}`;
 }
 
 // ==========================================
@@ -180,16 +122,18 @@ async function carregarPosts(pagina = 1) {
                 </div>
                 <p class="post-text">${post.content}</p>
                 <div class="post-stats">
-                    <span class="btn-like" style="cursor:pointer;">
+                    <button class="btn-like" style="cursor:pointer;">
                         <i class="${post.isLiked ? "fa-solid" : "fa-regular"} fa-thumbs-up"></i>
                         <span class="like-count">${post.likesCount || 0}</span>
-                     </span>
+                     </button>
                     <span><i class="fa-regular fa-comment"></i> 0</span>
                 </div>
             `;
       article
         .querySelector(".btn-like")
-        .addEventListener("click", () => handleLike(post.id, article));
+        .addEventListener("click", () =>
+          handleLike(post.id, article, post.likesCount || 0),
+        );
       timeline.appendChild(article);
     });
   } catch (error) {
@@ -249,13 +193,28 @@ function mostrarSkeletonComunidade() {
     `;
 }
 
-async function handleLike(postId, postElement) {
+async function handleLike(postId, postElement, current) {
+  const btn = postElement.querySelector(".btn-like");
   const likeIcon = postElement.querySelector(".btn-like i");
   const likeCountSpan = postElement.querySelector(".like-count");
 
   try {
-    // Chamada ao serviço de postagem via window
+    if (likeIcon.classList.contains("fa-solid")) {
+      likeIcon.classList.replace("fa-solid", "fa-regular");
+      likeIcon.style.color = "";
+      likeCountSpan.textContent =
+        Number.parseInt(likeCountSpan.textContent) - 1;
+    } else {
+      likeIcon.classList.replace("fa-regular", "fa-solid");
+      likeIcon.style.color = "var(--lumen-blue)";
+      likeCountSpan.textContent =
+        Number.parseInt(likeCountSpan.textContent) + 1;
+    }
+
+    btn.disabled = true;
+
     const data = await window.postService.toggleLike(postId);
+    btn.disabled = false;
 
     if (data.liked) {
       likeIcon.classList.replace("fa-regular", "fa-solid");

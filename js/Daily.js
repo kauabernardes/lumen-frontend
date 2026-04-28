@@ -101,18 +101,22 @@ document.addEventListener("DOMContentLoaded", function () {
   var estudaHoje = document.getElementById("estudaHoje");
 
   if (btnCheckin) {
-    btnCheckin.addEventListener("click", function () {
+    // Transformado em async para usar o window.api
+    btnCheckin.addEventListener("click", async function () {
       var desc1 = estudouOntem ? estudouOntem.value.trim() : "";
       var desc2 = estudaHoje ? estudaHoje.value.trim() : "";
-      var atingiu = document.querySelector('input[name="atingiu"]:checked');
+      var atingiuInput = document.querySelector(
+        'input[name="atingiu"]:checked',
+      );
 
+      // Validações visuais do Frontend
       if (!desc1) {
         shakeCard("step1");
         estudouOntem.focus();
         return;
       }
 
-      if (!atingiu) {
+      if (!atingiuInput) {
         shakeCard("step2");
         return;
       }
@@ -123,41 +127,65 @@ document.addEventListener("DOMContentLoaded", function () {
         return;
       }
 
-      // Sucesso!
-      btnCheckin.innerHTML =
-        '<i class="fa-solid fa-check"></i> <span>Check-in feito!</span>';
-      btnCheckin.style.background = "linear-gradient(135deg, #34c47a, #27a86a)";
-      btnCheckin.style.boxShadow = "0 5px 20px rgba(52,196,122,0.4)";
-      btnCheckin.disabled = true;
-
-      if (successBanner) successBanner.classList.add("visible");
-
-      // Incrementa streak visualmente
-      var streakEl = document.getElementById("streakCount");
-      if (streakEl) {
-        var current = parseInt(streakEl.textContent, 10) || 0;
-        animateNumber(streakEl, current, current + 1, 600);
+      if (!selectedMood) {
+        shakeCard("step4");
+        return;
       }
 
-      // Marca hoje como feito no calendário
-      var todayDot = document.querySelector(".week-day.today .week-day-dot");
-      if (todayDot) {
-        var parent = todayDot.closest(".week-day");
-        if (parent) {
-          parent.classList.add("done");
-          parent.classList.remove("today");
-          todayDot.textContent = "✓";
-        }
-      }
+      // Prepara o Payload no exato formato da nova Entidade (Opção 2)
+      const payload = {
+        date: new Date().toISOString().split("T")[0], // Pega apenas YYYY-MM-DD
+        mood: selectedMood.toString(),
+        studiedYesterday: desc1,
+        achievedGoal: atingiuInput.value, // 'sim', 'nao' ou 'quase'
+        studyToday: desc2,
+      };
 
-      // Restaura botão após 4s
-      setTimeout(function () {
+      try {
+        // Feedback visual de carregamento
         btnCheckin.innerHTML =
-          '<i class="fa-solid fa-paper-plane"></i> <span>Publicar agora</span>';
-        btnCheckin.style.background = "";
-        btnCheckin.style.boxShadow = "";
+          '<i class="fa-solid fa-spinner fa-spin"></i> <span>Salvando...</span>';
+        btnCheckin.disabled = true;
+
+        // Dispara requisição usando o client.js global
+        const response = await window.api.post("/daily-log", payload);
+
+        // Sucesso Visual
+        btnCheckin.innerHTML =
+          '<i class="fa-solid fa-check"></i> <span>Check-in feito!</span>';
+        btnCheckin.style.background =
+          "linear-gradient(135deg, #34c47a, #27a86a)";
+        btnCheckin.style.boxShadow = "0 5px 20px rgba(52,196,122,0.4)";
+
+        if (successBanner) successBanner.classList.add("visible");
+
+        // Incrementa streak visualmente
+        var streakEl = document.getElementById("streakCount");
+        if (streakEl) {
+          var current = parseInt(streakEl.textContent, 10) || 0;
+          animateNumber(streakEl, current, current + 1, 600);
+        }
+
+        // Marca hoje como feito no calendário
+        var todayDot = document.querySelector(".week-day.today .week-day-dot");
+        if (todayDot) {
+          var parent = todayDot.closest(".week-day");
+          if (parent) {
+            parent.classList.add("done");
+            parent.classList.remove("today");
+            todayDot.textContent = "✓";
+          }
+        }
+      } catch (error) {
+        // Tratamento de erro
+        console.error("Erro ao fazer checkin:", error);
+        alert(error.message || "Erro ao salvar o check-in. Tente novamente.");
+
+        // Restaura o botão em caso de erro
+        btnCheckin.innerHTML =
+          '<i class="fa-solid fa-circle-check"></i> <span>Fazer Check-in</span>';
         btnCheckin.disabled = false;
-      }, 4000);
+      }
     });
   }
 
@@ -237,10 +265,10 @@ document.addEventListener("DOMContentLoaded", function () {
   style.textContent = [
     "@keyframes shake {",
     "  0%, 100% { transform: translateX(0); }",
-    "  20%       { transform: translateX(-7px); }",
-    "  40%       { transform: translateX(7px); }",
-    "  60%       { transform: translateX(-5px); }",
-    "  80%       { transform: translateX(5px); }",
+    "  20%      { transform: translateX(-7px); }",
+    "  40%      { transform: translateX(7px); }",
+    "  60%      { transform: translateX(-5px); }",
+    "  80%      { transform: translateX(5px); }",
     "}",
   ].join("");
   document.head.appendChild(style);
