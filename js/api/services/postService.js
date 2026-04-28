@@ -22,6 +22,14 @@ const postService = {
   async toggleLike(postId) {
     return await window.api.post(`/posts/${postId}/like`);
   },
+
+  async getById(postId) {
+    return await window.api.get(`/posts/${postId}`);
+  },
+
+  async addComment(postId, commentText) {
+    return await window.api.post(`/posts/${postId}/comment`, { content: commentText });
+  }
 };
 
 // Disponibiliza o serviço globalmente

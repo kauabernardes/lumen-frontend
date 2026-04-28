@@ -8,6 +8,7 @@
     <link rel="stylesheet" href="../../css/header.css" />
     <link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;600;700;800&family=DM+Sans:ital,wght@0,400;0,500;0,600;1,400&display=swap" rel="stylesheet" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+
   </head>
   <body>
     <header class="topbar">
@@ -17,7 +18,7 @@
 
       <nav>
         <a href="../../home.html">home</a>
-        <a href="../../comunidades.html" class="active">comunidades</a>
+        <a href="/comunidade/" class="active">comunidades</a>
         <a href="../../Agenda.html">agenda</a>
       </nav>
 
@@ -57,26 +58,20 @@
     <div class="main-wrapper">
       <div class="container-comunidade">
         
-        <aside class="sidebar">
-          <a href="javascript:history.back();" class="btn-voltar">
-            <i class="fa-solid fa-arrow-left"></i> Voltar
-          </a>
-
-          <div class="card-info"></div>
-
-          <div class="ad-sidebar">
-            <div class="ad-label">Patrocinado</div>
-            <img src="../../img/promoengov.webp" alt="Anúncio Engov" class="ad-image" />
-          </div>
-        </aside>
 
         <main class="feed">
-          <button class="btn-postar" onclick="newPost()">
-            <i class="fa-solid fa-pen-to-square"></i> Fazer nova publicação
-          </button>
-          <div class="timeline" id="timeline-posts"></div>
-        </main>
+          
+          <div class="timeline" id="timeline-posts">
+            <div class="comments hidden" id="comments">
+              <h2>Comentários</h2>
+            
 
+            
+
+            </div>
+          </div>
+        </main>
+   
       </div>
     </div>
 

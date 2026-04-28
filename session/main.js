@@ -77,6 +77,7 @@ function showTimerUI() {
 
   Array.from(timerComponents).forEach((e) => {
     e.classList.remove("d-none");
+    // Mantém a lógica existente que readiciona d-flex
     if (e.tagName === "DIV") {
       e.classList.add("d-flex");
     }

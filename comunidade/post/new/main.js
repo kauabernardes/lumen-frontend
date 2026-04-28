@@ -1,9 +1,4 @@
 document.addEventListener("DOMContentLoaded", () => {
-  //const dropArea = document.getElementById("dropArea");
-  const fileInput = document.getElementById("fileInput");
-  const imagePreview = document.getElementById("imagePreview");
-  const uploadContent = document.getElementById("uploadContent");
-  //const btnRemove = document.getElementById("btnRemoveImage");
   const btnPostar = document.getElementById("btnPostar");
   const textarea = document.getElementById("desc");
   const communityList = document.getElementById("communityList");
@@ -12,46 +7,20 @@ document.addEventListener("DOMContentLoaded", () => {
   const urlParams = new URLSearchParams(window.location.search);
   const communityId = urlParams.get("id") || urlParams.get("communityId");
 
-  console.log(btnPostar);
-
-  // dropArea.addEventListener("click", (e) => {
-  //   if (e.target.closest("#btnRemoveImage")) return;
-  //   fileInput.click();
-  // });
-  //
-  //  fileInput.addEventListener("change", function () {
-  //    const file = this.files[0];
-  //    if (file) {
-  //      const reader = new FileReader();
-  //      reader.onload = function (e) {
-  //        imagePreview.src = e.target.result;
-  //        imagePreview.style.display = "block";
-  //        uploadContent.style.display = "none";
-  //        btnRemove.style.display = "flex";
-  //      };
-  //      reader.readAsDataURL(file);
-  //    }
-  //  });
-
-  // btnRemove.addEventListener("click", (e) => {
-  //   e.stopPropagation();
-  //   fileInput.value = "";
-  //   imagePreview.src = "";
-  //   imagePreview.style.display = "none";
-  //   uploadContent.style.display = "block";
-  //   btnRemove.style.display = "none";
-  // });
-
   btnPostar.addEventListener("click", async () => {
-    console.log("oo1ooas");
+    // Reseta estado de erro
+    errorE.innerText = "";
+    errorE.style.display = "none";
 
     if (!communityId) {
       errorE.innerText = "Erro: ID da comunidade não encontrado na URL!";
+      errorE.style.display = "block";
       return;
     }
 
     if (textarea.value.trim() === "") {
-      alert("Escreve uma descrição para a tua publicação!");
+      errorE.innerText = "Escreva uma descrição para a sua publicação!";
+      errorE.style.display = "block";
       textarea.focus();
       return;
     }
@@ -62,7 +31,7 @@ document.addEventListener("DOMContentLoaded", () => {
     btnPostar.disabled = true;
 
     try {
-      // Chamada ao serviço global
+    
       await window.postService.create(textarea.value.trim(), communityId);
 
       textarea.value = "";
@@ -70,13 +39,10 @@ document.addEventListener("DOMContentLoaded", () => {
       btnPostar.disabled = false;
       location.href = `${location.origin}/comunidade/feed/?id=${communityId}`;
 
-      //fileInput.value = "";
-      //imagePreview.style.display = "none";
-      //uploadContent.style.display = "block";
-      //btnRemove.style.display = "none";
     } catch (error) {
       console.error("Erro ao publicar:", error);
       errorE.innerText = error.message || "Tente novamente mais tarde.";
+      errorE.style.display = "block";
 
       btnPostar.innerHTML = textoOriginal;
       btnPostar.disabled = false;
@@ -85,23 +51,25 @@ document.addEventListener("DOMContentLoaded", () => {
 
   async function minhasComunidades() {
     try {
-      console.log("Iniciando carregamento de comunidades...");
-
       const response = await window.communityService.getIn();
-
       const comunidades = response.data || response;
 
       communityList.innerHTML = "";
 
       if (comunidades.length === 0) {
         communityList.innerHTML =
-          "<p>Você ainda não participa de nenhuma comunidade.</p>";
+          "<p style='font-size: 13px; color: var(--text-light); padding: 10px;'>Você ainda não participa de nenhuma comunidade.</p>";
         return;
       }
 
       comunidades.forEach((c) => {
         const box = document.createElement("div");
         box.className = "community-item";
+
+        // Verifica se é a comunidade atual para deixar "selecionada"
+        if (c.id === communityId) {
+            box.classList.add("selected");
+        }
 
         box.innerHTML = `
           <div class="community-avatar">
@@ -124,7 +92,7 @@ document.addEventListener("DOMContentLoaded", () => {
       });
     } catch (error) {
       console.error("Erro ao carregar comunidades:", error);
-      communityList.innerHTML = "<p>Erro ao carregar suas comunidades.</p>";
+      communityList.innerHTML = "<p style='font-size: 13px; color: var(--text-light); padding: 10px;'>Erro ao carregar suas comunidades.</p>";
     }
   }
 

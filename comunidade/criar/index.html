@@ -4,36 +4,31 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Lumen | Criar Comunidade</title>
-    <link
-      rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
-    />
-    <link rel="stylesheet" href="/css/criarcomunidades.css" />
-    <link rel="stylesheet" href="/css/header.css" />
+    
+    <link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;600;700;800&family=DM+Sans:ital,wght@0,400;0,500;0,600;1,400&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+    
+    <link rel="stylesheet" href="./style.css" />
+    <link rel="stylesheet" href="../../css/header.css" />
   </head>
   <body>
     <header class="topbar">
-      <!-- LOGO -->
       <div class="brand-side">
-        <img src="../img/LogoLumen2.svg" alt="Lumen Logo" class="logo-img" />
+        <img src="../../img/LogoLumen2.svg" alt="Lumen Logo" class="logo-img" />
       </div>
 
-      <!-- MENU -->
       <nav>
         <a href="/home.html">home</a>
-        <a href="/Comunidades.html" class="active">comunidades</a>
-        <a href="/Agenda.html">agenda</a>
+        <a href="/comunidade/" class="active">comunidades</a>
+        <a href="../../Agenda.html">agenda</a>
       </nav>
 
-      <!-- DIREITA -->
       <div class="divisao-header">
-        <!-- PESQUISA -->
         <div class="pesquisa">
           <i class="fa-solid fa-magnifying-glass"></i>
           <input type="text" placeholder="Procurar..." />
         </div>
 
-        <!-- NOTIFICAÇÃO -->
         <div class="notif">
           <i class="fa-regular fa-bell icon-bell"></i>
           <span class="badge" id="badgeNotif">0</span>
@@ -41,12 +36,10 @@
           <div class="dropdown" id="dropdownNotificacao">
             <div class="dropdown-header">Notificações</div>
 
-            <!-- mensagem quando vazio -->
             <div class="empty" id="emptyNotif">
               Você não possui notificações
             </div>
 
-            <!-- notificações entram aqui -->
             <div class="item">
               <span class="dot"></span>
               <p>Alguém curtiu seu conteúdo</p>
@@ -55,7 +48,6 @@
         </div>
       </div>
 
-      <!-- USUÁRIO -->
       <div class="right">
         <div class="user-menu">
           <div class="user-trigger">
@@ -83,14 +75,27 @@
       </div>
     </header>
 
+    <div class="bg-blob blob-1"></div>
+    <div class="bg-blob blob-2"></div>
+    <div class="bg-blob blob-3"></div>
+
     <main class="dashboard">
-      <aside class="sidebar">
-        <h2>Suas Comunidades</h2>
-        <div class="mini-card">📌 Medicina 2026</div>
-        <div class="mini-card">📌 Oficina de Redação</div>
-        <div class="stats-box">
-          <span>Total de membros: <strong>128</strong></span>
+      <aside class="sidebar-communities">
+        <div class="sidebar-title">
+          <i class="fa-solid fa-people-group"></i>
+          Suas Comunidades
         </div>
+
+        <div class="community-search">
+          <i class="fa-solid fa-magnifying-glass"></i>
+          <input
+            type="text"
+            id="communitySearchInput"
+            placeholder="Buscar comunidade..."
+          />
+        </div>
+
+        <div class="community-list" id="communityList"></div>
       </aside>
 
       <section class="main-content">
@@ -109,49 +114,10 @@
                     type="text"
                     id="nameInput"
                     placeholder="Ex: Feras da Bio"
-                    maxlength="25"
+                    maxlength="50"
                   />
                 </div>
-
-                <div class="input-group">
-                  <label>Público</label>
-                  <select id="targetSelect">
-                    <option value="Terceirão">Terceirão</option>
-                    <option value="Cursinho">Cursinho</option>
-                    <option value="Treineiro">Treineiro</option>
-                    <option value="Treineiro">Pós Graduação</option>
-                  </select>
-                </div>
-
-                <div class="input-group">
-                  <label>Privacidade</label>
-                  <select>
-                    <option>Pública</option>
-                    <option>Privada</option>
-                  </select>
-                </div>
-
-                <div class="input-group full-width">
-                  <label>Focos Recomendados</label>
-                  <div class="focos-flex" id="tagsContainer">
-                    <label class="tag"
-                      ><input type="checkbox" value="ENEM" /><span
-                        >ENEM</span
-                      ></label
-                    >
-                    <label class="tag"
-                      ><input type="checkbox" value="FUVEST" /><span
-                        >FUVEST</span
-                      ></label
-                    >
-                    <label class="tag"
-                      ><input type="checkbox" value="Redação" /><span
-                        >Redação</span
-                      ></label
-                    >
-                  </div>
-                </div>
-
+                
                 <div class="input-group full-width">
                   <label>Descrição</label>
                   <textarea
@@ -161,7 +127,7 @@
                   ></textarea>
                 </div>
               </div>
-              <p id="error-save" class="error-message">asas</p>
+              <p id="error-save" class="error-message"></p>
               <button type="submit" class="btn-save" id="btn-save">
                 Lançar Comunidade
               </button>
@@ -169,17 +135,6 @@
           </div>
 
           <div class="info-side">
-            <div class="recommendation-card">
-              <div class="rec-tag">Dica Lumen</div>
-              <h3>Tema em Alta</h3>
-              <p>
-                Muitos buscam por <strong>Geometria</strong>. Que tal adicionar?
-              </p>
-              <button type="button" class="btn-add-tag" id="btnAddSugg">
-                + Adicionar Foco
-              </button>
-            </div>
-
             <div class="preview-card">
               <div class="preview-banner"></div>
               <div class="preview-content">
@@ -187,7 +142,6 @@
                   <i class="fa-solid fa-users"></i>
                 </div>
                 <h4 id="viewName">Nome da Comunidade</h4>
-                <span id="viewTarget" class="badge-preview">Público</span>
                 <p id="viewDesc">Sua descrição aparecerá aqui...</p>
                 <div class="view-tags" id="viewTags"></div>
               </div>
@@ -197,13 +151,10 @@
       </section>
     </main>
 
-    <!-- 1. CARREGA A BASE (CLIENTE E SERVIÇOS) -->
-    <script src="../js/api/client.js"></script>
-    <script src="../js/api/services/authService.js"></script>
-    <script src="../js/api/services/communityService.js"></script>
-    <script src="../js/api/services/postService.js"></script>
-
-    <!-- 2. CARREGA A LÓGICA DA TELA -->
-    <script src="../js/criarcomunidades.js"></script>
+    <script src="../../js/api/client.js"></script>
+    <script src="../../js/api/services/authService.js"></script>
+    <script src="../../js/api/services/communityService.js"></script>
+    <script src="../../js/api/services/postService.js"></script>
+    <script src="./main.js"></script>
   </body>
 </html>

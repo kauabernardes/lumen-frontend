@@ -4,11 +4,10 @@
 const urlParams = new URLSearchParams(window.location.search);
 const comunidadeId = urlParams.get("id");
 
+// Gerador de cor adaptado para tons mais alinhados ao tema base
 function gerarCorPastel() {
-  const r = Math.floor(Math.random() * 127 + 128);
-  const g = Math.floor(Math.random() * 127 + 128);
-  const b = Math.floor(Math.random() * 127 + 128);
-  return `#${r.toString(16).padStart(2, "0")}${g.toString(16).padStart(2, "0")}${b.toString(16).padStart(2, "0")}`;
+  const tonsBase = ['#f9c0d8', '#f28cb8', '#d4e8ff', '#fbc8e0', '#fce4ef'];
+  return tonsBase[Math.floor(Math.random() * tonsBase.length)];
 }
 
 // ==========================================
@@ -26,11 +25,6 @@ if (userTrigger && userDropdown) {
 // ==========================================
 // 3. LÓGICA DE POSTAGEM (EVENTO DE FORMULÁRIO)
 // ==========================================
-const formPost = document.querySelector(".new-post-card");
-const postInput = document.getElementById("post-input");
-const btnPostar = document.querySelector(".btn-postar");
-const timeline = document.getElementById("timeline-posts");
-
 function newPost() {
   location.href = `${location.origin}/comunidade/post/new/?id=${comunidadeId}`;
 }
@@ -44,55 +38,44 @@ async function carregarComunidade() {
   mostrarSkeletonComunidade();
 
   try {
-    // Chamada ao serviço de comunidade via window
     const comunidade = await window.communityService.getById(comunidadeId);
-
-    const dataCriacao = new Date(comunidade.createdAt).toLocaleDateString(
-      "pt-BR",
-      {
+    const dataCriacao = new Date(comunidade.createdAt).toLocaleDateString("pt-BR", {
         day: "2-digit",
         month: "long",
         year: "numeric",
-      },
-    );
+    });
 
     const cardInfo = document.querySelector(".card-info");
     cardInfo.innerHTML = `
-            <div id="banner" class="banner">
-                <img id="comunidade-capa" alt="Capa" style="background-color: ${gerarCorPastel()}; width: 100%; border-radius: 20px;">
-            </div>
-            <h2 id="comunidade-nome">${comunidade.name}</h2>
-            <p class="description" id="comunidade-desc">${comunidade.description}</p>
-            <div class="meta">
-                <small>Criado por: <strong id="comunidade-autor">@${comunidade.author?.username || "desconhecido"}</strong></small>
-                <small id="comunidade-data">Em ${dataCriacao}</small>
-            </div>
-        `;
+        <div id="banner" class="banner">
+            <div id="comunidade-capa" style="background-color: ${gerarCorPastel()}; width: 100%; height: 100%;"></div>
+        </div>
+        <h2 id="comunidade-nome">${comunidade.name}</h2>
+        <p class="description" id="comunidade-desc">${comunidade.description}</p>
+        <div class="meta">
+            <small>Criado por: <strong id="comunidade-autor">@${comunidade.author?.username || "desconhecido"}</strong></small>
+            <small id="comunidade-data">Em ${dataCriacao}</small>
+        </div>
+    `;
   } catch (error) {
     console.error("Erro ao carregar comunidade:", error);
-    document.querySelector(".card-info").innerHTML =
-      "<p>Erro ao carregar dados.</p>";
+    document.querySelector(".card-info").innerHTML = "<p>Erro ao carregar dados.</p>";
   }
 }
 
 async function carregarPosts(pagina = 1) {
+  const timeline = document.getElementById("timeline-posts");
   if (!comunidadeId) return;
 
   mostrarSkeletons();
 
   try {
-    // Chamada ao serviço de comunidade via window
-    const result = await window.communityService.getPosts(
-      comunidadeId,
-      pagina,
-      10,
-    );
+    const result = await window.communityService.getPosts(comunidadeId, pagina, 10);
 
     if (pagina === 1) timeline.innerHTML = "";
 
     if (result.data.length === 0) {
-      timeline.innerHTML =
-        '<p style="text-align: center; color: #666; padding: 20px;">Nenhum post encontrado nesta comunidade.</p>';
+      timeline.innerHTML = '<p style="text-align: center; color: var(--text-light); padding: 20px; font-style: italic;">Nenhum post encontrado nesta comunidade.</p>';
       return;
     }
 
@@ -109,37 +92,40 @@ async function carregarPosts(pagina = 1) {
       article.className = "post";
       article.setAttribute("data-id", post.id);
       article.innerHTML = `
-                <div class="post-user">
-                    <i class="fa-regular fa-circle-user avatar"></i>
-                    <div class="user-data">
-                        <strong>${authorName}</strong>
-                        <span>@${authorName}</span>
-                    </div>
-                    <div class="post-info">
-                        <span>Postado às ${dataHora}</span><br>
-                        <a href="#">${communityName}</a>
-                    </div>
-                </div>
-                <p class="post-text">${post.content}</p>
-                <div class="post-stats">
-                    <button class="btn-like" style="cursor:pointer;">
-                        <i class="${post.isLiked ? "fa-solid" : "fa-regular"} fa-thumbs-up"></i>
-                        <span class="like-count">${post.likesCount || 0}</span>
-                     </button>
-                    <span><i class="fa-regular fa-comment"></i> 0</span>
-                </div>
-            `;
-      article
-        .querySelector(".btn-like")
-        .addEventListener("click", () =>
-          handleLike(post.id, article, post.likesCount || 0),
-        );
+          <div class="post-user">
+              <i class="fa-regular fa-circle-user avatar"></i>
+              <div class="user-data">
+                  <strong>${authorName}</strong>
+                  <span>@${authorName}</span>
+              </div>
+              <div class="post-info">
+                  <span>Postado às ${dataHora}</span><br>
+                  <a href="#">${communityName}</a>
+              </div>
+          </div>
+          <p class="post-text">${post.content}</p>
+          <div class="post-stats">
+              <button class="btn-like">
+                  <i class="${post.isLiked ? "fa-solid" : "fa-regular"} fa-heart"></i>
+                  <span class="like-count">${post.likesCount || 0}</span>
+               </button>
+              <span><i class="fa-regular fa-comment"></i> ${post.commentsCount || 0}</span>
+          </div>
+      `;
+      
+      article.querySelector(".btn-like").addEventListener("click", () =>
+        handleLike(post.id, article, post.likesCount || 0)
+      );
+      
+      article.addEventListener("click", (e) => {
+        if (e.target.closest(".btn-like")) return;
+        location.href = `${location.origin}/comunidade/post/?id=${post.id}`;
+      });
       timeline.appendChild(article);
     });
   } catch (error) {
     console.error("Erro ao carregar o feed:", error);
-    timeline.innerHTML =
-      '<p style="text-align: center;">Erro ao carregar o feed.</p>';
+    timeline.innerHTML = '<p style="text-align: center; color: var(--text-light);">Erro ao carregar o feed.</p>';
   }
 }
 
@@ -151,7 +137,6 @@ document.addEventListener("DOMContentLoaded", () => {
     console.warn("Nenhum ID de comunidade detectado na URL.");
     return;
   }
-
   carregarComunidade();
   carregarPosts(1);
 });
@@ -164,17 +149,17 @@ function mostrarSkeletons() {
     const skel = document.createElement("div");
     skel.className = "skeleton-post";
     skel.innerHTML = `
-            <div class="post-user" style="display: flex; gap: 12px; align-items: center; margin-bottom: 15px;">
-                <div class="skeleton skeleton-avatar"></div>
-                <div class="user-data">
-                    <div class="skeleton skeleton-title"></div>
-                    <div class="skeleton" style="width: 80px; height: 12px;"></div>
-                </div>
+        <div class="post-user" style="display: flex; gap: 12px; align-items: center; margin-bottom: 15px;">
+            <div class="skeleton skeleton-avatar"></div>
+            <div class="user-data">
+                <div class="skeleton skeleton-title"></div>
+                <div class="skeleton" style="width: 80px; height: 10px;"></div>
             </div>
-            <div class="skeleton skeleton-text"></div>
-            <div class="skeleton skeleton-text"></div>
-            <div class="skeleton skeleton-text short"></div>
-        `;
+        </div>
+        <div class="skeleton skeleton-text"></div>
+        <div class="skeleton skeleton-text"></div>
+        <div class="skeleton skeleton-text short"></div>
+    `;
     timeline.appendChild(skel);
   }
 }
@@ -182,18 +167,18 @@ function mostrarSkeletons() {
 function mostrarSkeletonComunidade() {
   const cardInfo = document.querySelector(".card-info");
   cardInfo.innerHTML = `
-        <div class="skeleton skeleton-banner"></div>
-        <div class="skeleton skeleton-title-lg"></div>
-        <div class="skeleton skeleton-desc"></div>
-        <div class="skeleton skeleton-desc"></div>
-        <div class="meta">
-            <div class="skeleton skeleton-meta"></div>
-            <div class="skeleton skeleton-meta"></div>
-        </div>
-    `;
+      <div class="skeleton skeleton-banner"></div>
+      <div class="skeleton skeleton-title-lg"></div>
+      <div class="skeleton skeleton-desc"></div>
+      <div class="skeleton skeleton-desc"></div>
+      <div class="meta">
+          <div class="skeleton skeleton-meta"></div>
+          <div class="skeleton skeleton-meta"></div>
+      </div>
+  `;
 }
 
-async function handleLike(postId, postElement, current) {
+async function handleLike(postId, postElement) {
   const btn = postElement.querySelector(".btn-like");
   const likeIcon = postElement.querySelector(".btn-like i");
   const likeCountSpan = postElement.querySelector(".like-count");
@@ -201,14 +186,10 @@ async function handleLike(postId, postElement, current) {
   try {
     if (likeIcon.classList.contains("fa-solid")) {
       likeIcon.classList.replace("fa-solid", "fa-regular");
-      likeIcon.style.color = "";
-      likeCountSpan.textContent =
-        Number.parseInt(likeCountSpan.textContent) - 1;
+      likeCountSpan.textContent = Number.parseInt(likeCountSpan.textContent) - 1;
     } else {
       likeIcon.classList.replace("fa-regular", "fa-solid");
-      likeIcon.style.color = "var(--lumen-blue)";
-      likeCountSpan.textContent =
-        Number.parseInt(likeCountSpan.textContent) + 1;
+      likeCountSpan.textContent = Number.parseInt(likeCountSpan.textContent) + 1;
     }
 
     btn.disabled = true;
@@ -218,15 +199,15 @@ async function handleLike(postId, postElement, current) {
 
     if (data.liked) {
       likeIcon.classList.replace("fa-regular", "fa-solid");
-      likeIcon.style.color = "var(--lumen-blue)";
     } else {
       likeIcon.classList.replace("fa-solid", "fa-regular");
-      likeIcon.style.color = "";
     }
 
     likeCountSpan.textContent = data.totalLikes;
   } catch (error) {
     console.error("Erro ao curtir:", error);
     alert(error.message || "Erro ao processar curtida.");
+    btn.disabled = false;
   }
 }
+

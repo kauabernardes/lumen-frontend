@@ -18,7 +18,8 @@ function mostrarSkeletonsComunidades() {
   container.innerHTML = "";
   for (let i = 0; i < 6; i++) {
     const skeleton = document.createElement("div");
-    skeleton.className = "skeleton-card";
+    // Adicionando classe glass-card para manter o design skeleton padronizado
+    skeleton.classList.add("skeleton-box", "glass-card");
     container.appendChild(skeleton);
   }
 }
@@ -30,37 +31,29 @@ async function fetchRecommends() {
   const comunidadesContainer = document.getElementById("comunidades-container");
   if (!comunidadesContainer) return;
 
-  // 1. Mostra o esqueleto
   mostrarSkeletonsComunidades();
 
   try {
-    // 2. Chama a API via serviço
-    comunidadesContainer.innerHTML = "";
-
-    [0, 1, 2, 3, 4, 5].forEach(() => {
-      const loading = document.createElement("div");
-      loading.classList.add("skeleton", "skeleton-box");
-      comunidadesContainer.append(loading);
-    });
-
     const result = await window.communityService.getRecommended(1, 5);
     const comunidades = result.data;
+    
     comunidadesContainer.innerHTML = "";
 
     if (!comunidades || comunidades.length === 0) {
-      comunidadesContainer.innerHTML = "<p>Nenhuma comunidade recomendada.</p>";
+      comunidadesContainer.innerHTML = "<p style='color: var(--text-mid); font-family: DM Sans;'>Nenhuma comunidade recomendada.</p>";
       return;
     }
 
     comunidades.forEach((comu) => {
       const card = document.createElement("div");
-      card.classList.add("card");
+      card.classList.add("card", "glass-card");
       card.style.backgroundColor = gerarCorPastel();
 
       const botaoAcao = comu.isMember
         ? `<button onclick="acessarComunidade('${comu.id}', ${comu.isMember})">Acessar</button>`
         : `<button onclick="acessarComunidade('${comu.id}', ${comu.isMember})">Entrar</button>`;
 
+      // Se sua API voltar imagem (ex: comu.bannerUrl), você pode colocar uma tag <img> aqui antes do H2
       card.innerHTML = `
         <h2>${comu.name}</h2>
         ${botaoAcao}
@@ -71,7 +64,7 @@ async function fetchRecommends() {
   } catch (error) {
     console.error("Erro ao buscar recomendações:", error);
     comunidadesContainer.innerHTML =
-      "<p>Erro ao carregar comunidades recomendadas.</p>";
+      "<p style='color: var(--text-mid); font-family: DM Sans;'>Erro ao carregar comunidades recomendadas.</p>";
   }
 }
 

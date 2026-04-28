@@ -16,59 +16,88 @@ document.addEventListener("DOMContentLoaded", function () {
       year: "numeric",
     };
     var formatted = now.toLocaleDateString("pt-BR", opts);
-    // Capitaliza primeira letra
     dateEl.textContent = formatted.charAt(0).toUpperCase() + formatted.slice(1);
   }
 
   // ----------------------------------------------------------
-  // MINI CALENDÁRIO DA SEMANA
+  // FUNÇÃO PARA CARREGAR DADOS DA API
   // ----------------------------------------------------------
-  var weekDaysEl = document.getElementById("weekDays");
-  if (weekDaysEl) {
-    var names = ["Dom", "Seg", "Ter", "Qua", "Qui", "Sex", "Sáb"];
-    var today = new Date();
-    var dayOfWeek = today.getDay(); // 0 = domingo
+  async function loadSummary() {
+    try {
+      // Usa o service que acabamos de criar!
+      const summary = await window.dailyService.getSummary();
+      
+      // 1. Atualiza a Ofensiva (Streak)
+      const streakEl = document.getElementById("streakCount");
+      const streakFill = document.querySelector(".streak-bar-fill");
+      const streakCaption = document.querySelector(".streak-bar-caption");
 
-    // Gera os 7 dias da semana (começando no domingo)
-    // Simula que os dias anteriores a hoje já foram feitos (exceto hoje)
-    for (var i = 0; i < 7; i++) {
-      var diff = i - dayOfWeek;
-      var d = new Date(today);
-      d.setDate(today.getDate() + diff);
+      if (streakEl) streakEl.textContent = summary.streak;
+      
+      if (streakFill && streakCaption) {
+        const target = 30; // Alvo fixo de 30 dias para a barra de progresso
+        const pct = Math.min((summary.streak / target) * 100, 100);
+        
+        setTimeout(() => {
+          streakFill.style.width = pct + "%";
+        }, 400); // pequeno delay para a animação CSS acontecer
+        
+        streakCaption.innerHTML = `${summary.streak} de ${target} dias — continue assim! 🎯`;
+      }
 
-      var isToday = i === dayOfWeek;
-      var isPast = i < dayOfWeek;
+      // 2. Atualiza o Calendário da Semana
+      const weekDaysEl = document.getElementById("weekDays");
+      if (weekDaysEl && summary.weekly) {
+        weekDaysEl.innerHTML = ""; // Limpa o conteúdo mockado
+        
+        const names = ["Dom", "Seg", "Ter", "Qua", "Qui", "Sex", "Sáb"];
+        const today = new Date();
+        const dayOfWeek = today.getDay(); 
 
-      var dayEl = document.createElement("div");
-      dayEl.className =
-        "week-day" + (isToday ? " today" : "") + (isPast ? " done" : "");
+        for (let i = 0; i < 7; i++) {
+          const diff = i - dayOfWeek;
+          const d = new Date(today);
+          d.setDate(today.getDate() + diff);
 
-      var nameEl = document.createElement("span");
-      nameEl.className = "week-day-name";
-      nameEl.textContent = names[i];
+          const isToday = i === dayOfWeek;
+          const isDone = summary.weekly[i]; // boolean retornado pela sua API
 
-      var dotEl = document.createElement("div");
-      dotEl.className = "week-day-dot";
-      dotEl.textContent = isPast ? "✓" : isToday ? d.getDate() : "";
+          const dayEl = document.createElement("div");
+          dayEl.className = "week-day" + (isToday ? " today" : "") + (isDone ? " done" : "");
 
-      dayEl.appendChild(nameEl);
-      dayEl.appendChild(dotEl);
-      weekDaysEl.appendChild(dayEl);
+          const nameEl = document.createElement("span");
+          nameEl.className = "week-day-name";
+          nameEl.textContent = names[i];
+
+          const dotEl = document.createElement("div");
+          dotEl.className = "week-day-dot";
+          dotEl.textContent = isDone ? "✓" : (isToday ? d.getDate() : "");
+
+          dayEl.appendChild(nameEl);
+          dayEl.appendChild(dotEl);
+          weekDaysEl.appendChild(dayEl);
+        }
+      }
+
+      // 3. Atualiza as Estatísticas (Check-ins e Metas)
+      const statValues = document.querySelectorAll(".stat-item .stat-value");
+      if (statValues.length >= 3 && summary.stats) {
+        // [0] = Check-ins, [1] = Matérias, [2] = Meta, [3] = Horas
+        statValues[0].textContent = summary.stats.totalCheckins;
+        statValues[2].textContent = summary.stats.goalPercentage + "%";
+      }
+
+    } catch (error) {
+      console.error("Erro ao carregar o resumo:", error);
     }
   }
 
-  var streakFill = document.querySelector(".streak-bar-fill");
-  if (streakFill) {
-    // a barra já tem width inline no HTML, anima ao carregar
-    var targetWidth = streakFill.style.width;
-    streakFill.style.width = "0%";
-    setTimeout(function () {
-      streakFill.style.width = targetWidth;
-    }, 400);
-  }
+  // Chama a função assim que a página carregar
+  loadSummary();
+
 
   // ----------------------------------------------------------
-  // RADIO "CONSEGUIU ATINGIR?"
+  // RADIO "CONSEGUIU ATINGIR?" E HUMOR (Sem alterações)
   // ----------------------------------------------------------
   var radioOptions = document.querySelectorAll(".radio-option");
   radioOptions.forEach(function (opt) {
@@ -95,102 +124,62 @@ document.addEventListener("DOMContentLoaded", function () {
     });
   });
 
+  // ----------------------------------------------------------
+  // LÓGICA DE CHECK-IN
+  // ----------------------------------------------------------
   var btnCheckin = document.getElementById("btnCheckin");
   var successBanner = document.getElementById("successBanner");
   var estudouOntem = document.getElementById("estudouOntem");
   var estudaHoje = document.getElementById("estudaHoje");
 
   if (btnCheckin) {
-    // Transformado em async para usar o window.api
     btnCheckin.addEventListener("click", async function () {
       var desc1 = estudouOntem ? estudouOntem.value.trim() : "";
       var desc2 = estudaHoje ? estudaHoje.value.trim() : "";
-      var atingiuInput = document.querySelector(
-        'input[name="atingiu"]:checked',
-      );
+      var atingiuInput = document.querySelector('input[name="atingiu"]:checked');
 
-      // Validações visuais do Frontend
-      if (!desc1) {
-        shakeCard("step1");
-        estudouOntem.focus();
-        return;
-      }
+      if (!desc1) { shakeCard("step1"); estudouOntem.focus(); return; }
+      if (!atingiuInput) { shakeCard("step2"); return; }
+      if (!desc2) { shakeCard("step3"); estudaHoje.focus(); return; }
+      if (!selectedMood) { shakeCard("step4"); return; }
 
-      if (!atingiuInput) {
-        shakeCard("step2");
-        return;
-      }
-
-      if (!desc2) {
-        shakeCard("step3");
-        estudaHoje.focus();
-        return;
-      }
-
-      if (!selectedMood) {
-        shakeCard("step4");
-        return;
-      }
-
-      // Prepara o Payload no exato formato da nova Entidade (Opção 2)
       const payload = {
-        date: new Date().toISOString().split("T")[0], // Pega apenas YYYY-MM-DD
+        date: new Date().toISOString().split("T")[0],
         mood: selectedMood.toString(),
         studiedYesterday: desc1,
-        achievedGoal: atingiuInput.value, // 'sim', 'nao' ou 'quase'
+        achievedGoal: atingiuInput.value,
         studyToday: desc2,
       };
 
       try {
-        // Feedback visual de carregamento
-        btnCheckin.innerHTML =
-          '<i class="fa-solid fa-spinner fa-spin"></i> <span>Salvando...</span>';
+        btnCheckin.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> <span>Salvando...</span>';
         btnCheckin.disabled = true;
 
-        // Dispara requisição usando o client.js global
-        const response = await window.api.post("/daily-log", payload);
+        // Usa o service para fazer o POST!
+        await window.dailyService.createCheckin(payload);
 
-        // Sucesso Visual
-        btnCheckin.innerHTML =
-          '<i class="fa-solid fa-check"></i> <span>Check-in feito!</span>';
-        btnCheckin.style.background =
-          "linear-gradient(135deg, #34c47a, #27a86a)";
+        btnCheckin.innerHTML = '<i class="fa-solid fa-check"></i> <span>Check-in feito!</span>';
+        btnCheckin.style.background = "linear-gradient(135deg, #34c47a, #27a86a)";
         btnCheckin.style.boxShadow = "0 5px 20px rgba(52,196,122,0.4)";
 
         if (successBanner) successBanner.classList.add("visible");
 
-        // Incrementa streak visualmente
-        var streakEl = document.getElementById("streakCount");
-        if (streakEl) {
-          var current = parseInt(streakEl.textContent, 10) || 0;
-          animateNumber(streakEl, current, current + 1, 600);
-        }
+        // Recarrega os dados do painel lateral inteiro chamando a API de novo!
+        // Isso atualiza a ofensiva, os cards da semana e as estatísticas automaticamente.
+        await loadSummary();
 
-        // Marca hoje como feito no calendário
-        var todayDot = document.querySelector(".week-day.today .week-day-dot");
-        if (todayDot) {
-          var parent = todayDot.closest(".week-day");
-          if (parent) {
-            parent.classList.add("done");
-            parent.classList.remove("today");
-            todayDot.textContent = "✓";
-          }
-        }
       } catch (error) {
-        // Tratamento de erro
         console.error("Erro ao fazer checkin:", error);
         alert(error.message || "Erro ao salvar o check-in. Tente novamente.");
 
-        // Restaura o botão em caso de erro
-        btnCheckin.innerHTML =
-          '<i class="fa-solid fa-circle-check"></i> <span>Fazer Check-in</span>';
+        btnCheckin.innerHTML = '<i class="fa-solid fa-circle-check"></i> <span>Fazer Check-in</span>';
         btnCheckin.disabled = false;
       }
     });
   }
 
   // ----------------------------------------------------------
-  // FRASES MOTIVACIONAIS
+  // FRASES MOTIVACIONAIS E HELPERS
   // ----------------------------------------------------------
   var frases = [
     '"Cada dia de estudo é um tijolo na construção do seu futuro."',
@@ -211,9 +200,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
   function getRandomQuote() {
     var idx;
-    do {
-      idx = Math.floor(Math.random() * frases.length);
-    } while (idx === lastIdx);
+    do { idx = Math.floor(Math.random() * frases.length); } while (idx === lastIdx);
     lastIdx = idx;
     return frases[idx];
   }
@@ -228,38 +215,16 @@ document.addEventListener("DOMContentLoaded", function () {
     });
   }
 
-  // ----------------------------------------------------------
-  // HELPERS
-  // ----------------------------------------------------------
-
-  // Shake de card inválido
   function shakeCard(id) {
     var card = document.getElementById(id);
     if (!card) return;
     card.style.animation = "none";
-    card.offsetHeight; // reflow
+    card.offsetHeight;
     card.style.animation = "shake 0.4s ease";
-    setTimeout(function () {
-      card.style.animation = "";
-    }, 450);
-  }
-
-  // Animação de número
-  function animateNumber(el, from, to, duration) {
-    var start = null;
-    function step(timestamp) {
-      if (!start) start = timestamp;
-      var progress = Math.min((timestamp - start) / duration, 1);
-      el.textContent = Math.round(from + (to - from) * progress);
-      if (progress < 1) requestAnimationFrame(step);
-    }
-    requestAnimationFrame(step);
+    setTimeout(function () { card.style.animation = ""; }, 450);
   }
 });
 
-// ----------------------------------------------------------
-// Animação de shake (injetada via CSS dinâmico)
-// ----------------------------------------------------------
 (function () {
   var style = document.createElement("style");
   style.textContent = [
