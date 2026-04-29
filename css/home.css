@@ -10,7 +10,6 @@ body {
   background: #f3f3f3;
   height: 100vh;
   overflow: hidden;
-  
 }
 
 /* LAYOUT */
@@ -25,7 +24,6 @@ body {
   flex: 1;
   padding: 20px;
   overflow: hidden;
-  
 }
 
 /* HEADER FEED */
@@ -40,7 +38,7 @@ body {
 
 /* POSTS CONTAINER */
 .posts {
-  background: #64B9F6;
+  background: #64b9f6;
   border-radius: 20px;
   padding: 20px;
   display: flex;
@@ -82,16 +80,12 @@ body {
   flex: 1;
   text-align: right;
   margin-right: 8px;
-  
 }
 
-
-
 .post-info strong {
-  color: #006ab6  !important;
+  color: #006ab6 !important;
   font-weight: 500;
   cursor: pointer;
-
 }
 
 .menu-post {
@@ -125,7 +119,7 @@ body {
 .sidebar li {
   width: 45px;
   height: 45px;
-  background: #99B1C2;
+  background: #99b1c2;
   border-radius: 50%;
   margin: 15px 0;
   display: flex;
@@ -260,6 +254,14 @@ body {
 .start {
   background: white;
   color: #4a9c5a;
+  border-radius: 20px;
+  padding: 10px;
+  border: none;
+}
+
+.start-daily {
+  background: white;
+  color: #d741a3;
   border-radius: 20px;
   padding: 10px;
   border: none;

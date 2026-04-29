@@ -1,8 +1,15 @@
-const API_URL = "http://localhost:3000/session"; // URL base para as rotas REST
-const socket = io("http://localhost:3000/session");
+// ==========================================
+// 1. CONFIGURAÇÕES E UTILITÁRIOS GERAIS
+// ==========================================
+const API_URL = "http://localhost:3000/session";
+
+// Injetando o socket no window para que outros serviços possam usá-lo
+window.socket = io("http://localhost:3000/session");
+const socket = window.socket;
 
 const myUser = "019cfd8f-4bd8-798c-9e83-ea34343a94ef";
 let currentSessionId = null;
+let participants = [];
 
 const notificacao = new Audio("../../assets/audio/session-notification.wav");
 const startNotificacao = new Audio("../../assets/audio/session-start.wav");
@@ -16,12 +23,14 @@ const btnLongBreak = document.getElementById("btn-long-break");
 const btnStudy = document.getElementById("btn-study");
 
 const btnCopyLink = document.getElementById("btn-copy-link");
-
 const elSessionInput = document.getElementById("session-input");
 const btnCreate = document.getElementById("btn-create");
 const btnJoin = document.getElementById("btn-join");
 const joinContainer = document.getElementById("join-container");
 const timerComponents = document.getElementsByClassName("timer-component");
+
+// Novos elementos para usuários ativos
+const participantsContainer = document.getElementById("participants-list");
 
 // interface
 
@@ -48,25 +57,49 @@ function updateTimerDisplay(totalSeconds) {
   const secStr = String(seconds).padStart(2, "0");
   const timeString = `${minStr}:${secStr}`;
 
-  elMinutes.innerText = minStr;
-  elSeconds.innerText = secStr;
+  if (elMinutes && elSeconds) {
+    elMinutes.innerText = minStr;
+    elSeconds.innerText = secStr;
+  }
 
-  if (totalSeconds <= 0) {
-    document.title = "🔔 Fim do Bloco! | Lumen";
+  if (document.title.includes("🔔")) {
+    document.title = timeString + " - Sessão de Estudos";
   } else {
     document.title = `${timeString} - Sessão de Estudos`;
   }
 }
 
 function showTimerUI() {
-  joinContainer.classList.add("d-none");
-  joinContainer.classList.remove("d-flex");
+  if (joinContainer) {
+    joinContainer.classList.add("d-none");
+    joinContainer.classList.remove("d-flex");
+  }
 
   Array.from(timerComponents).forEach((e) => {
     e.classList.remove("d-none");
+    // Mantém a lógica existente que readiciona d-flex
     if (e.tagName === "DIV") {
       e.classList.add("d-flex");
     }
+  });
+}
+
+// --- Gerenciamento de Participantes ---
+
+function renderParticipants(users) {
+  if (!participantsContainer) return;
+  participantsContainer.innerHTML = "";
+
+  users.forEach(user => {
+    const userEl = document.createElement("div");
+    userEl.className = "participant-item";
+    userEl.innerHTML = `
+      <div class="participant-avatar">
+        <i class="fa-regular fa-circle-user"></i>
+      </div>
+      <span class="participant-name">${user.username}</span>
+    `;
+    participantsContainer.appendChild(userEl);
   });
 }
 
@@ -76,19 +109,29 @@ socket.on("connect", () => {
   console.info("Conectado ao servidor Socket.io com ID:", socket.id);
 });
 
-function requestJoinSession(sessionId = null) {
-  const token = localStorage.getItem("access_token");
+socket.on("user_joined", (user) => {
+  console.log("Usuário entrou:", user);
+  participants.push(user);
+  renderParticipants(participants);
+});
 
-  if (!token) {
-    alert("Você precisa estar logado para acessar as sessões.");
-    window.location.href = "telalogin.html";
+socket.on("user_left", (user) => {
+  console.log("Usuário saiu:", user);
+  participants = participants.filter(p => p.userId !== user.userId);
+  renderParticipants(participants);
+});
+
+socket.on("timer_state", (data) => {
+  updateTimerDisplay(data.timeLeft);
+});
+
+function requestJoinSession(sessionId = null) {
+  if (!window.sessionService) {
+    console.error("sessionService não encontrado!");
     return;
   }
 
-  const payload = { token: token };
-  if (sessionId) payload.sessionId = sessionId;
-
-  socket.emit("join_session", payload, (response) => {
+  window.sessionService.join(sessionId, async (response) => {
     if (response.error) {
       alert("Erro: " + response.error);
       if (response.error.includes("Acesso negado")) {
@@ -98,48 +141,55 @@ function requestJoinSession(sessionId = null) {
     }
 
     currentSessionId = response.sessionId;
+
+    // Busca a lista inicial de participantes via API
+    try {
+      const participantsData = await window.sessionService.getParticipants(currentSessionId);
+      participants = participantsData;
+      renderParticipants(participants);
+    } catch (err) {
+      console.error("Erro ao buscar participantes iniciais:", err);
+    }
+
     updateTimerDisplay(response.pomodoro.timeLeft);
     showTimerUI();
-
-    updateResumeButton(response.pomodoro.status);
   });
 }
 
-socket.on("timer_state", (data) => {
-  updateTimerDisplay(data.timeLeft);
-});
-
 // acoes usuario
 
-async function sendCommand(endpoint, bodyData = {}) {
-  if (!currentSessionId) return null;
-
-  const token = localStorage.getItem("access_token");
+async function handleCommand(command, payload = {}) {
+  if (!currentSessionId) return;
 
   try {
-    const response = await fetch(`${API_URL}/${currentSessionId}/${endpoint}`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${token}`,
-      },
-      body: JSON.stringify(bodyData),
-    });
-
-    if (!response.ok) {
-      if (response.status === 401) {
-        alert("Sua sessão expirou. Faça login novamente.");
-        window.location.href = "telalogin.html";
-      }
-      throw new Error("Falha na requisição");
+    let result;
+    if (command === 'toggle') {
+      result = await window.sessionService.toggle(currentSessionId);
+    } else if (command === 'break') {
+      result = await window.sessionService.forceBreak(currentSessionId, payload.type);
+    } else if (command === 'study') {
+      result = await window.sessionService.forceStudy(currentSessionId);
     }
-    return await response.json();
+
+    if (result) {
+      triggerShake();
+      if (command === 'toggle') {
+        updateResumeButton(result.status);
+        if (result.status === "running") start();
+        else notificar();
+      } else {
+        updateResumeButton("paused");
+        notificar();
+      }
+    }
   } catch (error) {
-    console.error(`Erro ao enviar comando ${endpoint}:`, error);
+    console.error(`Erro ao executar comando ${command}:`, error);
+    alert(error.message || "Erro ao processar comando.");
   }
 }
 
 function updateResumeButton(status) {
+  if (!btnResume) return;
   if (status === "running") {
     btnResume.innerHTML = '<i class="fa-solid fa-pause"></i> Pausar';
   } else {
@@ -147,44 +197,13 @@ function updateResumeButton(status) {
   }
 }
 
-btnResume.addEventListener("click", async () => {
-  const result = await sendCommand("toggle");
+btnResume.addEventListener("click", () => handleCommand('toggle'));
 
-  if (result && result.status) {
-    updateResumeButton(result.status);
-    triggerShake();
+btnShortBreak.addEventListener("click", () => handleCommand('break', { type: 'short' }));
 
-    if (result.status === "running") start();
-    else notificar();
-  }
-});
+btnLongBreak.addEventListener("click", () => handleCommand('break', { type: 'long' }));
 
-btnShortBreak.addEventListener("click", async () => {
-  const result = await sendCommand("break", { type: "short" });
-  if (result) {
-    updateResumeButton("paused");
-    triggerShake();
-    notificar();
-  }
-});
-
-btnLongBreak.addEventListener("click", async () => {
-  const result = await sendCommand("break", { type: "long" });
-  if (result) {
-    updateResumeButton("paused");
-    triggerShake();
-    notificar();
-  }
-});
-
-btnStudy.addEventListener("click", async () => {
-  const result = await sendCommand("study");
-  if (result) {
-    updateResumeButton("paused");
-    triggerShake();
-    notificar();
-  }
-});
+btnStudy.addEventListener("click", () => handleCommand('study'));
 
 btnCreate.addEventListener("click", () => requestJoinSession());
 
@@ -202,7 +221,7 @@ const sessionIdFromURL = urlParams.get("id");
 
 if (sessionIdFromURL) {
   console.log("ID encontrado na URL:", sessionIdFromURL);
-  elSessionInput.value = sessionIdFromURL;
+  if (elSessionInput) elSessionInput.value = sessionIdFromURL;
   requestJoinSession(sessionIdFromURL);
 }
 

@@ -98,14 +98,12 @@ emailInput.addEventListener("input", validarCampos);
 passwordInput.addEventListener("input", validarCampos);
 confirmPasswordInput.addEventListener("input", validarCampos);
 
-// Função que será chamada pelo onsubmit do form
 async function handleRegister(event) {
-  event.preventDefault(); // Impede a página de recarregar
+  // PREVINE O RECARREGAMENTO DA PÁGINA
+  if (event) event.preventDefault();
 
-  // Executa a validação uma última vez antes de enviar
   validarCampos();
 
-  // Se o botão não estiver desabilitado (ou seja, campos estão válidos)
   if (!registerBtn.disabled) {
     const username = usernameInput.value;
     const email = emailInput.value;
@@ -115,44 +113,26 @@ async function handleRegister(event) {
       registerBtn.textContent = "Cadastrando...";
       registerBtn.disabled = true;
 
-      const response = await fetch("http://localhost:3000/auth/register", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          email: email,
-          username: username,
-          name: username,
-          password: password,
-        }),
+      // USA O SERVIÇO GLOBAL (definido no authService.js via window)
+      await window.authService.register({
+        email: email,
+        username: username,
+        password: password,
       });
 
-      const data = await response.json();
-
-      // Verifica se a requisição foi um sucesso (Status 200-299)
-      if (response.ok) {
-        // Redireciona o usuário para a tela de login sem o alert
-        window.location.href = "/";
-      } else {
-        console.error("Erro no cadastro:", data);
-        emailError.textContent =
-          data.message || "Erro ao criar conta. Verifique os dados.";
-        emailError.classList.add("active");
-        emailInput.classList.add("error");
-
-        passwordError.textContent =
-          data.message || "Erro ao criar conta. Verifique os dados.";
-        passwordError.classList.add("active");
-        passwordInput.classList.add("error");
-      }
+      alert("Conta criada com sucesso! Faça login.");
+      window.location.href = "/telalogin.html"; // Ou sua rota de login
     } catch (error) {
-      console.error("Erro de conexão com o servidor:", error);
-      emailError.textContent =
-        "Erro de conexão com o servidor. Tente mais tarde.";
+      console.error("Erro no cadastro:", error);
+      emailError.textContent = error.message || "Erro ao criar conta. Verifique os dados.";
       emailError.classList.add("active");
+      emailInput.classList.add("error");
+      passwordError.textContent = error.message || "Erro ao criar conta. Verifique os dados.";
+      passwordError.classList.add("active");
+      passwordInput.classList.add("error");
     } finally {
-      registerBtn.textContent = "Entrar";
+      registerBtn.textContent = "Cadastrar";
+      registerBtn.disabled = false;
     }
   }
 }

@@ -58,7 +58,8 @@ loginField.addEventListener("input", validarCampos);
 passwordInput.addEventListener("input", validarCampos);
 
 async function handleLogin(event) {
-  event.preventDefault();
+  // PREVINE O RECARREGAMENTO DA PÁGINA
+  if (event) event.preventDefault();
 
   validarCampos();
 
@@ -73,40 +74,23 @@ async function handleLogin(event) {
       passwordInput.disabled = true;
       loginField.disabled = true;
 
-      const response = await fetch("http://localhost:3000/auth/login", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          identifier: identifier,
-          password: password,
-        }),
-      });
+      // USA O SERVIÇO GLOBAL (definido no authService.js via window)
+      await window.authService.login(identifier, password);
 
-      const data = await response.json();
-
-      if (response.ok) {
-        localStorage.setItem("access_token", data.access_token);
-        window.location.href = "home.html";
-      } else {
-        loginError.textContent =
-          data.message || "E-mail, usuário ou senha incorretos.";
-        loginError.classList.add("active");
-        loginField.classList.add("error");
-        passwordError.textContent =
-          data.message || "E-mail, usuário ou senha incorretos.";
-        passwordError.classList.add("active");
-        passwordInput.classList.add("error");
-      }
+      window.location.href = "home.html";
     } catch (error) {
-      console.error("Erro ao conectar com o servidor:", error);
+      console.error("Erro ao realizar login:", error);
       loginError.textContent =
-        "Erro de conexão com o servidor. Tente novamente mais tarde.";
+        error.message || "E-mail, usuário ou senha incorretos.";
       loginError.classList.add("active");
+      loginField.classList.add("error");
+      passwordError.textContent =
+        error.message || "E-mail, usuário ou senha incorretos.";
+      passwordError.classList.add("active");
+      passwordInput.classList.add("error");
     } finally {
       loginBtn.textContent = textoOriginal;
-      loginBtn.disabled = true;
+      loginBtn.disabled = false;
       passwordInput.disabled = false;
       loginField.disabled = false;
     }
@@ -127,7 +111,6 @@ togglePassword.addEventListener("click", function () {
     passwordInput.getAttribute("type") === "password" ? "text" : "password";
   passwordInput.setAttribute("type", type);
 
-  // Alterna o ícone entre olho aberto e fechado
   if (type === "password") {
     this.innerHTML = `
       <svg xmlns="http://www.w3.org/2000/svg" class="icon-eye" viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2">
