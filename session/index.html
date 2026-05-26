@@ -83,7 +83,7 @@
             <i class="fa-solid fa-book-open"></i> Temas
           </h2>
 
-          <div class="theme-input-group mb-3" style="display: flex; gap: 8px">
+          <form onsubmit="addTheme(event)" class="theme-input-group mb-3" style="display: flex; gap: 8px">
             <input
               type="text"
               id="theme-input"
@@ -91,19 +91,20 @@
               placeholder="Adicionar tema..."
             />
             <button
+            type="submit"
               id="btn-add-theme"
               class="btn-primary"
               style="padding: 8px 12px"
             >
               <i class="fa-solid fa-plus"></i>
             </button>
-          </div>
+          </form>
 
           <ul id="themes-list" class="themes-list">
             <p class="empty-text" id="themes-placeholder">
               Nenhum tema selecionado.
             </p>
-          </ol>
+          </ul>
         </div>
 
         <div class="side-card">
@@ -141,6 +142,12 @@
             <button id="btn-create" class="btn-secondary">Minha Sessão</button>
             <button id="btn-join" class="btn-primary">Entrar</button>
           </div>
+          </div>
+      
+
+        <div class="step-card" id="loading">
+          <p>Entrando na sessão...</p>
+            <div class="loader"></div></div>
         </div>
 
         <div class="step-card timer-component d-none" id="timer-container">
@@ -180,16 +187,7 @@
               Converse com a Luminha!
             </p>
            
-           
-            <div class="message">
-              <div class="message-header">
-                <span span class="username">User</span>
-                <span class="timestamp">14:28</span>
-              </div>
-              <p class="content">akodkadkoakdakodkaodadokadkoaodkakodkaodadoao</p>
           
-          
-            </div>
           </div>
 
           <form onsubmit="handleMessage(event)" id="chat-form" class="chat-input-group mt-auto">

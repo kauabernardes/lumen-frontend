@@ -139,7 +139,7 @@ body {
   margin: 0 auto;
   padding: 32px 24px 48px;
   display: grid;
-  grid-template-columns: 250px 1fr 280px;
+  grid-template-columns: 250px 1fr 400px;
   gap: 22px;
   align-items: start;
 }
@@ -153,6 +153,19 @@ body {
   border: 1.5px solid rgba(167, 243, 208, 0.45);
   padding: 20px 22px;
 }
+
+.step-card#loading {
+  color: var(--green-dark);
+  display: flex;
+
+  align-items: center;
+  justify-items: center;
+  flex-direction: column;
+  gap: 12px;
+  padding: 24px;
+}
+
+
 
 /* Coluna Esquerda */
 .col-left {
@@ -452,69 +465,148 @@ body {
   height: calc(100vh - 320px);
   display: flex;
   flex-direction: column;
-}
-.chat-messages {
+}.chat-messages {
   flex-grow: 1;
   overflow-y: auto;
   padding-right: 8px;
   margin-bottom: 16px;
   display: flex;
   flex-direction: column;
-  gap: 8px;
+  gap: 12px; /* Aumentei levemente o gap para respirar melhor */
 }
+
 .chat-messages::-webkit-scrollbar {
   width: 6px;
 }
+
 .chat-messages::-webkit-scrollbar-thumb {
   background: var(--green-mid);
   border-radius: 10px;
 }
+
 .chat-input-group {
   display: flex;
   gap: 8px;
 }
 
-.chat-messages > .message {
+/* =========================================
+   ESTILO BASE DAS MENSAGENS
+   ========================================= */
+.message, .message-sent {
   padding: 10px 14px;
-  border-radius: 8px;
-  border: 1px solid var(--fore);
-  margin-bottom: 10px;
-  background-color: #f9f9f9;
+  max-width: 85%; /* Impede que ocupe a tela toda */
+  display: flex;
+  flex-direction: column;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1); /* Sombra sutil no lugar da borda grossa */
+  position: relative;
 }
 
-.chat-messages > .message-sent {
-  padding: 10px 14px;
-  border-radius: 8px;
-  border: 1px solid var(--fore);
-  margin-bottom: 10px;
+/* =========================================
+   MENSAGEM RECEBIDA (Outros usuários/Bot)
+   ========================================= */
+.message {
+  align-self: flex-start; /* Alinha à esquerda */
+  background-color: #f0f2f5; /* Cinza bem claro e amigável */
+  border-radius: 12px 12px 12px 2px; /* Canto inferior esquerdo reto (formato de balão) */
+  border: 1px solid #e4e6eb; /* Borda bem clarinha só para dar contorno */
+}
+
+/* =========================================
+   MENSAGEM ENVIADA (Você)
+   ========================================= */
+.message-sent {
+  align-self: flex-end; /* Alinha à direita */
   background-color: var(--green-light);
+  border-radius: 12px 12px 2px 12px; /* Canto inferior direito reto (formato de balão) */
+  border: 1px solid var(--green-mid); /* Usa sua variável para manter a identidade */
 }
 
+/* =========================================
+   CONTEÚDO INTERNO (Textos, Nomes, Horários)
+   ========================================= */
 .message-header {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 4px;
+  margin-bottom: 6px;
+  gap: 12px; /* Espaço entre nome e hora */
 }
 
 .username {
   color: var(--dark);
-
   font-size: 13px;
+  font-weight: 600; /* Deixa o nome um pouco mais destacado */
   margin: 0;
+}
+
+/* Destaca levemente o nome quando é você quem envia */
+.message-sent .username {
+  color: var(--green-dark); 
 }
 
 .timestamp {
   font-size: 11px;
   color: #888;
+  white-space: nowrap; /* Impede que a hora quebre de linha */
 }
 
 .content {
   margin: 0;
   font-size: 14px;
-  line-height: 1.4;
+  line-height: 1.5;
   word-wrap: break-word;
+  color: #333;
 }
+
+/* =========================================
+   MENSAGEM DA IA (LUMINHA)
+   ========================================= */
+
+/* Destaca a mensagem da IA com uma cor de fundo sutil (um azul/roxo bem claro, por exemplo) */
+.message-ai {
+  background-color: #f4f7ff; 
+  border: 1px solid #dce5ff;
+}
+
+/* Colore o nome e o ícone da IA */
+.message-ai .username {
+  color: #4a72d4; 
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+/* Contêiner interno que separa o cabeçalho do conteúdo da pergunta */
+.ai-card {
+  margin-top: 4px;
+  padding-top: 8px;
+  border-top: 1px solid rgba(74, 114, 212, 0.15); /* Linha divisória fina */
+}
+
+/* Título (ex: Tema - Dificuldade) */
+.ai-title {
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--dark);
+  margin: 0 0 4px 0;
+  line-height: 1.2;
+}
+
+/* Subtítulo (ex: Contexto) */
+.ai-subtitle {
+  font-size: 11px;
+  font-style: italic;
+  color: #666;
+  display: block;
+  margin-bottom: 8px;
+  line-height: 1.3;
+}
+
+/* Utilitário de margem */
+.mt-2 {
+  margin-top: 8px;
+}
+
 
 .btn-send {
   background: var(--green-strong);
@@ -548,9 +640,7 @@ body {
   .session-main {
     grid-template-columns: 250px 1fr;
   }
-  .col-right {
-    display: none;
-  }
+ 
 }
 @media (max-width: 768px) {
   .session-main {
@@ -558,9 +648,29 @@ body {
     padding: 16px;
   }
   .col-left {
-    order: 2;
+    order: 3;
   }
   .col-center {
     order: 1;
   }
+  .col-right {order: 2;}
+}
+
+.loader {
+  width: 45px;
+  aspect-ratio: 2;
+  --_g: no-repeat radial-gradient(circle closest-side, var(--green-dark) 90%,#0000);
+  background: 
+    var(--_g) 0%   50%,
+    var(--_g) 50%  50%,
+    var(--_g) 100% 50%;
+  background-size: calc(100%/3) 50%;
+  animation: l3 1s infinite linear;
+  margin: 8px auto 0;
+}
+@keyframes l3 {
+    20%{background-position:0%   0%, 50%  50%,100%  50%}
+    40%{background-position:0% 100%, 50%   0%,100%  50%}
+    60%{background-position:0%  50%, 50% 100%,100%   0%}
+    80%{background-position:0%  50%, 50%  50%,100% 100%}
 }

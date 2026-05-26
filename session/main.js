@@ -3,9 +3,6 @@ const API_URL = "http://localhost:3000/session";
 window.socket = io("http://localhost:3000/session");
 const socket = window.socket;
 
-const user = window.authService.getAuthData();
-console.log(user)
-
 let currentSessionId = null;
 let participants = [];
 
@@ -36,6 +33,30 @@ const chatForm = document.getElementById("chat-form");
 const chatInput = document.getElementById("chat-input");
 const chatContainer = document.getElementById("chat");
 const chatPlaceholder = document.getElementById("chat-placeholder");
+const chatBtn = document.getElementById("btn-send");
+
+const loadingIndicator = document.getElementById("loading");
+
+loadingIndicator.style.display = "none";
+chatInput.disabled = true;
+chatBtn.disabled = true;
+
+btnAddTheme.disabled = true;
+themeInput.disabled = true;
+
+let userData = null;
+
+async function getUserData() {
+  try {
+    userData = JSON.parse(sessionStorage.getItem("auth_data")); 
+    console.log("Dados do usuário obtidos:", userData);
+  }
+  catch (error) {
+    console.error("Erro ao obter dados do usuário:", error);
+  }
+}
+getUserData();
+
 
 function notificar() {
   notificacao.play().catch(console.error);
@@ -110,22 +131,56 @@ socket.on("user_left", (user) => {
 
 function renderMessage(message) {
   const messageE = document.createElement("div");
-  messageE.className = "message";
-  messageE.innerHTML = `<div class=${message?.userId == }"message-header">
-                <span span class="username">${message?.username}</span>
-                <span class="timestamp">${new Date(
-                  message?.timestamp,
-                ).toLocaleString("pt-BR", {
-                  day: "2-digit",
-                  month: "2-digit",
-                  year: "numeric",
-                  hour: "2-digit",
-                  minute: "2-digit",
-                })}</span>
-              </div>
-              <p class="content">${message?.text}</p>
-          `;
+  
+  const isMe = userData?.id === message?.userId;
+  const isAi = message?.isAi || message?.userId === 'ai';
 
+  if (isMe) {
+    messageE.className = "message-sent";
+  } else if (isAi) {
+    messageE.className = "message message-ai";
+  } else {
+    messageE.className = "message";
+  }
+
+  const formattedDate = new Date(message?.timestamp).toLocaleString("pt-BR", {
+    day: "2-digit",
+    month: "2-digit",
+    year: "numeric",
+    hour: "2-digit",
+    minute: "2-digit",
+  });
+
+
+  let innerContent = '';
+
+  if (isAi) {
+
+    innerContent = `
+      <div class="message-header">
+        <span class="username">
+          <i class="fa-solid fa-robot"></i> ${message?.username || 'Luminha'}
+        </span>
+        <span class="timestamp">${formattedDate}</span>
+      </div>
+      <div class="ai-card">
+        ${message?.title ? `<h4 class="ai-title">${message.title}</h4>` : ''}
+        ${message?.subtitle ? `<span class="ai-subtitle">${message.subtitle}</span>` : ''}
+        <p class="content mt-2">${message?.text}</p>
+      </div>
+    `;
+  } else {
+
+    innerContent = `
+      <div class="message-header">
+        <span class="username">${message?.username}</span>
+        <span class="timestamp">${formattedDate}</span>
+      </div>
+      <p class="content">${message?.text}</p>
+    `;
+  }
+
+  messageE.innerHTML = innerContent;
   chatContainer.appendChild(messageE);
   chatContainer.scrollTo({
     top: chatContainer.scrollHeight,
@@ -137,7 +192,13 @@ socket.on("receive_message", (message) => {
   renderMessage(message);
 });
 
-socket.on("timer_state", (data) => updateTimerDisplay(data.timeLeft));
+socket.on("timer_state", (data) => {
+  console.log("Estado do timer atualizado:", data);
+
+  if (data.status === "running") btnResume.innerHTML = '<i class="fa-solid fa-pause"></i> Pausar';
+  else btnResume.innerHTML = '<i class="fa-solid fa-play"></i> Retomar';
+
+  updateTimerDisplay(data.timeLeft)});
 
 function requestJoinSession(sessionId = null) {
   if (!window.sessionService) {
@@ -145,6 +206,11 @@ function requestJoinSession(sessionId = null) {
     return;
   }
 
+  loadingIndicator.style.display = "block";
+  joinContainer.style.display = "none";
+
+
+  
   window.sessionService.join(sessionId, async (response) => {
     if (response.error) {
       alert("Erro: " + response.error);
@@ -153,6 +219,11 @@ function requestJoinSession(sessionId = null) {
     }
 
     currentSessionId = response.sessionId;
+    loadingIndicator.style.display = "none";
+    chatInput.disabled = false;
+    chatBtn.disabled = false;
+    btnAddTheme.disabled = false;
+    themeInput.disabled = false;
 
     try {
       const participantsData =
@@ -173,13 +244,20 @@ function sendMessage(text) {
     console.error("sessionService não encontrado!");
     return;
   }
-
+  chatBtn.disabled = true;
+  chatBtn.innerHTML = `<i class="fa-solid fa-spinner fa-spin"></i>`;
   window.sessionService.sendMessage(text, async (response) => {
     if (response.error) {
+       chatInput.value = "";
+    chatBtn.disabled = false;
+    chatBtn.innerHTML = `<i class="fa-solid fa-paper-plane"></i>`;
       alert("Erro: " + response.error);
       if (response.error.includes("Acesso negado")) window.location.href = "/";
       return;
     }
+    chatInput.value = "";
+    chatBtn.disabled = false;
+    chatBtn.innerHTML = `<i class="fa-solid fa-paper-plane"></i>`;
   });
 }
 
@@ -240,8 +318,10 @@ btnJoin.addEventListener("click", () => {
   requestJoinSession(sessionIdToJoin);
 });
 
-btnAddTheme.addEventListener("click", async () => {
-  const newTheme = themeInput.value.trim();
+async function addTheme(e){
+  console.log("Adicionando tema...");
+  e.preventDefault();
+   const newTheme = themeInput.value.trim();
   if (!newTheme || !currentSessionId) return;
 
   try {
@@ -251,7 +331,7 @@ btnAddTheme.addEventListener("click", async () => {
     );
   } catch (e) {}
   themeInput.value = "";
-});
+}
 
 async function handleMessage(e) {
   e.preventDefault();
