@@ -1,0 +1,130 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Agenda - Lumen</title>
+    <link rel="stylesheet" href="./agenda.css" />
+    <link rel="stylesheet" href="../css/header.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+  </head>
+  <body>
+    <header class="topbar">
+      <div class="brand-side">
+        <img src="../img/LogoLumen2.svg" alt="Lumen Logo" class="logo-img" />
+      </div>
+
+      <nav>
+        <a href="../home.html">home</a>
+        <a href="../comunidade/index.html">comunidades</a>
+        <a href="agenda.html" class="active">agenda</a>
+      </nav>
+
+      <div class="divisao-header">
+
+
+        <div class="notif">
+          <i class="fa-regular fa-bell icon-bell"></i>
+          <span class="badge" id="badgeNotif">0</span>
+          <div class="dropdown" id="dropdownNotificacao">
+            <div class="dropdown-header">Notificações</div>
+            <div class="empty" id="emptyNotif">Você não possui notificações</div>
+            <div class="item">
+              <span class="dot"></span>
+              <p>Alguém curtiu seu conteúdo</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="right">
+        <div class="user-menu">
+          <div class="user-trigger">
+            <i class="fa-regular fa-circle-user avatar"></i>
+            <span class="username">João A B</span>
+          </div>
+          <div class="user-dropdown" id="userDropdown">
+            <div class="user-info">
+              <i class="fa-regular fa-circle-user avatar"></i>
+              <span>João A B</span>
+            </div>
+            <div class="user-item">
+              <i class="fa-solid fa-gear"></i>
+              <span>Configurações</span>
+            </div>
+            <div class="user-item" id="btnSair">
+              <i class="fa-solid fa-right-from-bracket"></i>
+              <span>Sair</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <div class="agenda-layout">
+
+      <!-- COLUNA ESQUERDA: lista de eventos -->
+      <div class="agenda-left">
+        <div class="agenda-left-header">
+          <div>
+            <h2><i class="fa-solid fa-calendar-days"></i> Agenda</h2>
+            <p>Veja e gerencie seus eventos</p>
+          </div>
+          <button class="btn-new-event" id="btnAbrirForm">
+            <i class="fa-solid fa-plus"></i> Novo evento
+          </button>
+        </div>
+
+        <div class="eventos-lista" id="listaEventos">
+          <!-- eventos gerados pelo JS -->
+        </div>
+
+        <div class="empty-state" id="emptyState">
+          <i class="fa-regular fa-calendar-xmark"></i>
+          <p>Nenhum evento cadastrado ainda.</p>
+        </div>
+      </div>
+
+      <!-- COLUNA DIREITA: formulário -->
+      <div class="agenda-right">
+        <div class="form-card" id="formCard">
+          <div class="form-header">
+            <h3 id="formTitulo"><i class="fa-solid fa-pen"></i> Novo evento</h3>
+          </div>
+
+          <div class="form-group">
+            <label>Título</label>
+            <input type="text" id="inputTitulo" placeholder="Ex: Prova de História" />
+          </div>
+
+          <div class="form-group">
+            <label>Descrição</label>
+            <input type="text" id="inputDescricao" placeholder="Ex: Capítulos 1 ao 5" />
+          </div>
+
+          <div class="form-row">
+            <div class="form-group">
+              <label>Data</label>
+              <input type="date" id="inputData" />
+            </div>
+            <div class="form-group">
+              <label>Hora</label>
+              <input type="time" id="inputHora" />
+            </div>
+          </div>
+
+          <div class="form-row">
+            <button class="btn-cancelar" id="btnCancelar">Cancelar</button>
+            <button class="btn-salvar" id="btnSalvar">
+              <i class="fa-solid fa-floppy-disk"></i> Salvar
+            </button>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <script src="agenda.js"></script>
+    <script src="../js/header.js"></script>
+  </body>
+</html>

@@ -14,6 +14,11 @@
 
 }
 
+.user-trigger.active .avatar,
+.user-trigger.active .username {
+  color: #006ab6;
+}
+
 /* LOGO */
 .brand-side {
   display: flex;

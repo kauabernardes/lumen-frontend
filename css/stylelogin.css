@@ -17,8 +17,14 @@ body {
 .background-pattern {
     width: 100%;
     height: 100%;
-    background: linear-gradient(45deg, #84a9ff 25%, #7696e6 25%, #7696e6 50%, #84a9ff 50%, #84a9ff 75%, #7696e6 75%, #7696e6 100%);
-    background-size: 100px 100px;
+    /* 1. Apontando para a sua imagem salva localmente na pasta img */
+    background-image: url('../img/fundo-entrar.svg'); 
+    
+    /* 2. Propriedades para cobrir a tela perfeitamente */
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    
     display: flex;
     align-items: center;
     justify-content: center;

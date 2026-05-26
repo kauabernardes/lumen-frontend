@@ -3,11 +3,11 @@
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-  font-family: "Segoe UI", sans-serif;
+  font-family: "DM Sans", sans-serif;
 }
 
 body {
-  background: #f3f3f3;
+  background: #f4f7f9;
   height: 100vh;
   overflow: hidden;
 }
@@ -16,8 +16,11 @@ body {
 .layout {
   display: flex;
   height: calc(100vh - 80px);
-  margin-left: 50px;
-  padding-right: 40px;
+  max-width: 2100px;    /* ← limita a largura total */
+  margin: 0 auto;       /* ← centraliza */
+  padding: 0 0px 12px 270px;
+  width: 100%;
+  
 }
 
 /* FEED ESQUERDA */
@@ -27,6 +30,7 @@ body {
   overflow: hidden;
   display: flex;
   flex-direction: column;
+  max-width: 800px;
 }
 
 /* HEADER FEED */
@@ -82,9 +86,7 @@ body {
   flex: 1;
   overflow: hidden;
   align-items: flex-start;
-  box-shadow:
-    0 20px 40px rgba(30, 124, 184, 0.3),
-    inset 0 1px 0 rgba(255,255,255,0.15);
+  
   position: relative;
 }
 
@@ -272,8 +274,8 @@ body {
 /* PAINEL DIREITO */
 .right-panel {
   width: 35%;
-  padding: 20px;
-  margin-right: 0px;
+  padding: 20px 20px 0 20px;
+  
   display: flex;
   flex-direction: column;
   gap: 12px;
@@ -327,9 +329,7 @@ body {
 
   position: relative;
   overflow: hidden;
-  box-shadow:
-    0 20px 40px rgba(29, 122, 74, 0.4),
-    inset 0 1px 0 rgba(255,255,255,0.15);
+  
 }
 
 .session::before {
@@ -474,9 +474,7 @@ body {
   display: flex;
   flex-direction: column;
   gap: 25px;
-  box-shadow:
-    0 20px 40px rgba(147, 51, 234, 0.35),
-    inset 0 1px 0 rgba(255,255,255,0.2);
+  
   position: relative;
   overflow: hidden;
 }
@@ -632,9 +630,7 @@ body {
   position: relative;
   overflow: hidden;
 
-  box-shadow:
-    0 20px 40px rgba(67, 56, 202, 0.4),
-    inset 0 1px 0 rgba(255,255,255,0.15);
+
 }
 
 .recommendation::before {
@@ -733,10 +729,10 @@ body {
 .events {
   background: white;
   border-radius: 22px;
-  padding: 18px;
+  padding: 10px;
   box-shadow: 0 8px 18px rgba(0,0,0,0.06);
   flex: 1;
-  min-height: 0;       /* ← essencial */
+  min-height: 130px;
   display: flex;
   flex-direction: column;
 }
@@ -770,6 +766,7 @@ body {
   padding-bottom: 12px;
   flex: 1;
   min-height: 0;
+  max-height: 120px; 
 }
 
 .events li {
@@ -827,10 +824,10 @@ body {
 .achievements {
   background: #ffedbd;
   border-radius: 22px;
-  padding: 18px;
+  padding: 12px;
   display: flex;
   flex-direction: column;
-  gap: 10px;
+  gap: 6px;
   box-shadow: 0 8px 24px rgba(0,0,0,0.07);
   border: 1px solid #f1f5f9;
   position: relative;
@@ -860,7 +857,7 @@ body {
 }
 
 .achievements h3 {
-  font-size: 14px;
+  font-size: 18px;
   font-weight: 700;
   color: #1e293b;
 }
@@ -876,7 +873,7 @@ body {
   background: linear-gradient(135deg, #fbbf24, #f59e0b);
   color: #fff;
   border: none;
-  padding: 11px;
+  padding: 7px;
   border-radius: 14px;
   font-weight: 700;
   font-size: 12px;

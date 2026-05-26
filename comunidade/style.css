@@ -319,6 +319,7 @@ body {
   display: flex;
   justify-content: center;
   align-items: flex-start;
+  
 }
 
 /* ANÚNCIO (Tamanho alto recuperado) */
@@ -330,6 +331,7 @@ body {
   cursor: pointer;
   transition: transform 0.3s;
   padding: 0; /* zera padding da classe glass-card p/ imagem preencher tudo */
+  margin-bottom: 80px;
 }
 
 .ad-card img {
