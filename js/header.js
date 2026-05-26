@@ -46,8 +46,27 @@ atualizarBadge();
 // 👤 MENU USUÁRIO
 // =========================
 
+let userData = null;
+
+function getUserData() {
+  try {
+    userData = JSON.parse(sessionStorage.getItem("auth_data")); 
+    console.log("Dados do usuário obtidos:", userData);
+  }
+  catch (error) {
+    console.error("Erro ao obter dados do usuário:", error);
+  }
+}
+getUserData();
+
+
 const userTrigger = document.querySelector(".user-trigger");
 const userDropdown = document.getElementById("userDropdown");
+
+const username = userTrigger.children[1];
+if (username && userData) {
+  username.innerHTML = userData.username || "Usuário";
+}
 
 if (userTrigger && userDropdown) {
   userTrigger.addEventListener("click", (e) => {

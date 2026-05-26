@@ -23,6 +23,12 @@ const sessionService = {
     window.socket.emit("join_session", payload, callback);
   },
 
+  async sendMessage(text, callback) {
+    const payload = { text };
+
+    window.socket.emit("send_message", payload, callback);
+  },
+
   /**
    * Busca a lista de participantes da sessão atual.
    * @param {string} sessionId - ID da sessão.
@@ -59,6 +65,22 @@ const sessionService = {
   async forceStudy(sessionId) {
     return await window.api.post(`/session/${sessionId}/study`);
   },
+
+  async addTheme(sessionId, theme) {
+    return await window.api.post(`/session/${sessionId}/add/theme`, { theme });
+  },
+
+  async getLastChallenge(sessionId) {
+    return await window.api.get(`/session/${sessionId}/ai/question`);
+  },
+
+  async getThemes(sessionId) {
+    return await window.api.get(`/session/${sessionId}/themes`);
+  },
+
+  async validate(sessionId){
+    return await window.api.post(`/session/${sessionId}/ai/validate`);
+  }
 };
 
 // Disponibiliza o serviço globalmente
