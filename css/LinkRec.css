@@ -17,14 +17,18 @@ body {
 .background-pattern {
     width: 100%;
     height: 100%;
-    /* Dois tons de verde menta para criar as listras */
-    background: linear-gradient(45deg, #8ecbb4 25%, #7eb6a1 25%, #7eb6a1 50%, #8ecbb4 50%, #8ecbb4 75%, #7eb6a1 75%, #7eb6a1 100%);
-    background-size: 100px 100px;
+    /* 1. Apontando para a sua imagem salva localmente na pasta img */
+    background-image: url('../img/LinkRec-\ Web\ \(2\).svg'); 
+    
+    /* 2. Propriedades para cobrir a tela perfeitamente */
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    
     display: flex;
     align-items: center;
     justify-content: center;
     position: relative;
-    overflow: hidden;
 }
 
 /* Container principal (sua estrutura) */

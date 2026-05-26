@@ -17,14 +17,18 @@ body {
 .background-pattern {
     width: 100%;
     height: 100%;
-    /* Substituí o amarelo pelos tons de rosa: #d187c5 e o tom mais claro #c375b6 */
-    background: linear-gradient(45deg, #d187c5 25%, #c375b6 25%, #c375b6 50%, #d187c5 50%, #d187c5 75%, #c375b6 75%, #c375b6 100%);
-    background-size: 100px 100px;
+    /* 1. Apontando para a sua imagem salva localmente na pasta img */
+    background-image: url('../img/Recuperar\ Conta-\ Web\ \(1\).svg'); 
+    
+    /* 2. Propriedades para cobrir a tela perfeitamente */
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    
     display: flex;
     align-items: center;
     justify-content: center;
     position: relative;
-    overflow: hidden;
 }
 
 .main-container {

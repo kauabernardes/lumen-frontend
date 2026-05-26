@@ -13,12 +13,17 @@ body {
     background-color: #f7d37e; /* Amarelo base */
 }
 
-/* Fundo com padrão diagonal amarelo */
 .background-pattern {
     width: 100%;
     height: 100%;
-    background: linear-gradient(45deg, #f7d37e 25%, #fce6a9 25%, #fce6a9 50%, #f7d37e 50%, #f7d37e 75%, #fce6a9 75%, #fce6a9 100%);
-    background-size: 100px 100px;
+    /* 1. Apontando para a sua imagem salva localmente na pasta img */
+    background-image: url('../img/Criar\ Conta-\ Web.svg'); 
+    
+    /* 2. Propriedades para cobrir a tela perfeitamente */
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    
     display: flex;
     align-items: center;
     justify-content: center;
