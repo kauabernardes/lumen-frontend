@@ -69,6 +69,18 @@ const sessionService = {
   async addTheme(sessionId, theme) {
     return await window.api.post(`/session/${sessionId}/add/theme`, { theme });
   },
+
+  async getLastChallenge(sessionId) {
+    return await window.api.get(`/session/${sessionId}/ai/question`);
+  },
+
+  async getThemes(sessionId) {
+    return await window.api.get(`/session/${sessionId}/themes`);
+  },
+
+  async validate(sessionId){
+    return await window.api.post(`/session/${sessionId}/ai/validate`);
+  }
 };
 
 // Disponibiliza o serviço globalmente

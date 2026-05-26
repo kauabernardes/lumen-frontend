@@ -36,6 +36,13 @@ const chatPlaceholder = document.getElementById("chat-placeholder");
 const chatBtn = document.getElementById("btn-send");
 
 const loadingIndicator = document.getElementById("loading");
+const tip = document.getElementById("tip");
+const tipIndicator = document.getElementById("tip-indicator");
+
+const lastChallengeCard = document.getElementById("card-last-challenge");
+const lastChallengeTitle = document.getElementById("title-last-challenge");
+const lastChallengeSubtitle = document.getElementById("subtitle-last-challenge");
+const lastChallengeContent = document.getElementById("content-last-challenge");
 
 loadingIndicator.style.display = "none";
 chatInput.disabled = true;
@@ -44,18 +51,7 @@ chatBtn.disabled = true;
 btnAddTheme.disabled = true;
 themeInput.disabled = true;
 
-let userData = null;
 
-async function getUserData() {
-  try {
-    userData = JSON.parse(sessionStorage.getItem("auth_data")); 
-    console.log("Dados do usuário obtidos:", userData);
-  }
-  catch (error) {
-    console.error("Erro ao obter dados do usuário:", error);
-  }
-}
-getUserData();
 
 
 function notificar() {
@@ -129,6 +125,17 @@ socket.on("user_left", (user) => {
   renderParticipants(participants);
 });
 
+socket.on("ai_generating", () => {
+  tipIndicator.style.display = "flex";
+  tip.innerText = "Luminha está pensando...";
+});
+
+socket.on("ai_generated", () => {
+  tipIndicator.style.display = "none";
+  tip.innerText = "Luminha está pensando...";
+});
+
+
 function renderMessage(message) {
   const messageE = document.createElement("div");
   
@@ -169,6 +176,13 @@ function renderMessage(message) {
         <p class="content mt-2">${message?.text}</p>
       </div>
     `;
+
+    
+        lastChallengeCard.style.display = "block";
+        lastChallengeTitle.innerText = message.title || "";
+        lastChallengeSubtitle.innerText = message.subtitle || "";
+        lastChallengeContent.innerText = message.text || "";
+      
   } else {
 
     innerContent = `
@@ -186,6 +200,16 @@ function renderMessage(message) {
     top: chatContainer.scrollHeight,
     behavior: "smooth",
   });
+}
+
+async function validateAi() {
+  try {
+  const data = await window.sessionService.validate(currentSessionId);
+  console.log("Resposta da IA validada com sucesso." + JSON.stringify(data));
+  } catch(e) {
+    console.error("Erro ao validar resposta da IA:", e);
+    alert("Erro ao validar resposta da IA. Tente novamente.");
+  }
 }
 
 socket.on("receive_message", (message) => {
@@ -233,6 +257,42 @@ function requestJoinSession(sessionId = null) {
     } catch (err) {
       console.error("Erro ao buscar participantes:", err);
     }
+
+    try{
+      const themesData = await window.sessionService.getThemes(currentSessionId);
+      if (themesData && themesData.length > 0) {
+        themesList.innerHTML = "";
+        themesData.forEach((theme) => {
+          const themeEl = document.createElement("li");
+          themeEl.className = "theme-item";
+          themeEl.innerHTML = `${theme}`;
+          themesList.appendChild(themeEl);
+        });
+      } else {
+        themesList.innerHTML = "";
+        themesList.appendChild(themesPlaceholder);
+        themesPlaceholder.style.display = "block";
+      }
+    } catch(err){
+      console.error("Erro ao buscar temas:", err);
+    }
+
+    try {
+      const lastChallengeData = await window.sessionService.getLastChallenge(currentSessionId);
+      if (lastChallengeData) {
+        lastChallengeCard.style.display = "block";
+        lastChallengeTitle.innerText = lastChallengeData.title || "Desafio sem título";
+        lastChallengeSubtitle.innerText = lastChallengeData.context || "";
+        lastChallengeContent.innerText = lastChallengeData.question || "";
+      } else {
+        lastChallengeCard.style.display = "none";
+        
+      }
+    } catch (err) {
+      console.error("Erro ao buscar último desafio:", err);
+    }
+
+
 
     updateTimerDisplay(response.pomodoro.timeLeft);
     showTimerUI();

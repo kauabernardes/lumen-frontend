@@ -112,7 +112,7 @@
             <i class="fa-solid fa-users"></i> Participantes
           </h2>
           <div id="participants-list" class="participants-list">
-            <!-- Participantes injetados via JS -->
+           
           </div>
         </div>
       </aside>
@@ -176,6 +176,15 @@
             <i class="fa-solid fa-play"></i> Retomar
           </button>
         </div>
+
+        <div class="step-card" id="card-last-challenge" style="display: none;">
+          <h2 class="card-title"><i class="fa-solid fa-robot"></i> Luminha - Último Desafio</h2>
+          <p id="title-last-challenge" class="challenge-title">Nenhum desafio recebido ainda.</p>
+          <p id="subtitle-last-challenge" class="challenge-subtitle">Nenhum desafio recebido ainda.</p>
+          <p id="content-last-challenge" class="challenge-content">.</p>
+
+          
+        </div>
       </section>
 
       <aside class="col-right flex-column" aria-label="Chat Assistant">
@@ -189,7 +198,8 @@
            
           
           </div>
-
+          <div>
+            <div class="tip-indicator" style="display: none;" id="tip-indicator"> <p id="tip" class="tip-text">Digitando...</p> <div class="loader-small"></div></div>
           <form onsubmit="handleMessage(event)" id="chat-form" class="chat-input-group mt-auto">
             <input
               type="text"
@@ -199,14 +209,19 @@
               autocomplete="off"
               required
             />
+            <button type="button" class="btn-secondary" id="btn-validate-ai" onclick="validateAi()">
+              <i class="fa-solid fa-check"></i>
+            </button>
             <button type="submit" class="btn-send" id="btn-send">
               <i class="fa-solid fa-paper-plane"></i>
             </button>
           </form>
+          </div>
         </div>
       </aside>
     </main>
 
+    <script src="/js/header.js"></script>
     <script src="https://cdn.socket.io/4.7.4/socket.io.min.js"></script>
     <script src="../js/api/client.js"></script>
     <script src="../js/api/services/authService.js"></script>
