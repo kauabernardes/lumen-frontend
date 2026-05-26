@@ -121,13 +121,15 @@ async function handleRegister(event) {
       });
 
       alert("Conta criada com sucesso! Faça login.");
-      window.location.href = "/telalogin.html"; // Ou sua rota de login
+      window.location.href = "/"; // Ou sua rota de login
     } catch (error) {
       console.error("Erro no cadastro:", error);
-      emailError.textContent = error.message || "Erro ao criar conta. Verifique os dados.";
+      emailError.textContent =
+        error.message || "Erro ao criar conta. Verifique os dados.";
       emailError.classList.add("active");
       emailInput.classList.add("error");
-      passwordError.textContent = error.message || "Erro ao criar conta. Verifique os dados.";
+      passwordError.textContent =
+        error.message || "Erro ao criar conta. Verifique os dados.";
       passwordError.classList.add("active");
       passwordInput.classList.add("error");
     } finally {

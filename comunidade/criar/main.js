@@ -36,7 +36,8 @@ async function handleSave(event) {
   try {
     // Feedback visual de carregamento
     const originalText = btnSave.innerHTML;
-    btnSave.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Criando...';
+    btnSave.innerHTML =
+      '<i class="fa-solid fa-spinner fa-spin"></i> Criando...';
     btnSave.disabled = true;
     errorMsg.classList.remove("active");
 
@@ -45,10 +46,12 @@ async function handleSave(event) {
 
     // Sucesso!
     alert("Comunidade criada com sucesso!");
-    window.location.href = "/Comunidades.html";
+    window.location.href = "/comunidade/";
   } catch (error) {
     console.error("Erro ao criar comunidade:", error);
-    showError(error.message || "Não foi possível criar a comunidade. Tente novamente.");
+    showError(
+      error.message || "Não foi possível criar a comunidade. Tente novamente.",
+    );
   } finally {
     // Restaurar botão
     if (btnSave) {
@@ -103,14 +106,16 @@ async function minhasComunidades() {
 
       box.addEventListener(
         "click",
-        () => (location.href = `${location.origin}/comunidade/feed/?id=${c.id}`)
+        () =>
+          (location.href = `${location.origin}/comunidade/feed/?id=${c.id}`),
       );
 
       communityList.appendChild(box);
     });
   } catch (error) {
     console.error("Erro ao carregar comunidades:", error);
-    communityList.innerHTML = '<p style="font-size: 13px; color: var(--text-light);">Erro ao carregar suas comunidades.</p>';
+    communityList.innerHTML =
+      '<p style="font-size: 13px; color: var(--text-light);">Erro ao carregar suas comunidades.</p>';
   }
 }
 

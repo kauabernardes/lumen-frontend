@@ -17,6 +17,7 @@ const authService = {
 
     if (data && data.access_token) {
       sessionStorage.setItem("auth_token", data.access_token);
+      sessionStorage.setItem("auth_data", JSON.stringify(data?.user));
     }
 
     return data;
@@ -45,6 +46,17 @@ const authService = {
    */
   getToken() {
     return sessionStorage.getItem("auth_token");
+  },
+
+  getAuthData() {
+    const data = sessionStorage.getItem("auth_data");
+
+    try {
+      return data ? JSON.parse(data) : null;
+    } catch (error) {
+      console.error("Erro ao converter dados do storage:", error);
+      return null;
+    }
   },
 };
 

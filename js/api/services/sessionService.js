@@ -23,6 +23,12 @@ const sessionService = {
     window.socket.emit("join_session", payload, callback);
   },
 
+  async sendMessage(text, callback) {
+    const payload = { text };
+
+    window.socket.emit("send_message", payload, callback);
+  },
+
   /**
    * Busca a lista de participantes da sessão atual.
    * @param {string} sessionId - ID da sessão.
@@ -58,6 +64,10 @@ const sessionService = {
    */
   async forceStudy(sessionId) {
     return await window.api.post(`/session/${sessionId}/study`);
+  },
+
+  async addTheme(sessionId, theme) {
+    return await window.api.post(`/session/${sessionId}/add/theme`, { theme });
   },
 };
 
