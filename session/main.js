@@ -216,6 +216,43 @@ socket.on("receive_message", (message) => {
   renderMessage(message);
 });
 
+
+socket.on("validation_result", (result) => {
+  if (result.feedback) {
+
+     const messageE = document.createElement("div");
+    messageE.className = "message message-ai";
+
+    const formattedDate = new Date().toLocaleString("pt-BR", {
+      day: "2-digit",
+      month: "2-digit",
+      year: "numeric",
+      hour: "2-digit",
+      minute: "2-digit",
+    });
+
+    messageE.innerHTML = `
+      <div class="message-header">
+        <span class="username">
+          <i class="fa-solid fa-robot"></i> Luminha
+        </span>
+        <span class="timestamp">${formattedDate}</span>
+      </div>
+      <div class="ai-card">
+        <h4 class="ai-title">Feedback da Luminha ;)</h4>
+        <p class="content mt-2">${result.feedback}</p>
+      </div>
+    `;
+
+    chatContainer.appendChild(messageE);
+    chatContainer.scrollTo({
+      top: chatContainer.scrollHeight,
+      behavior: "smooth",
+    });
+  }
+})
+
+
 socket.on("timer_state", (data) => {
   console.log("Estado do timer atualizado:", data);
 
