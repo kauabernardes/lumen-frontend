@@ -18,13 +18,13 @@
       </div>
 
       <nav>
-        <a href="/home.html">home</a>
-        <a href="/comunidade/" class="active">comunidades</a>
-        <a href="../../Agenda.html">agenda</a>
+        <a href="../../home.html" >home</a>
+        <a href="../../comunidade/index.html" class="active">comunidades</a>
+        <a href="../../agenda/agenda.html" >agenda</a>
       </nav>
 
       <div class="divisao-header">
-        
+      
 
         <div class="notif">
           <i class="fa-regular fa-bell icon-bell"></i>
@@ -32,11 +32,9 @@
 
           <div class="dropdown" id="dropdownNotificacao">
             <div class="dropdown-header">Notificações</div>
-
             <div class="empty" id="emptyNotif">
               Você não possui notificações
             </div>
-
             <div class="item">
               <span class="dot"></span>
               <p>Alguém curtiu seu conteúdo</p>
@@ -53,16 +51,17 @@
           </div>
 
           <div class="user-dropdown" id="userDropdown">
-            <div class="user-info">
+  
+            <a href="/PerfilUsuario/usuario.html" class="user-info user-item user-profile-link">
               <i class="fa-regular fa-circle-user avatar"></i>
               <span>João A B</span>
-            </div>
+            </a>
 
             <div class="user-item">
               <i class="fa-solid fa-gear"></i>
               <span>Configurações</span>
             </div>
-
+            
             <div class="user-item" id="btnSair">
               <i class="fa-solid fa-right-from-bracket"></i>
               <span>Sair</span>
@@ -147,12 +146,14 @@
         </div>
       </section>
     </main>
-    <script src="../js/header.js"></script>
-
     <script src="../../js/api/client.js"></script>
+    
     <script src="../../js/api/services/authService.js"></script>
     <script src="../../js/api/services/communityService.js"></script>
     <script src="../../js/api/services/postService.js"></script>
+
+    <script src="../../js/header.js"></script>
+
     <script src="./main.js"></script>
   </body>
 </html>
