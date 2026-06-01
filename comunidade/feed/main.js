@@ -1,12 +1,18 @@
 // ==========================================
-// 1. CONFIGURAÇÕES E UTILITÁRIOS GERAIS
+// 1. CONFIGURAÇÕES E ESTADOS GERAIS
 // ==========================================
 const urlParams = new URLSearchParams(window.location.search);
 const comunidadeId = urlParams.get("id");
 
+// Variáveis de controle para o scroll infinito
+let paginaAtual = 1;
+const limitePorPagina = 5; // Definido para no máximo 5 posts por consulta
+let carregando = false;
+let temMaisPosts = true;
+
 // Gerador de cor adaptado para tons mais alinhados ao tema base
 function gerarCorPastel() {
-  const tonsBase = ['#f9c0d8', '#f28cb8', '#d4e8ff', '#fbc8e0', '#fce4ef'];
+  const tonsBase = ["#f9c0d8", "#f28cb8", "#d4e8ff", "#fbc8e0", "#fce4ef"];
   return tonsBase[Math.floor(Math.random() * tonsBase.length)];
 }
 
@@ -39,11 +45,14 @@ async function carregarComunidade() {
 
   try {
     const comunidade = await window.communityService.getById(comunidadeId);
-    const dataCriacao = new Date(comunidade.createdAt).toLocaleDateString("pt-BR", {
+    const dataCriacao = new Date(comunidade.createdAt).toLocaleDateString(
+      "pt-BR",
+      {
         day: "2-digit",
         month: "long",
         year: "numeric",
-    });
+      },
+    );
 
     const cardInfo = document.querySelector(".card-info");
     cardInfo.innerHTML = `
@@ -59,24 +68,40 @@ async function carregarComunidade() {
     `;
   } catch (error) {
     console.error("Erro ao carregar comunidade:", error);
-    document.querySelector(".card-info").innerHTML = "<p>Erro ao carregar dados.</p>";
+    document.querySelector(".card-info").innerHTML =
+      "<p>Erro ao carregar dados.</p>";
   }
 }
 
 async function carregarPosts(pagina = 1) {
-  const timeline = document.getElementById("timeline-posts");
-  if (!comunidadeId) return;
+  if (!comunidadeId || carregando || !temMaisPosts) return;
 
-  mostrarSkeletons();
+  const timeline = document.getElementById("timeline-posts");
+  carregando = true;
+
+  // Exibe os skeletons anexando-os no fim caso seja uma nova página
+  mostrarSkeletons(pagina > 1);
 
   try {
-    const result = await window.communityService.getPosts(comunidadeId, pagina, 10);
+    // Busca os posts passando o limite máximo de 5 por consulta
+    const result = await window.communityService.getPosts(
+      comunidadeId,
+      pagina,
+      limitePorPagina,
+    );
 
-    if (pagina === 1) timeline.innerHTML = "";
+    removerSkeletons();
 
-    if (result.data.length === 0) {
-      timeline.innerHTML = '<p style="text-align: center; color: var(--text-light); padding: 20px; font-style: italic;">Nenhum post encontrado nesta comunidade.</p>';
+    if (pagina === 1 && result.data.length === 0) {
+      timeline.innerHTML =
+        '<p style="text-align: center; color: var(--text-light); padding: 20px; font-style: italic;">Nenhum post encontrado nesta comunidade.</p>';
+      temMaisPosts = false;
       return;
+    }
+
+    // Se vierem menos posts que o limite, significa que a lista chegou ao fim
+    if (!result.data || result.data.length < limitePorPagina) {
+      temMaisPosts = false;
     }
 
     result.data.forEach((post) => {
@@ -112,38 +137,64 @@ async function carregarPosts(pagina = 1) {
               <span><i class="fa-regular fa-comment"></i> ${post.commentsCount || 0}</span>
           </div>
       `;
-      
-      article.querySelector(".btn-like").addEventListener("click", () =>
-        handleLike(post.id, article, post.likesCount || 0)
-      );
-      
+
+      article
+        .querySelector(".btn-like")
+        .addEventListener("click", () =>
+          handleLike(post.id, article, post.likesCount || 0),
+        );
+
       article.addEventListener("click", (e) => {
         if (e.target.closest(".btn-like")) return;
         location.href = `${location.origin}/comunidade/post/?id=${post.id}`;
       });
+
       timeline.appendChild(article);
     });
+
+    paginaAtual = pagina; // Atualiza o ponteiro de página atual
   } catch (error) {
     console.error("Erro ao carregar o feed:", error);
-    timeline.innerHTML = '<p style="text-align: center; color: var(--text-light);">Erro ao carregar o feed.</p>';
+    removerSkeletons();
+    if (pagina === 1) {
+      timeline.innerHTML =
+        '<p style="text-align: center; color: var(--text-light);">Erro ao carregar o feed.</p>';
+    }
+  } finally {
+    carregando = false;
   }
 }
 
 // ==========================================
-// 5. INICIALIZAÇÃO DA PÁGINA
+// 5. INICIALIZAÇÃO DA PÁGINA E SCROLL INFINITO
 // ==========================================
 document.addEventListener("DOMContentLoaded", () => {
   if (!comunidadeId) {
     console.warn("Nenhum ID de comunidade detectado na URL.");
     return;
   }
+
   carregarComunidade();
-  carregarPosts(1);
+  carregarPosts(paginaAtual);
+
+  // Escuta o evento de rolagem na janela global (window)
+  window.addEventListener("scroll", () => {
+    const { scrollTop, scrollHeight, clientHeight } = document.documentElement;
+    if (scrollTop + clientHeight >= scrollHeight - 50) {
+      carregarPosts(paginaAtual + 1);
+    }
+  });
 });
 
-function mostrarSkeletons() {
+function mostrarSkeletons(isAppending = false) {
   const timeline = document.getElementById("timeline-posts");
-  timeline.innerHTML = "";
+  if (!timeline) return;
+
+  if (!isAppending) {
+    timeline.innerHTML = "";
+  }
+  const wrapperSkel = document.createElement("div");
+  wrapperSkel.id = "feed-skeleton-wrapper";
 
   for (let i = 0; i < 3; i++) {
     const skel = document.createElement("div");
@@ -160,7 +211,16 @@ function mostrarSkeletons() {
         <div class="skeleton skeleton-text"></div>
         <div class="skeleton skeleton-text short"></div>
     `;
-    timeline.appendChild(skel);
+    wrapperSkel.appendChild(skel);
+  }
+
+  timeline.appendChild(wrapperSkel);
+}
+
+function removerSkeletons() {
+  const wrapper = document.getElementById("feed-skeleton-wrapper");
+  if (wrapper) {
+    wrapper.remove();
   }
 }
 
@@ -186,10 +246,12 @@ async function handleLike(postId, postElement) {
   try {
     if (likeIcon.classList.contains("fa-solid")) {
       likeIcon.classList.replace("fa-solid", "fa-regular");
-      likeCountSpan.textContent = Number.parseInt(likeCountSpan.textContent) - 1;
+      likeCountSpan.textContent =
+        Number.parseInt(likeCountSpan.textContent) - 1;
     } else {
       likeIcon.classList.replace("fa-regular", "fa-solid");
-      likeCountSpan.textContent = Number.parseInt(likeCountSpan.textContent) + 1;
+      likeCountSpan.textContent =
+        Number.parseInt(likeCountSpan.textContent) + 1;
     }
 
     btn.disabled = true;
@@ -210,4 +272,3 @@ async function handleLike(postId, postElement) {
     btn.disabled = false;
   }
 }
-

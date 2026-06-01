@@ -30,9 +30,9 @@ const communityService = {
    * @returns {Promise<Object>}
    */
   async getRecommended(page = 1, limit = 10) {
-    return await window.api.get("/community/recommended", {
-      params: { page, limit },
-    });
+    return await window.api.get(
+      `/community/recommended?page=${page}&limit=${limit}`,
+    );
   },
 
   /**
@@ -52,9 +52,9 @@ const communityService = {
    * @returns {Promise<Object>}
    */
   async getPosts(communityId, page = 1, limit = 10) {
-    return await window.api.get(`/community/${communityId}/posts`, {
-      params: { page, limit },
-    });
+    return await window.api.get(
+      `/community/${communityId}/posts?page=${page}&limit=${limit}`,
+    );
   },
 
   async getIn() {

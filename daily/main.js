@@ -23,25 +23,35 @@ document.addEventListener("DOMContentLoaded", function () {
   // FUNÇÃO PARA CARREGAR DADOS DA API
   // ----------------------------------------------------------
   async function loadSummary() {
+    const loading = document.getElementById("loading");
+    const streakCard = document.getElementById("streak-card");
+    const weekCard = document.getElementById("week-card");
+    loading.style.display = "flex";
+    streakCard.style.display = "none";
+    weekCard.style.display = "none";
     try {
       // Usa o service que acabamos de criar!
       const summary = await window.dailyService.getSummary();
-      
+
+      loading.style.display = "none";
+      streakCard.style.display = "inline";
+
+      weekCard.style.display = "inline";
       // 1. Atualiza a Ofensiva (Streak)
       const streakEl = document.getElementById("streakCount");
       const streakFill = document.querySelector(".streak-bar-fill");
       const streakCaption = document.querySelector(".streak-bar-caption");
 
       if (streakEl) streakEl.textContent = summary.streak;
-      
+
       if (streakFill && streakCaption) {
         const target = 30; // Alvo fixo de 30 dias para a barra de progresso
         const pct = Math.min((summary.streak / target) * 100, 100);
-        
+
         setTimeout(() => {
           streakFill.style.width = pct + "%";
         }, 400); // pequeno delay para a animação CSS acontecer
-        
+
         streakCaption.innerHTML = `${summary.streak} de ${target} dias — continue assim! 🎯`;
       }
 
@@ -49,10 +59,10 @@ document.addEventListener("DOMContentLoaded", function () {
       const weekDaysEl = document.getElementById("weekDays");
       if (weekDaysEl && summary.weekly) {
         weekDaysEl.innerHTML = ""; // Limpa o conteúdo mockado
-        
+
         const names = ["Dom", "Seg", "Ter", "Qua", "Qui", "Sex", "Sáb"];
         const today = new Date();
-        const dayOfWeek = today.getDay(); 
+        const dayOfWeek = today.getDay();
 
         for (let i = 0; i < 7; i++) {
           const diff = i - dayOfWeek;
@@ -63,7 +73,8 @@ document.addEventListener("DOMContentLoaded", function () {
           const isDone = summary.weekly[i]; // boolean retornado pela sua API
 
           const dayEl = document.createElement("div");
-          dayEl.className = "week-day" + (isToday ? " today" : "") + (isDone ? " done" : "");
+          dayEl.className =
+            "week-day" + (isToday ? " today" : "") + (isDone ? " done" : "");
 
           const nameEl = document.createElement("span");
           nameEl.className = "week-day-name";
@@ -71,7 +82,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
           const dotEl = document.createElement("div");
           dotEl.className = "week-day-dot";
-          dotEl.textContent = isDone ? "✓" : (isToday ? d.getDate() : "");
+          dotEl.textContent = isDone ? "✓" : isToday ? d.getDate() : "";
 
           dayEl.appendChild(nameEl);
           dayEl.appendChild(dotEl);
@@ -79,14 +90,12 @@ document.addEventListener("DOMContentLoaded", function () {
         }
       }
 
-      // 3. Atualiza as Estatísticas (Check-ins e Metas)
       const statValues = document.querySelectorAll(".stat-item .stat-value");
       if (statValues.length >= 3 && summary.stats) {
-        // [0] = Check-ins, [1] = Matérias, [2] = Meta, [3] = Horas
         statValues[0].textContent = summary.stats.totalCheckins;
         statValues[2].textContent = summary.stats.goalPercentage + "%";
+        statValues[3].textContent = summary.stats.hoursStudied;
       }
-
     } catch (error) {
       console.error("Erro ao carregar o resumo:", error);
     }
@@ -94,7 +103,6 @@ document.addEventListener("DOMContentLoaded", function () {
 
   // Chama a função assim que a página carregar
   loadSummary();
-
 
   // ----------------------------------------------------------
   // RADIO "CONSEGUIU ATINGIR?" E HUMOR (Sem alterações)
@@ -136,12 +144,28 @@ document.addEventListener("DOMContentLoaded", function () {
     btnCheckin.addEventListener("click", async function () {
       var desc1 = estudouOntem ? estudouOntem.value.trim() : "";
       var desc2 = estudaHoje ? estudaHoje.value.trim() : "";
-      var atingiuInput = document.querySelector('input[name="atingiu"]:checked');
+      var atingiuInput = document.querySelector(
+        'input[name="atingiu"]:checked',
+      );
 
-      if (!desc1) { shakeCard("step1"); estudouOntem.focus(); return; }
-      if (!atingiuInput) { shakeCard("step2"); return; }
-      if (!desc2) { shakeCard("step3"); estudaHoje.focus(); return; }
-      if (!selectedMood) { shakeCard("step4"); return; }
+      if (!desc1) {
+        shakeCard("step1");
+        estudouOntem.focus();
+        return;
+      }
+      if (!atingiuInput) {
+        shakeCard("step2");
+        return;
+      }
+      if (!desc2) {
+        shakeCard("step3");
+        estudaHoje.focus();
+        return;
+      }
+      if (!selectedMood) {
+        shakeCard("step4");
+        return;
+      }
 
       const payload = {
         date: new Date().toISOString().split("T")[0],
@@ -152,14 +176,17 @@ document.addEventListener("DOMContentLoaded", function () {
       };
 
       try {
-        btnCheckin.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> <span>Salvando...</span>';
+        btnCheckin.innerHTML =
+          '<i class="fa-solid fa-spinner fa-spin"></i> <span>Salvando...</span>';
         btnCheckin.disabled = true;
 
         // Usa o service para fazer o POST!
         await window.dailyService.createCheckin(payload);
 
-        btnCheckin.innerHTML = '<i class="fa-solid fa-check"></i> <span>Check-in feito!</span>';
-        btnCheckin.style.background = "linear-gradient(135deg, #34c47a, #27a86a)";
+        btnCheckin.innerHTML =
+          '<i class="fa-solid fa-check"></i> <span>Check-in feito!</span>';
+        btnCheckin.style.background =
+          "linear-gradient(135deg, #34c47a, #27a86a)";
         btnCheckin.style.boxShadow = "0 5px 20px rgba(52,196,122,0.4)";
 
         if (successBanner) successBanner.classList.add("visible");
@@ -167,12 +194,12 @@ document.addEventListener("DOMContentLoaded", function () {
         // Recarrega os dados do painel lateral inteiro chamando a API de novo!
         // Isso atualiza a ofensiva, os cards da semana e as estatísticas automaticamente.
         await loadSummary();
-
       } catch (error) {
         console.error("Erro ao fazer checkin:", error);
         alert(error.message || "Erro ao salvar o check-in. Tente novamente.");
 
-        btnCheckin.innerHTML = '<i class="fa-solid fa-circle-check"></i> <span>Fazer Check-in</span>';
+        btnCheckin.innerHTML =
+          '<i class="fa-solid fa-circle-check"></i> <span>Fazer Check-in</span>';
         btnCheckin.disabled = false;
       }
     });
@@ -200,7 +227,9 @@ document.addEventListener("DOMContentLoaded", function () {
 
   function getRandomQuote() {
     var idx;
-    do { idx = Math.floor(Math.random() * frases.length); } while (idx === lastIdx);
+    do {
+      idx = Math.floor(Math.random() * frases.length);
+    } while (idx === lastIdx);
     lastIdx = idx;
     return frases[idx];
   }
@@ -221,7 +250,9 @@ document.addEventListener("DOMContentLoaded", function () {
     card.style.animation = "none";
     card.offsetHeight;
     card.style.animation = "shake 0.4s ease";
-    setTimeout(function () { card.style.animation = ""; }, 450);
+    setTimeout(function () {
+      card.style.animation = "";
+    }, 450);
   }
 });
 

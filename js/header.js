@@ -6,6 +6,7 @@ const botao = document.querySelector(".icon-bell");
 const dropdown = document.getElementById("dropdownNotificacao");
 const badge = document.getElementById("badgeNotif");
 const emptyMsg = document.getElementById("emptyNotif");
+const userItem = document.querySelector(".user-info span");
 
 if (botao && dropdown) {
   botao.addEventListener("click", (e) => {
@@ -41,7 +42,6 @@ function atualizarBadge() {
 if (emptyMsg) emptyMsg.style.display = "none";
 atualizarBadge();
 
-
 // =========================
 // 👤 MENU USUÁRIO
 // =========================
@@ -50,15 +50,13 @@ let userData = null;
 
 function getUserData() {
   try {
-    userData = JSON.parse(sessionStorage.getItem("auth_data")); 
+    userData = JSON.parse(sessionStorage.getItem("auth_data"));
     console.log("Dados do usuário obtidos:", userData);
-  }
-  catch (error) {
+  } catch (error) {
     console.error("Erro ao obter dados do usuário:", error);
   }
 }
 getUserData();
-
 
 const userTrigger = document.querySelector(".user-trigger");
 const userDropdown = document.getElementById("userDropdown");
@@ -66,6 +64,7 @@ const userDropdown = document.getElementById("userDropdown");
 const username = userTrigger.children[1];
 if (username && userData) {
   username.innerHTML = userData.username || "Usuário";
+  userItem.innerHTML = userData.username || "Usuário";
 }
 
 if (userTrigger && userDropdown) {
@@ -86,5 +85,12 @@ const btnSair = document.getElementById("btnSair");
 if (btnSair) {
   btnSair.addEventListener("click", () => {
     window.location.href = "telalogin.html";
+  });
+}
+
+if (userItem) {
+  userItem.addEventListener("click", () => {
+    console.log("oadoaoda");
+    window.location.href = "/PerfilUsuario/usuario.html";
   });
 }

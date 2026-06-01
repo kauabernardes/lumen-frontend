@@ -59,7 +59,7 @@ passwordInput.addEventListener("input", validarCampos);
 
 async function handleLogin(event) {
   // PREVINE O RECARREGAMENTO DA PÁGINA
-  if (event) event.preventDefault();
+  event.preventDefault();
 
   validarCampos();
 

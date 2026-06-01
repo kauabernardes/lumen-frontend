@@ -28,8 +28,16 @@ const postService = {
   },
 
   async addComment(postId, commentText) {
-    return await window.api.post(`/posts/${postId}/comment`, { content: commentText });
-  }
+    return await window.api.post(`/posts/${postId}/comment`, {
+      content: commentText,
+    });
+  },
+
+  async getRecommendedPosts(page = 1, limit = 10) {
+    return await window.api.get(
+      `/posts/recommended?page=${page}&limit=${limit}`,
+    );
+  },
 };
 
 // Disponibiliza o serviço globalmente

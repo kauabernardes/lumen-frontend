@@ -72,7 +72,10 @@
     <main class="daily-main">
       <aside class="col-left">
         <!-- Streak -->
-        <div class="streak-card">
+        <div class="loading-card" id="loading">
+          <div class="loader"></div>
+        </div>
+        <div class="streak-card" id="streak-card">
           <div class="streak-top">
             <div class="streak-flame">
               <i class="fa-solid fa-fire"></i>
@@ -93,15 +96,14 @@
         </div>
 
         <!-- Mini calendário da semana -->
-        <div class="week-card">
+        <div class="week-card" id="week-card">
           <div class="week-title">
             <i class="fa-regular fa-calendar-check"></i> Semana atual
           </div>
           <div class="week-days" id="weekDays"></div>
-        </div>
 
-        <!-- Estatísticas rápidas -->
-        <div class="stats-card">
+          <!-- Estatísticas rápidas -->
+
           <div class="stats-title">Seus números</div>
           <div class="stats-grid">
             <div class="stat-item">
@@ -249,7 +251,7 @@
         </div>
       </aside>
     </main>
- <script src="../js/api/client.js"></script>
+    <script src="../js/api/client.js"></script>
     <script src="../js/api/services/dailyService.js"></script>
     <script src="./main.js"></script>
   </body>
