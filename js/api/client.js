@@ -1,17 +1,15 @@
-
-
-const API_BASE_URL = "http://localhost:3000"; 
+const API_BASE_URL = "https://lumen-backend-production-8879.up.railway.app";
 
 async function apiRequest(endpoint, options = {}) {
   const url = `${API_BASE_URL}${endpoint}`;
-
-  
   const token = sessionStorage.getItem("auth_token");
 
-  const defaultHeaders = {
-    "Content-Type": "application/json",
-  };
+  const defaultHeaders = {};
 
+  // ERRO CORRIGIDO: Só define 'application/json' se NÃO for um FormData
+  if (!(options.body instanceof FormData)) {
+    defaultHeaders["Content-Type"] = "application/json";
+  }
 
   if (token) {
     defaultHeaders["Authorization"] = `Bearer ${token}`;
@@ -24,6 +22,11 @@ async function apiRequest(endpoint, options = {}) {
       ...options.headers,
     },
   };
+
+  // ERRO CORRIGIDO: Remove qualquer Content-Type forçado caso seja FormData
+  if (options.body instanceof FormData && config.headers["Content-Type"]) {
+    delete config.headers["Content-Type"];
+  }
 
   if (config.method === "GET" || config.method === "HEAD") {
     delete config.body;
@@ -69,25 +72,31 @@ async function apiRequest(endpoint, options = {}) {
 const api = {
   get: (endpoint, options) =>
     apiRequest(endpoint, { ...options, method: "GET" }),
+
   post: (endpoint, body, options) =>
     apiRequest(endpoint, {
       ...options,
       method: "POST",
-      body: JSON.stringify(body),
+      // ERRO CORRIGIDO: Se for FormData, não usa JSON.stringify()
+      body: body instanceof FormData ? body : JSON.stringify(body),
     }),
+
   put: (endpoint, body, options) =>
     apiRequest(endpoint, {
       ...options,
       method: "PUT",
-      body: JSON.stringify(body),
+      body: body instanceof FormData ? body : JSON.stringify(body),
     }),
+
   delete: (endpoint, options) =>
     apiRequest(endpoint, { ...options, method: "DELETE" }),
+
   patch: (endpoint, body, options) =>
     apiRequest(endpoint, {
       ...options,
       method: "PATCH",
-      body: JSON.stringify(body),
+      // ERRO CORRIGIDO: Se for FormData, passa direto sem converter
+      body: body instanceof FormData ? body : JSON.stringify(body),
     }),
 };
 

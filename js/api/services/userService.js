@@ -25,8 +25,8 @@ const userService = {
    * Busca o resumo de estatísticas do usuário (ofensiva, horas, check-ins).
    * @returns {Promise<Object>}
    */
-  async getSessionStats() {
-    return await window.api.get("/user/session/stats");
+  async getSessionStats(userId) {
+    return await window.api.get(`/user/${userId}/session/stats`);
   },
 
   /**
@@ -47,6 +47,10 @@ const userService = {
     return await window.api.get(
       `/user/contributions?page=${page}&limit=${limit}`,
     );
+  },
+
+  async updateProfile(formData) {
+    return await window.api.patch(`/user/profile`, formData);
   },
 };
 

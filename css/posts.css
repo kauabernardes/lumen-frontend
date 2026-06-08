@@ -39,6 +39,12 @@
   font-size: 40px;
   color: #cccccc;
 }
+.post-user img {
+  width: 42px;
+  height: 42px;
+  background-color: var(--lumen-blue);
+  border-radius: 50%;
+}
 
 .user-data {
   display: flex;

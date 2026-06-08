@@ -214,6 +214,9 @@ async function fetchRecommendedPosts(page = 1) {
 
       const authorName = post.user ? post.user.username : "Usuário Oculto";
       const communityName = post.community ? post.community.name : "Comunidade";
+      const profileImage = post.user.profileImage
+        ? `<img src="${API_BASE_URL}/uploads/${post.user.profileImage}"></img>`
+        : '<i class="fa-regular fa-circle-user avatar"></i>';
 
       const article = document.createElement("div");
       article.className = "post";
@@ -221,7 +224,7 @@ async function fetchRecommendedPosts(page = 1) {
 
       article.innerHTML = `
         <div class="post-user">
-              <i class="fa-regular fa-circle-user avatar"></i>
+              ${profileImage}
               <div class="user-data">
                   <strong>${authorName}</strong>
                   <span>@${authorName}</span>

@@ -207,36 +207,38 @@
             <i class="fa-solid fa-xmark"></i>
           </button>
         </div>
-        <div class="modal-body">
-          <div class="form-group">
-            <label for="nome">Nome</label>
-            <input
-            name="name"
-              type="text"
-              id="inputNome"
-              placeholder="Seu nome"
-              value="João A B"
-            />
-          </div>
-          <div class="form-group">
-            <label for="username">Handle</label>
-            <input
-            name="username"
-              type="text"
-              id="inputHandle"
-              placeholder="@seuhandle"
-              value="@joaoab"
-            />
-          </div>
-          <div class="modal-actions">
-            <button class="btn-cancelar" id="btnCancelarModal">Cancelar</button>
-            <button class="btn-salvar" id="btnSalvarModal">
-              <i class="fa-solid fa-floppy-disk"></i> Salvar
-            </button>
-          </div>
-        </div>
+       
+          <div class="modal-body">
+  <div class="form-group">
+    <label for="inputFile"><i class="fa-solid fa-camera"></i> Foto de Perfil</label>
+    <input
+      type="file"
+      id="inputFile"
+      accept="image/png, image/jpeg, image/webp"
+      class="form-control"
+    />
+  </div>
+
+  <div class="form-group">
+    <label for="nome">Nome</label>
+    <input name="name" type="text" id="inputNome" placeholder="Seu nome" value="João A B" />
+  </div>
+  
+  <div class="form-group">
+    <label for="username">Handle</label>
+    <input name="username" type="text" id="inputHandle" placeholder="@seuhandle" value="@joaoab" />
+  </div>
+  
+  <div class="modal-actions">
+    <button class="btn-cancelar" id="btnCancelarModal">Cancelar</button>
+    <button class="btn-salvar" id="btnSalvarModal">
+      <i class="fa-solid fa-floppy-disk"></i> Salvar
+    </button>
+  </div>
+</div>
       </div>
     </div>
+    <script src="/js/header.js"></script>
 
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="/js/api/client.js"></script>
@@ -244,6 +246,5 @@
     <script src="/js/api/services/userService.js"></script>
        <script src="/js/api/services/communityService.js"></script>
     <script src="/PerfilUsuario/usuario.js"></script>
-    <script src="/js/header.js"></script>
   </body>
 </html>

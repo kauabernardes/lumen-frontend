@@ -1,25 +1,20 @@
-
-
 const urlParams = new URLSearchParams(window.location.search);
 const postId = urlParams.get("id");
 const comments = document.getElementById("comments");
-
 
 async function fetchPost() {
   if (!postId) return;
   const timeline = document.getElementById("timeline-posts");
   if (!timeline) return;
 
-  
-  if (!comments) return
+  if (!comments) return;
   try {
     const result = await window.postService.getById(postId);
-   
-   
 
     console.log("Post encontrado:", result);
     if (!result) {
-      timeline.innerHTML = "<p style='color: var(--text-mid); font-family: DM Sans;'>Post não encontrado.</p>";
+      timeline.innerHTML =
+        "<p style='color: var(--text-mid); font-family: DM Sans;'>Post não encontrado.</p>";
       return;
     }
     const postCard = createPostCard(result);
@@ -38,7 +33,8 @@ async function fetchPost() {
     });
   } catch (error) {
     console.error("Erro ao buscar post:", error);
-    timeline.innerHTML = "<p style='color: var(--text-mid); font-family: DM Sans;'>Erro ao carregar post.</p>";
+    timeline.innerHTML =
+      "<p style='color: var(--text-mid); font-family: DM Sans;'>Erro ao carregar post.</p>";
   }
 }
 
@@ -50,13 +46,16 @@ function createPostCard(post, comment = false) {
 
   const authorName = post.user ? post.user.username : "Usuário Oculto";
   const communityName = post.community ? post.community.name : "Comunidade";
+  const profileImage = post.user.profileImage
+    ? `<img src="${API_BASE_URL}/uploads/${post.user.profileImage}"></img>`
+    : '<i class="fa-regular fa-circle-user avatar"></i>';
 
   const article = document.createElement("article");
   article.className = comment ? "comment" : "post";
   article.setAttribute("data-id", post.id);
   article.innerHTML = `
       <div class="post-user">
-          <i class="fa-regular fa-circle-user avatar"></i>
+          ${profileImage}
           <div class="user-data">
               <strong>${authorName}</strong>
               <span>@${authorName}</span>
@@ -64,48 +63,54 @@ function createPostCard(post, comment = false) {
         
           <div class="post-info">
               <span>Postado às ${dataHora}</span><br>
-              ${! comment ? `<a href="/comunidade/feed/?id=${post?.community?.id}">${communityName}</a>` : ''}
+              ${!comment ? `<a href="/comunidade/feed/?id=${post?.community?.id}">${communityName}</a>` : ""}
           </div>
       </div>
-        ${post.parent ?
-          `<a href="/comunidade/post/?id=${post?.parent?.id}" class="post-reply">Em resposta a ${post?.parent?.user?.username || "usuário"}</a>` : ''}
+        ${
+          post.parent
+            ? `<a href="/comunidade/post/?id=${post?.parent?.id}" class="post-reply">Em resposta a ${post?.parent?.user?.username || "usuário"}</a>`
+            : ""
+        }
       <p class="post-text">${post.content}</p>
        <div class="post-stats">
               <button class="btn-like">
                   <i class="${post.isLiked ? "fa-solid" : "fa-regular"} fa-heart"></i>
                   <span class="like-count">${post.likesCount || 0}</span>
                </button>
-                ${comment ? `<span><i class="fa-regular fa-comment"></i> ${post.commentsCount || 0}</span>` : ''}   
+                ${comment ? `<span><i class="fa-regular fa-comment"></i> ${post.commentsCount || 0}</span>` : ""}   
           </div>
 
-          ${!comment ? `<div class="input-group">
+          ${
+            !comment
+              ? `<div class="input-group">
           <label for="desc">Responder</label>
           <textarea
             id="desc"
             placeholder="Comentar na postagem de @${authorName}"
           ></textarea> 
         </div>
-        <button class="btn-postar" onclick="handleComment('${post.id}', document.getElementById('desc'), this)">Comentar</button>` : ''}
+        <button class="btn-postar" onclick="handleComment('${post.id}', document.getElementById('desc'), this)">Comentar</button>`
+              : ""
+          }
   `;
 
-   article.querySelector(".btn-like").addEventListener("click", () =>
-        handleLike(post.id, article, post.likesCount || 0)
-      );
+  article
+    .querySelector(".btn-like")
+    .addEventListener("click", () =>
+      handleLike(post.id, article, post.likesCount || 0),
+    );
 
-      if (comment) {
-      article.addEventListener("click", (e) => {
-        if (e.target.closest(".btn-like")) return;
-        location.href = `${location.origin}/comunidade/post/?id=${post.id}`;
-      });}
+  if (comment) {
+    article.addEventListener("click", (e) => {
+      if (e.target.closest(".btn-like")) return;
+      location.href = `${location.origin}/comunidade/post/?id=${post.id}`;
+    });
+  }
 
   return article;
 }
 
-
-
-
 fetchPost();
-
 
 async function handleComment(postId, desc, commentButton) {
   const commentValue = desc.value.trim();
@@ -116,11 +121,14 @@ async function handleComment(postId, desc, commentButton) {
   }
   commentButton.disabled = true;
   desc.disabled = true;
-  commentButton.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Publicando...';
+  commentButton.innerHTML =
+    '<i class="fa-solid fa-spinner fa-spin"></i> Publicando...';
   try {
-    
-    const newComment = await window.postService.addComment(postId, commentValue);
-     desc.value = "";
+    const newComment = await window.postService.addComment(
+      postId,
+      commentValue,
+    );
+    desc.value = "";
     const commentsContainer = document.getElementById("comments");
     if (commentsContainer) {
       const commentCard = createPostCard(newComment, true);
@@ -145,10 +153,12 @@ async function handleLike(postId, postElement) {
   try {
     if (likeIcon.classList.contains("fa-solid")) {
       likeIcon.classList.replace("fa-solid", "fa-regular");
-      likeCountSpan.textContent = Number.parseInt(likeCountSpan.textContent) - 1;
+      likeCountSpan.textContent =
+        Number.parseInt(likeCountSpan.textContent) - 1;
     } else {
       likeIcon.classList.replace("fa-regular", "fa-solid");
-      likeCountSpan.textContent = Number.parseInt(likeCountSpan.textContent) + 1;
+      likeCountSpan.textContent =
+        Number.parseInt(likeCountSpan.textContent) + 1;
     }
 
     btn.disabled = true;

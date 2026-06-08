@@ -1,6 +1,8 @@
-const API_URL = "http://localhost:3000/session";
+const API_URL = "https://lumen-backend-production-8879.up.railway.app/session";
 
-window.socket = io("http://localhost:3000/session");
+window.socket = io(
+  "https://lumen-backend-production-8879.up.railway.app/session",
+);
 const socket = window.socket;
 
 let currentSessionId = null;
