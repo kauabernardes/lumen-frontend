@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Conquistas</title>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" />
+  <link rel="stylesheet" href="../../css/header.css" />
+  <link rel="stylesheet" href="conquistas.css" />
+</head>
+<body>
+
+  <main class="conquistas-page">
+
+    <div class="page-header">
+      <button class="btn-voltar" onclick="history.back()">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M19 12H5M12 19l-7-7 7-7"/>
+        </svg>
+        Voltar
+      </button>
+    </div>
+
+    <section class="conquistas-container">
+
+      <div class="conquistas-titulo-wrapper">
+        <h1 class="conquistas-titulo">Conquistas</h1>
+        <div class="conquistas-subtitulo">
+          <span id="totalDesbloqueadas">3</span> de <span id="totalConquistas">11</span> desbloqueadas
+        </div>
+      </div>
+
+      <div class="conquistas-grid" id="conquistasGrid"></div>
+
+    </section>
+
+  </main>
+
+  <script src="conquistas.js"></script>
+</body>
+</html>
