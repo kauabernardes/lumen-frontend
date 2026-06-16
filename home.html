@@ -6,6 +6,8 @@
     <title>Lumen</title>
     <link rel="stylesheet" href="./css/home.css" />
     <link rel="stylesheet" href="./css/header.css" />
+    <link rel="stylesheet" href="/css/posts.css" />
+    <link rel="stylesheet" href="/css/loadingSkeleton.css" />
     <link
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
@@ -24,8 +26,6 @@
       </nav>
 
       <div class="divisao-header">
-      
-
         <div class="notif">
           <i class="fa-regular fa-bell icon-bell"></i>
           <span class="badge" id="badgeNotif">0</span>
@@ -70,133 +70,21 @@
 
     <div class="layout">
       <main class="feed">
-        <div class="feed-content">
-          <div class="feed-header">
-              <h2><i class="fas fa-users"></i> Comunidades</h2>
-            
-          </div>
+        <div class="feed-header">
+          <h2><i class="fas fa-users"></i> Comunidades</h2>
+          <button class="new-post-top">
+            <i class="fa-solid fa-plus"></i> Novo Post
+          </button>
+        </div>
 
-          <div class="posts">
-
-            <div class="posts-content">
-              <div class="post">
-                <i class="fa-regular fa-circle-user avatar"></i>
-                <div class="content">
-                  <div class="post-info">
-                    <span>Postado às 11h48m em <strong>Loucos do ENEM</strong></span>
-                    <i class="fa-solid fa-ellipsis-vertical menu-post"></i>
-                  </div>
-                  <div class="post-body">
-                    <strong>Julia Oliveira:</strong> Galera, fiz um resumo de História...
-                  </div>
-                </div>
-              </div>
-
-              <div class="post">
-                <i class="fa-regular fa-circle-user avatar"></i>
-                <div class="content">
-                  <div class="post-info">
-                    <span>Postado às 12h32m em <strong>Estuda que Passa</strong></span>
-                    <i class="fa-solid fa-ellipsis-vertical menu-post"></i>
-                  </div>
-                  <div class="post-body">
-                    <strong>Giovanna Lacerda:</strong> Oi gente, alguém sabe de vídeo aula boa para geometria analítica?
-                  </div>
-                  <div class="reply">
-                    <i class="fa-regular fa-circle-user reply-avatar"></i>
-                    <div class="reply-content">
-                      <strong>Caio Siqueira:</strong> No canal "Professor Ferreto" tem uma playlist sobre o conteúdo, é ótimo!
-                    </div>
-                  </div>
-                </div>
-              </div>
-
-              <div class="post">
-                <i class="fa-regular fa-circle-user avatar"></i>
-                <div class="content">
-                  <div class="post-info">
-                    <span>Postado às 15h01m em <strong>Loucos do ENEM</strong></span>
-                    <i class="fa-solid fa-ellipsis-vertical menu-post"></i>
-                  </div>
-                  <div class="post-body">
-                    <strong>Vinícius Lima:</strong> Faltam 30 dias pro ENEM e já tô ficando ansioso. Bora manter o foco, a gente consegue 💪
-                  </div>
-                </div>
-              </div>
-
-              <div class="post">
-                <i class="fa-regular fa-circle-user avatar"></i>
-                <div class="content">
-                  <div class="post-info">
-                    <span>Postado às 18h10m em <strong>Tarados pela FUVEST</strong></span>
-                    <i class="fa-solid fa-ellipsis-vertical menu-post"></i>
-                  </div>
-                  <div class="post-body">
-                    <strong>Lara Dias:</strong> Descobri uma apostila gratuita para questões padrões da FUVEST. <a href="#"> Link</a>
-                  </div>
-                </div>
-              </div>
-
-              <div class="post">
-                <i class="fa-regular fa-circle-user avatar"></i>
-                <div class="content">
-                  <div class="post-info">
-                    <span>Postado às 15h01m em <strong>Loucos do ENEM</strong></span>
-                    <i class="fa-solid fa-ellipsis-vertical menu-post"></i>
-                  </div>
-                  <div class="post-body">
-                    <strong>Vinícius Lima:</strong> Pessoal, como ficou aquela questão do log desse enem? Deu ambiguidade? Vi uns gabaritos bem diferentes.
-                  </div>
-                </div>
-              </div>
-              <div class="post">
-                <i class="fa-regular fa-circle-user avatar"></i>
-                <div class="content">
-                  <div class="post-info">
-                    <span>Postado às 11h48m em <strong>Loucos do ENEM</strong></span>
-                    <i class="fa-solid fa-ellipsis-vertical menu-post"></i>
-                  </div>
-                  <div class="post-body">
-                    <strong>Julia Oliveira:</strong> Galera, fiz um resumo de História...
-                  </div>
-                </div>
-              </div>
-
-              <div class="post">
-                <i class="fa-regular fa-circle-user avatar"></i>
-                <div class="content">
-                  <div class="post-info">
-                    <span>Postado às 12h32m em <strong>Estuda que Passa</strong></span>
-                    <i class="fa-solid fa-ellipsis-vertical menu-post"></i>
-                  </div>
-                  <div class="post-body">
-                    <strong>Giovanna Lacerda:</strong> Oi gente, alguém sabe de vídeo aula boa para geometria analítica?
-                  </div>
-                  <div class="reply">
-                    <i class="fa-regular fa-circle-user reply-avatar"></i>
-                    <div class="reply-content">
-                      <strong>Caio Siqueira:</strong> No canal "Professor Ferreto" tem uma playlist sobre o conteúdo, é ótimo!
-                    </div>
-                  </div>
-                </div>
-              </div>
-
-           
-
-          
-
-            
-            </div>
-          </div>
+        <div class="posts">
+          <div class="posts-content timeline"></div>
+        </div>
       </main>
 
-      <!-- Painel lateral direito -->
       <aside class="right-panel">
-
         <div class="top-blocks">
-
-          <!-- SESSÃO -->
-          <div class="session">
+          <div class="widget session">
             <div class="session-header">
               <span class="session-title">Sessão</span>
             </div>
@@ -207,92 +95,78 @@
               <button class="mode-btn">
                 <i class="fa-solid fa-mug-hot"></i> Pausa Curta
               </button>
-              <button class="mode-btn">
-                <i class="fa-solid fa-couch"></i> Pausa Longa
-              </button>
             </div>
             <div class="session-timer">
               <span class="timer-display">25:00</span>
             </div>
-            <a href="session/" class="session-start">
-              <i class="fa-solid fa-play"></i> Entrar em Sessão
+            <a href="session/" class="btn-primary">
+              <i class="fa-solid fa-play"></i> Iniciar
             </a>
           </div>
 
-          <!-- CHECKIN -->
-          <div class="checkin">
+          <div class="widget checkin">
             <div class="checkin-header">
               <span class="checkin-title">Progresso</span>
             </div>
-            <div class="checkin-item">
-              <div class="checkin-left">
+            <div class="checkin-stats">
+              <div class="checkin-item">
                 <div class="icon-check fire">
                   <i class="fa-solid fa-fire"></i>
                 </div>
-                <div class="checkin-label">
-                  <span class="checkin-name">Dias de Ofensiva</span>
-                  <span class="checkin-sub">sequência atual</span>
+                <div class="checkin-info">
+                  <span class="checkin-value">84</span>
+                  <span class="checkin-label">Dias seguidos</span>
                 </div>
               </div>
-              <div class="checkin-value">84</div>
-            </div>
-            <div class="checkin-divider"></div>
-            <div class="checkin-item">
-              <div class="checkin-left">
+              <div class="checkin-item">
                 <div class="icon-check clock">
                   <i class="fa-regular fa-clock"></i>
                 </div>
-                <div class="checkin-label">
-                  <span class="checkin-name">Horas de Estudos</span>
-                  <span class="checkin-sub">total acumulado</span>
+                <div class="checkin-info">
+                  <span class="checkin-value">252h</span>
+                  <span class="checkin-label">Total de estudo</span>
                 </div>
               </div>
-              <div class="checkin-value">252</div>
             </div>
-            <button class="checkin-btn" onclick="window.location.href='../daily/index.html'">
-                <i class="fa-solid fa-circle-check"></i> Fazer check-in
+            <button
+              class="btn-primary outline"
+              onclick="window.location.href = '../daily/index.html'"
+            >
+              <i class="fa-solid fa-circle-check"></i> Fazer Check-in
             </button>
           </div>
+        </div>
 
-          <!-- RECOMENDAÇÃO -->
-          <div class="recommendation">
-            <h4>
-              História - Revolução Francesa<br />
-              <span>Disponível hoje</span>
-            </h4>
-            <button>Começar agora</button>
+        <div class="widget recommendation">
+          <div class="rec-content">
+            <h4>História - Revolução Francesa</h4>
+            <span>Disponível hoje</span>
           </div>
+          <button class="btn-light">Começar agora</button>
+        </div>
 
-          <!-- ANÚNCIO -->
-          <div class="ad">
-            <img src="../img/anuncio-mc.png" alt="Anúncio" class="ad-img" />
-          </div>
-
-        </div> 
-
-        <!-- eventos -->
-        <div class="events">
+        <div class="widget events">
           <div class="events-header">
             <i class="fa-solid fa-calendar-days"></i>
             <h3>Próximos eventos</h3>
           </div>
-          <ul>
+          <ul class="events-list">
             <li>
-              <div class="event-date">10/10</div>
+              <div class="event-date">10<br />Out</div>
               <div class="event-info">
                 <span class="event-title">Prova de História</span>
                 <span class="event-time">08:00</span>
               </div>
             </li>
             <li>
-              <div class="event-date">18/10</div>
+              <div class="event-date">18<br />Out</div>
               <div class="event-info">
                 <span class="event-title">Entrega: Trabalho de Química</span>
-                <span class="event-time">dia todo</span>
+                <span class="event-time">Dia todo</span>
               </div>
             </li>
             <li>
-              <div class="event-date">22/10</div>
+              <div class="event-date">22<br />Out</div>
               <div class="event-info">
                 <span class="event-title">Prova de Matemática</span>
                 <span class="event-time">10:00</span>
@@ -301,19 +175,20 @@
           </ul>
         </div>
 
-        <div class="achievements">
+        <div class="widget achievements">
           <div class="achievements-top">
             <i class="fa-solid fa-trophy"></i>
             <h3>Conquistas</h3>
           </div>
-          <p>Você tem pontos disponíveis para resgatar</p>
-          <button>Resgatar pontos</button>
+          <p>Você tem pontos disponíveis para resgatar na loja.</p>
+          <button class="btn-gold">Resgatar pontos</button>
         </div>
-
       </aside>
     </div>
 
-    <script src="home.js"></script>
     <script src="../js/header.js"></script>
+    <script src="../js/api/client.js"></script>
+    <script src="../js/api/services/postService.js"></script>
+    <script src="/js/home.js"></script>
   </body>
 </html>

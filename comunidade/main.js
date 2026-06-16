@@ -24,9 +24,8 @@ function gerarCorPastel() {
   return `#${r.toString(16).padStart(2, "0")}${g.toString(16).padStart(2, "0")}${b.toString(16).padStart(2, "0")}`;
 }
 
-// ==========================================
-// LÓGICA DE COMUNIDADES RECOMENDADAS
-// ==========================================
+// comunidades recomendadas
+
 function mostrarSkeletonsComunidades(isAppending = false) {
   const container = document.getElementById("comunidades-container");
   if (!container) return;
@@ -127,12 +126,7 @@ async function acessarComunidade(id, isMember) {
   }
 }
 
-// ==========================================
-// LÓGICA DE POSTS RECOMENDADOS
-// ==========================================
-// ==========================================
-// LÓGICA DE POSTS RECOMENDADOS
-// ==========================================
+// recomendacoes de posts
 function mostrarSkeletonsPosts(isAppending = false) {
   const container = document.querySelector(".timeline");
   if (!container) return;
@@ -173,7 +167,6 @@ function removerSkeletonsPosts() {
 async function fetchRecommendedPosts(page = 1) {
   if (isPostsLoading || !hasMorePosts) return;
 
-  // Garante que os posts vão para o container correto
   const postsContainer = document.querySelector(".timeline");
   if (!postsContainer) return;
 

@@ -207,7 +207,7 @@ body {
 .center {
   display: flex;
   flex-direction: column;
-  gap: 16px; /* espaçamento mais limpo entre os posts */
+  gap: 16px;
   height: calc(100vh - 80px);
   overflow-y: auto;
   overflow-x: hidden;
@@ -215,7 +215,6 @@ body {
   padding-bottom: 50px;
 }
 
-/* CREATE COMMUNITY */
 .create-community {
   display: flex;
   align-items: center;
