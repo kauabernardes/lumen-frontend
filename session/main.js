@@ -111,7 +111,6 @@ function renderParticipants(users) {
   });
 }
 
-// Lógica WebSocket
 socket.on("connect", () =>
   console.info("Conectado ao servidor Socket.io com ID:", socket.id),
 );
@@ -456,7 +455,6 @@ if (sessionIdFromURL) {
   requestJoinSession(sessionIdFromURL);
 }
 
-// Copiar Link
 btnCopyLink.addEventListener("click", () => {
   if (!currentSessionId) return;
   const shareUrl = `${window.location.origin}/session/?id=${currentSessionId}`;

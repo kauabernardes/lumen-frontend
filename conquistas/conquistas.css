@@ -1,223 +1,230 @@
-*, *::before, *::after {
-    box-sizing: border-box;
-    margin: 0;
-    padding: 0;
-  }
-  
-  body {
-    font-family: 'Poppins', sans-serif;
-    min-height: 100vh;
-    background-image: url('../img/conquistas-web.png');
-    background-size: cover;
-    background-position: center;
-    background-repeat: no-repeat;
-    background-attachment: fixed;
-    overflow-x: hidden;
-    position: relative;
-  }
-  
-  .conquistas-page {
-    position: relative;
-    z-index: 1;
-    min-height: 100vh;
-    padding: 0 0 60px;
-  }
-  
-  .page-header {
-    padding: 24px 40px 0;
-  }
-  
-  .btn-voltar {
-    display: inline-flex;
-    align-items: center;
-    gap: 8px;
-    background: rgba(255, 255, 255, 0.25);
-    border: none;
-    border-radius: 50px;
-    padding: 10px 22px;
-    font-family: 'Poppins', sans-serif;
-    font-size: 0.95rem;
-    font-weight: 600;
-    color: #5a3e00;
-    cursor: pointer;
-    backdrop-filter: blur(8px);
-    transition: background 0.2s, transform 0.15s;
-  }
-  
-  .btn-voltar:hover {
-    background: rgba(255, 255, 255, 0.45);
-    transform: translateX(-3px);
-  }
-  
-  .conquistas-container {
-    max-width: 1100px;
-    margin: 0 auto;
-    padding: 36px 40px 0;
-  }
-  
-  .conquistas-titulo-wrapper {
-    margin-bottom: 36px;
-  }
-  
-  .conquistas-titulo {
-    font-size: 3rem;
-    font-weight: 800;
-    color: #3a2800;
-    line-height: 1;
-    letter-spacing: -1px;
-  }
-  
-  .conquistas-subtitulo {
-    margin-top: 8px;
-    font-size: 1rem;
-    font-weight: 500;
-    color: rgba(58, 40, 0, 0.65);
-  }
-  
-  .conquistas-subtitulo span {
-    font-weight: 700;
-    color: #3a2800;
-  }
-  
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: "Poppins", sans-serif;
+  min-height: 100vh;
+  background-image: url("../img/conquistas-web.png");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  overflow-x: hidden;
+  position: relative;
+}
+
+.conquistas-page {
+  position: relative;
+  z-index: 1;
+  min-height: 100vh;
+  padding: 0 0 60px;
+}
+
+.page-header {
+  padding: 24px 40px 0;
+}
+
+.btn-voltar {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: rgba(255, 255, 255, 0.25);
+  border: none;
+  border-radius: 50px;
+  padding: 10px 22px;
+  font-family: "Poppins", sans-serif;
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: #5a3e00;
+  cursor: pointer;
+  backdrop-filter: blur(8px);
+  transition:
+    background 0.2s,
+    transform 0.15s;
+}
+
+.btn-voltar:hover {
+  background: rgba(255, 255, 255, 0.45);
+  transform: translateX(-3px);
+}
+
+.conquistas-container {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 36px 40px 0;
+}
+
+.conquistas-titulo-wrapper {
+  margin-bottom: 36px;
+}
+
+.conquistas-titulo {
+  font-size: 3rem;
+  font-weight: 800;
+  color: #3a2800;
+  line-height: 1;
+  letter-spacing: -1px;
+}
+
+.conquistas-subtitulo {
+  margin-top: 8px;
+  font-size: 1rem;
+  font-weight: 500;
+  color: rgba(58, 40, 0, 0.65);
+}
+
+.conquistas-subtitulo span {
+  font-weight: 700;
+  color: #3a2800;
+}
+
+.conquistas-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 18px;
+}
+
+.conquista-card {
+  border-radius: 20px;
+  padding: 22px 22px 18px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 14px;
+  min-height: 130px;
+  transition:
+    transform 0.2s,
+    box-shadow 0.2s;
+  position: relative;
+  overflow: hidden;
+  cursor: default;
+}
+
+.conquista-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.18);
+}
+
+.conquista-card.desbloqueada {
+  background: linear-gradient(135deg, #7c3aed, #9f5cf7);
+  box-shadow: 0 8px 24px rgba(124, 58, 237, 0.35);
+}
+
+.conquista-card.bloqueada {
+  background: linear-gradient(135deg, #5a5a6e, #6e6e82);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
+}
+
+.conquista-card::before {
+  content: "";
+  position: absolute;
+  top: -30px;
+  right: -30px;
+  width: 90px;
+  height: 90px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.07);
+}
+
+.conquista-card-nome {
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: #ffffff;
+  line-height: 1.4;
+  flex: 1;
+}
+
+.conquista-card-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.conquista-pontos {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 0.82rem;
+  font-weight: 600;
+  text-transform: capitalize;
+}
+
+.conquista-card.desbloqueada .conquista-pontos {
+  color: #ffd700;
+}
+
+.conquista-card.bloqueada .conquista-pontos {
+  color: rgba(255, 255, 255, 0.5);
+}
+
+.conquista-pontos svg {
+  width: 14px;
+  height: 14px;
+}
+
+.conquista-card.desbloqueada .conquista-pontos svg {
+  fill: #ffd700;
+  stroke: #ffd700;
+}
+
+.conquista-card.bloqueada .conquista-pontos svg {
+  fill: none;
+  stroke: rgba(255, 255, 255, 0.4);
+}
+
+.conquista-badge {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.conquista-card.desbloqueada .conquista-badge {
+  background: rgba(255, 255, 255, 0.2);
+}
+
+.conquista-card.bloqueada .conquista-badge {
+  background: rgba(255, 255, 255, 0.08);
+}
+
+.conquista-badge svg {
+  width: 14px;
+  height: 14px;
+  stroke: rgba(255, 255, 255, 0.7);
+  fill: none;
+}
+
+.conquista-card.desbloqueada .conquista-badge svg {
+  stroke: #ffd700;
+}
+
+@media (max-width: 900px) {
   .conquistas-grid {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 18px;
+    grid-template-columns: repeat(2, 1fr);
   }
-  
-  .conquista-card {
-    border-radius: 20px;
-    padding: 22px 22px 18px;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    gap: 14px;
-    min-height: 130px;
-    transition: transform 0.2s, box-shadow 0.2s;
-    position: relative;
-    overflow: hidden;
-    cursor: default;
+  .conquistas-titulo {
+    font-size: 2.2rem;
   }
-  
-  .conquista-card:hover {
-    transform: translateY(-4px);
-    box-shadow: 0 16px 40px rgba(0,0,0,0.18);
+}
+
+@media (max-width: 600px) {
+  .conquistas-container {
+    padding: 28px 20px 0;
   }
-  
-  .conquista-card.desbloqueada {
-    background: linear-gradient(135deg, #7c3aed, #9f5cf7);
-    box-shadow: 0 8px 24px rgba(124, 58, 237, 0.35);
+  .page-header {
+    padding: 20px 20px 0;
   }
-  
-  .conquista-card.bloqueada {
-    background: linear-gradient(135deg, #5a5a6e, #6e6e82);
-    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
+  .conquistas-grid {
+    grid-template-columns: 1fr;
   }
-  
-  .conquista-card::before {
-    content: '';
-    position: absolute;
-    top: -30px;
-    right: -30px;
-    width: 90px;
-    height: 90px;
-    border-radius: 50%;
-    background: rgba(255,255,255,0.07);
+  .conquistas-titulo {
+    font-size: 1.9rem;
   }
-  
-  .conquista-card-nome {
-    font-size: 0.95rem;
-    font-weight: 600;
-    color: #ffffff;
-    line-height: 1.4;
-    flex: 1;
-  }
-  
-  .conquista-card-footer {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-  }
-  
-  .conquista-pontos {
-    display: inline-flex;
-    align-items: center;
-    gap: 5px;
-    font-size: 0.82rem;
-    font-weight: 600;
-  }
-  
-  .conquista-card.desbloqueada .conquista-pontos {
-    color: #ffd700;
-  }
-  
-  .conquista-card.bloqueada .conquista-pontos {
-    color: rgba(255,255,255,0.5);
-  }
-  
-  .conquista-pontos svg {
-    width: 14px;
-    height: 14px;
-  }
-  
-  .conquista-card.desbloqueada .conquista-pontos svg {
-    fill: #ffd700;
-    stroke: #ffd700;
-  }
-  
-  .conquista-card.bloqueada .conquista-pontos svg {
-    fill: none;
-    stroke: rgba(255,255,255,0.4);
-  }
-  
-  .conquista-badge {
-    width: 28px;
-    height: 28px;
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-  
-  .conquista-card.desbloqueada .conquista-badge {
-    background: rgba(255,255,255,0.2);
-  }
-  
-  .conquista-card.bloqueada .conquista-badge {
-    background: rgba(255,255,255,0.08);
-  }
-  
-  .conquista-badge svg {
-    width: 14px;
-    height: 14px;
-    stroke: rgba(255,255,255,0.7);
-    fill: none;
-  }
-  
-  .conquista-card.desbloqueada .conquista-badge svg {
-    stroke: #ffd700;
-  }
-  
-  @media (max-width: 900px) {
-    .conquistas-grid {
-      grid-template-columns: repeat(2, 1fr);
-    }
-    .conquistas-titulo {
-      font-size: 2.2rem;
-    }
-  }
-  
-  @media (max-width: 600px) {
-    .conquistas-container {
-      padding: 28px 20px 0;
-    }
-    .page-header {
-      padding: 20px 20px 0;
-    }
-    .conquistas-grid {
-      grid-template-columns: 1fr;
-    }
-    .conquistas-titulo {
-      font-size: 1.9rem;
-    }
-  }
+}

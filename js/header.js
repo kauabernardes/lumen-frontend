@@ -42,10 +42,6 @@ function atualizarBadge() {
 if (emptyMsg) emptyMsg.style.display = "none";
 atualizarBadge();
 
-// =========================
-// 👤 MENU USUÁRIO
-// =========================
-
 let userData = null;
 
 function getUserData() {
@@ -84,7 +80,7 @@ if (userTrigger && userDropdown) {
 const btnSair = document.getElementById("btnSair");
 if (btnSair) {
   btnSair.addEventListener("click", () => {
-    window.location.href = "telalogin.html";
+    window.location.href = "/";
   });
 }
 

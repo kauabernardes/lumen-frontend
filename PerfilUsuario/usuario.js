@@ -73,7 +73,6 @@ btnSalvarModal.addEventListener("click", async () => {
     return;
   }
 
-  // Desabilita o botão e exibe feedback visual de carregamento
   const textoOriginalBtn = btnSalvarModal.innerHTML;
   btnSalvarModal.innerHTML =
     '<i class="fa-solid fa-spinner fa-spin"></i> Salvando...';
@@ -177,7 +176,7 @@ async function carregarComunidades() {
     if (!comunidadesList) return;
 
     comunidadesList.innerHTML = "";
-    response?.map((comum) => {
+    response?.data?.map((comum) => {
       const art = document.createElement("article");
       art.className = "comunidade-card";
 
@@ -190,7 +189,8 @@ async function carregarComunidades() {
             `;
       comunidadesList.appendChild(art);
     });
-    if (comunidadesCount) comunidadesCount.innerText = response?.length || 0;
+    if (comunidadesCount)
+      comunidadesCount.innerText = response?.meta?.total || 0;
   } catch (e) {
     console.log("Erro ao carregar lista de comunidades:", e);
   }

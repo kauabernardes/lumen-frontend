@@ -6,7 +6,6 @@ async function apiRequest(endpoint, options = {}) {
 
   const defaultHeaders = {};
 
-  // ERRO CORRIGIDO: Só define 'application/json' se NÃO for um FormData
   if (!(options.body instanceof FormData)) {
     defaultHeaders["Content-Type"] = "application/json";
   }
@@ -23,7 +22,6 @@ async function apiRequest(endpoint, options = {}) {
     },
   };
 
-  // ERRO CORRIGIDO: Remove qualquer Content-Type forçado caso seja FormData
   if (options.body instanceof FormData && config.headers["Content-Type"]) {
     delete config.headers["Content-Type"];
   }
@@ -77,7 +75,7 @@ const api = {
     apiRequest(endpoint, {
       ...options,
       method: "POST",
-      // ERRO CORRIGIDO: Se for FormData, não usa JSON.stringify()
+
       body: body instanceof FormData ? body : JSON.stringify(body),
     }),
 
@@ -95,7 +93,6 @@ const api = {
     apiRequest(endpoint, {
       ...options,
       method: "PATCH",
-      // ERRO CORRIGIDO: Se for FormData, passa direto sem converter
       body: body instanceof FormData ? body : JSON.stringify(body),
     }),
 };

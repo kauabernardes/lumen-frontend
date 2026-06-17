@@ -176,8 +176,48 @@ async function handleLike(postId, postElement) {
   }
 }
 
+async function renderEvents() {
+  const eventsList = document.getElementById("events-list");
+  eventsList.innerHTML = "";
+
+  try {
+    const response = await window.agendaService.getEvents();
+
+    response.forEach((evento) => {
+      const item = document.createElement("li");
+      item.innerHTML = `
+              <div class="event-date">${new Date(
+                evento?.eventDate,
+              ).toLocaleString("pt-BR", { day: "2-digit" })}<br />${new Date(
+                evento?.eventDate,
+              ).toLocaleString("pt-BR", { month: "short" })}</div>
+              <div class="event-info">
+                <span class="event-title">${evento?.title}</span>
+                <span class="event-time">Às ${new Date(evento?.eventDate).toLocaleTimeString("pt-BR", { minute: "2-digit", hour: "2-digit" })}</span>
+              </div>
+              `;
+
+      eventsList.append(item);
+    });
+  } catch (e) {}
+}
+
+async function iaRec() {
+  const box = document.getElementById("recom");
+  box.innerHTML = "<div class='loader'></div>";
+
+  try {
+    const response = await window.recommendationService.get();
+
+    box.innerHTML = `<div class="rec-content">
+            <h4>${response?.title}</h4>
+            <span>${response?.subtitle}</span>
+          </div>
+          <button class="btn-light">${response?.action}</button>`;
+  } catch (e) {}
+}
+
 document.addEventListener("DOMContentLoaded", async () => {
-  // Carrega os posts iniciais
   await fetchRecommendedPosts(currentPostPage);
   const postsContent = document.querySelector(".posts");
 
@@ -200,3 +240,6 @@ document.addEventListener("DOMContentLoaded", async () => {
     }
   });
 });
+
+renderEvents();
+iaRec();

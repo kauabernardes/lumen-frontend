@@ -8,6 +8,7 @@
     <link rel="stylesheet" href="./css/header.css" />
     <link rel="stylesheet" href="/css/posts.css" />
     <link rel="stylesheet" href="/css/loadingSkeleton.css" />
+    <link rel="stylesheet" href="/css/loader.css" />
     <link
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
@@ -51,8 +52,10 @@
           </div>
 
           <div class="user-dropdown" id="userDropdown">
-  
-            <a href="/PerfilUsuario/usuario.html" class="user-info user-item user-profile-link">
+            <a
+              href="/PerfilUsuario/usuario.html"
+              class="user-info user-item user-profile-link"
+            >
               <i class="fa-regular fa-circle-user avatar"></i>
               <span>João A B</span>
             </a>
@@ -61,7 +64,7 @@
               <i class="fa-solid fa-gear"></i>
               <span>Configurações</span>
             </div>
-            
+
             <div class="user-item" id="btnSair">
               <i class="fa-solid fa-right-from-bracket"></i>
               <span>Sair</span>
@@ -140,7 +143,7 @@
           </div>
         </div>
 
-        <div class="widget recommendation">
+        <div id="recom" class="widget recommendation">
           <div class="rec-content">
             <h4>História - Revolução Francesa</h4>
             <span>Disponível hoje</span>
@@ -153,29 +156,7 @@
             <i class="fa-solid fa-calendar-days"></i>
             <h3>Próximos eventos</h3>
           </div>
-          <ul class="events-list">
-            <li>
-              <div class="event-date">10<br />Out</div>
-              <div class="event-info">
-                <span class="event-title">Prova de História</span>
-                <span class="event-time">08:00</span>
-              </div>
-            </li>
-            <li>
-              <div class="event-date">18<br />Out</div>
-              <div class="event-info">
-                <span class="event-title">Entrega: Trabalho de Química</span>
-                <span class="event-time">Dia todo</span>
-              </div>
-            </li>
-            <li>
-              <div class="event-date">22<br />Out</div>
-              <div class="event-info">
-                <span class="event-title">Prova de Matemática</span>
-                <span class="event-time">10:00</span>
-              </div>
-            </li>
-          </ul>
+          <ul id="events-list" class="events-list"></ul>
         </div>
 
         <div class="widget achievements">
@@ -183,15 +164,22 @@
             <i class="fa-solid fa-trophy"></i>
             <h3>Conquistas</h3>
           </div>
-          <p>Você tem pontos disponíveis para resgatar na loja.</p>
-          <button class="btn-gold">Resgatar pontos</button>
+          <p>Você acertou diversos desafios</p>
+          <button
+            onclick="window.location.href = '../conquistas/conquistas.html'"
+            class="btn-gold"
+          >
+            Visualizar
+          </button>
         </div>
       </aside>
     </div>
 
-    <script src="../js/header.js"></script>
     <script src="../js/api/client.js"></script>
+    <script src="/js/api/services/agendaService.js"></script>
+    <script src="/js/api/services/recommendationService.js"></script>
     <script src="../js/api/services/postService.js"></script>
+    <script src="/js/header.js"></script>
     <script src="/js/home.js"></script>
   </body>
 </html>

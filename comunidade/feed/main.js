@@ -1,43 +1,20 @@
-// ==========================================
-// 1. CONFIGURAÇÕES E ESTADOS GERAIS
-// ==========================================
 const urlParams = new URLSearchParams(window.location.search);
 const comunidadeId = urlParams.get("id");
 
-// Variáveis de controle para o scroll infinito
 let paginaAtual = 1;
-const limitePorPagina = 5; // Definido para no máximo 5 posts por consulta
+const limitePorPagina = 5;
 let carregando = false;
 let temMaisPosts = true;
 
-// Gerador de cor adaptado para tons mais alinhados ao tema base
 function gerarCorPastel() {
   const tonsBase = ["#f9c0d8", "#f28cb8", "#d4e8ff", "#fbc8e0", "#fce4ef"];
   return tonsBase[Math.floor(Math.random() * tonsBase.length)];
 }
 
-// ==========================================
-// 2. INTERFACE DO USUÁRIO (MENU DROPDOWN)
-// ==========================================
-const userTrigger = document.querySelector(".user-trigger");
-const userDropdown = document.getElementById("dropdownNotificacao");
-
-if (userTrigger && userDropdown) {
-  userTrigger.addEventListener("click", () => {
-    userDropdown.classList.toggle("active");
-  });
-}
-
-// ==========================================
-// 3. LÓGICA DE POSTAGEM (EVENTO DE FORMULÁRIO)
-// ==========================================
 function newPost() {
   location.href = `${location.origin}/comunidade/post/new/?id=${comunidadeId}`;
 }
 
-// ==========================================
-// 4. BUSCA DE DADOS (COMUNIDADE E FEED)
-// ==========================================
 async function carregarComunidade() {
   if (!comunidadeId) return;
 
@@ -79,11 +56,9 @@ async function carregarPosts(pagina = 1) {
   const timeline = document.getElementById("timeline-posts");
   carregando = true;
 
-  // Exibe os skeletons anexando-os no fim caso seja uma nova página
   mostrarSkeletons(pagina > 1);
 
   try {
-    // Busca os posts passando o limite máximo de 5 por consulta
     const result = await window.communityService.getPosts(
       comunidadeId,
       pagina,
@@ -99,7 +74,6 @@ async function carregarPosts(pagina = 1) {
       return;
     }
 
-    // Se vierem menos posts que o limite, significa que a lista chegou ao fim
     if (!result.data || result.data.length < limitePorPagina) {
       temMaisPosts = false;
     }
@@ -155,7 +129,7 @@ async function carregarPosts(pagina = 1) {
       timeline.appendChild(article);
     });
 
-    paginaAtual = pagina; // Atualiza o ponteiro de página atual
+    paginaAtual = pagina;
   } catch (error) {
     console.error("Erro ao carregar o feed:", error);
     removerSkeletons();
@@ -168,9 +142,6 @@ async function carregarPosts(pagina = 1) {
   }
 }
 
-// ==========================================
-// 5. INICIALIZAÇÃO DA PÁGINA E SCROLL INFINITO
-// ==========================================
 document.addEventListener("DOMContentLoaded", () => {
   if (!comunidadeId) {
     console.warn("Nenhum ID de comunidade detectado na URL.");
@@ -180,7 +151,6 @@ document.addEventListener("DOMContentLoaded", () => {
   carregarComunidade();
   carregarPosts(paginaAtual);
 
-  // Escuta o evento de rolagem na janela global (window)
   window.addEventListener("scroll", () => {
     const { scrollTop, scrollHeight, clientHeight } = document.documentElement;
     if (scrollTop + clientHeight >= scrollHeight - 50) {
