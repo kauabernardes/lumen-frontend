@@ -36,7 +36,7 @@ body {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  box-shadow: 0 8px 24px rgba(0,0,0,0.06);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.06);
   border: 1px solid #e2e8f0;
 }
 
@@ -55,7 +55,7 @@ body {
   display: flex;
   align-items: center;
   justify-content: center;
-  box-shadow: 0 8px 20px rgba(30,124,184,0.3);
+  box-shadow: 0 8px 20px rgba(30, 124, 184, 0.3);
   flex-shrink: 0;
 }
 
@@ -117,13 +117,13 @@ body {
   align-items: center;
   gap: 8px;
   transition: 0.25s ease;
-  box-shadow: 0 4px 14px rgba(30,124,184,0.3);
+  box-shadow: 0 4px 14px rgba(30, 124, 184, 0.3);
   flex-shrink: 0;
 }
 
 .btn-editar:hover {
   transform: translateY(-2px);
-  box-shadow: 0 8px 20px rgba(30,124,184,0.4);
+  box-shadow: 0 8px 20px rgba(30, 124, 184, 0.4);
 }
 
 /* ========================= */
@@ -145,7 +145,7 @@ body {
   background: white;
   border-radius: 22px;
   padding: 22px;
-  box-shadow: 0 8px 24px rgba(0,0,0,0.06);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.06);
   border: 1px solid #e2e8f0;
 }
 .perfil-section:first-child {
@@ -176,25 +176,49 @@ body {
   display: flex;
   flex-direction: column;
   gap: 12px;
+
+  /* Altura exata para 3 cards (3x 150px + 2x 12px de gap) */
+  max-height: 300px;
+  overflow-y: auto; /* 'auto' é melhor que 'scroll' para não mostrar barra horizontal vazia */
+  overflow-x: hidden;
+  padding-right: 8px; /* Afasta o conteúdo da barra de rolagem */
+}
+
+/* Scrollbar estilizada para manter o design clean */
+.comunidades-grid::-webkit-scrollbar {
+  width: 6px;
+}
+.comunidades-grid::-webkit-scrollbar-track {
+  background: #f8fafc;
+  border-radius: 8px;
+}
+.comunidades-grid::-webkit-scrollbar-thumb {
+  background: #cbd5e1;
+  border-radius: 8px;
+}
+.comunidades-grid::-webkit-scrollbar-thumb:hover {
+  background: #94a3b8;
 }
 
 .comunidade-card {
+  height: 100px;
+  flex-shrink: 0; /* IMPEDE que os cards encolham e força a div pai a rolar */
   border-radius: 12px;
   overflow: hidden;
   transition: 0.3s ease;
-  box-shadow: 0 4px 15px rgba(0,0,0,0.1);
-  border: 1px solid rgba(255,255,255,0.6);
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.6);
 }
 
 .comunidade-card:hover {
   transform: translateY(-3px);
-  box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
 }
 
 .comunidade-cover {
   position: relative;
   width: 100%;
-  height: 80px;
+  height: 100%;
   display: flex;
   align-items: flex-end;
   padding: 12px 14px;
@@ -208,7 +232,7 @@ body {
   right: 16px;
   transform: translateY(-50%);
   font-size: 40px;
-  color: rgba(255,255,255,0.15);
+  color: rgba(255, 255, 255, 0.15);
 }
 
 /* gradiente escuro no rodapé */
@@ -216,7 +240,7 @@ body {
   content: "";
   position: absolute;
   inset: 0;
-  background: linear-gradient(to top, rgba(0,0,0,0.5) 0%, transparent 60%);
+  background: linear-gradient(to top, rgba(0, 0, 0, 0.5) 0%, transparent 60%);
   pointer-events: none;
 }
 
@@ -226,16 +250,16 @@ body {
   color: white;
   font-size: 14px;
   font-weight: 800;
-  text-shadow: 0 2px 4px rgba(0,0,0,0.4);
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.4);
   flex: 1;
 }
 
 .btn-acessar {
   position: relative;
   z-index: 2;
-  background: rgba(255,255,255,0.25);
+  background: rgba(255, 255, 255, 0.25);
   backdrop-filter: blur(6px);
-  border: 1px solid rgba(255,255,255,0.4);
+  border: 1px solid rgba(255, 255, 255, 0.4);
   color: white;
   padding: 6px 14px;
   border-radius: 8px;
@@ -247,7 +271,7 @@ body {
 }
 
 .btn-acessar:hover {
-  background: rgba(255,255,255,0.4);
+  background: rgba(255, 255, 255, 0.4);
   transform: translateY(-1px);
 }
 
@@ -359,7 +383,7 @@ body {
 .modal-overlay {
   position: fixed;
   inset: 0;
-  background: rgba(0,0,0,0.4);
+  background: rgba(0, 0, 0, 0.4);
   backdrop-filter: blur(4px);
   display: flex;
   align-items: center;
@@ -381,7 +405,7 @@ body {
   padding: 28px;
   width: 100%;
   max-width: 420px;
-  box-shadow: 0 20px 50px rgba(0,0,0,0.2);
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.2);
   transform: translateY(20px);
   transition: 0.25s ease;
 }
@@ -464,7 +488,7 @@ body {
 .form-group input:focus {
   border-color: #3b82f6;
   background: white;
-  box-shadow: 0 0 0 3px rgba(59,130,246,0.1);
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
 }
 
 .modal-actions {
@@ -505,10 +529,23 @@ body {
   align-items: center;
   justify-content: center;
   gap: 7px;
-  box-shadow: 0 4px 14px rgba(30,124,184,0.3);
+  box-shadow: 0 4px 14px rgba(30, 124, 184, 0.3);
 }
 
 .btn-salvar:hover {
   transform: translateY(-2px);
-  box-shadow: 0 8px 20px rgba(30,124,184,0.4);
+  box-shadow: 0 8px 20px rgba(30, 124, 184, 0.4);
+}
+
+.coluna-esq,
+.coluna-dir {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.chart-container {
+  position: relative;
+  width: 100%;
+  height: 250px; /* Limita a altura para o gráfico não crescer infinitamente */
 }

@@ -5,8 +5,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Agenda - Lumen</title>
     <link rel="stylesheet" href="./agenda.css" />
+    <link rel="stylesheet" href="/css/loader.css" />
     <link rel="stylesheet" href="../css/header.css" />
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
+    />
   </head>
   <body>
     <header class="topbar">
@@ -15,14 +19,12 @@
       </div>
 
       <nav>
-        <a href="../home.html" >home</a>
-        <a href="../comunidade/index.html" >comunidades</a>
+        <a href="../home.html">home</a>
+        <a href="../comunidade/index.html">comunidades</a>
         <a href="../agenda/agenda.html" class="active">agenda</a>
       </nav>
 
       <div class="divisao-header">
-      
-
         <div class="notif">
           <i class="fa-regular fa-bell icon-bell"></i>
           <span class="badge" id="badgeNotif">0</span>
@@ -48,8 +50,10 @@
           </div>
 
           <div class="user-dropdown" id="userDropdown">
-  
-            <a href="/PerfilUsuario/usuario.html" class="user-info user-item user-profile-link">
+            <a
+              href="/PerfilUsuario/usuario.html"
+              class="user-info user-item user-profile-link"
+            >
               <i class="fa-regular fa-circle-user avatar"></i>
               <span>João A B</span>
             </a>
@@ -58,7 +62,7 @@
               <i class="fa-solid fa-gear"></i>
               <span>Configurações</span>
             </div>
-            
+
             <div class="user-item" id="btnSair">
               <i class="fa-solid fa-right-from-bracket"></i>
               <span>Sair</span>
@@ -68,10 +72,7 @@
       </div>
     </header>
 
-
     <div class="agenda-layout">
-
-      <!-- COLUNA ESQUERDA: lista de eventos -->
       <div class="agenda-left">
         <div class="agenda-left-header">
           <div>
@@ -93,21 +94,28 @@
         </div>
       </div>
 
-      <!-- COLUNA DIREITA: formulário -->
       <div class="agenda-right">
-        <div class="form-card" id="formCard">
+        <form onsubmit="newEvent(event)" class="form-card" id="formCard">
           <div class="form-header">
             <h3 id="formTitulo"><i class="fa-solid fa-pen"></i> Novo evento</h3>
           </div>
 
           <div class="form-group">
             <label>Título</label>
-            <input type="text" id="inputTitulo" placeholder="Ex: Prova de História" />
+            <input
+              type="text"
+              id="inputTitulo"
+              placeholder="Ex: Prova de História"
+            />
           </div>
 
           <div class="form-group">
             <label>Descrição</label>
-            <input type="text" id="inputDescricao" placeholder="Ex: Capítulos 1 ao 5" />
+            <input
+              type="text"
+              id="inputDescricao"
+              placeholder="Ex: Capítulos 1 ao 5"
+            />
           </div>
 
           <div class="form-row">
@@ -123,15 +131,16 @@
 
           <div class="form-row">
             <button class="btn-cancelar" id="btnCancelar">Cancelar</button>
-            <button class="btn-salvar" id="btnSalvar">
+            <button type="submit" class="btn-salvar" id="btnSalvar">
               <i class="fa-solid fa-floppy-disk"></i> Salvar
             </button>
           </div>
-        </div>
+        </form>
       </div>
-
     </div>
 
+    <script src="/js/api/client.js"></script>
+    <script src="/js/api/services/agendaService.js"></script>
     <script src="agenda.js"></script>
     <script src="../js/header.js"></script>
   </body>

@@ -1,6 +1,8 @@
-const API_URL = "http://localhost:3000/session";
+const API_URL = "https://lumen-backend-production-8879.up.railway.app/session";
 
-window.socket = io("http://localhost:3000/session");
+window.socket = io(
+  "https://lumen-backend-production-8879.up.railway.app/session",
+);
 const socket = window.socket;
 
 let currentSessionId = null;
@@ -41,7 +43,9 @@ const tipIndicator = document.getElementById("tip-indicator");
 
 const lastChallengeCard = document.getElementById("card-last-challenge");
 const lastChallengeTitle = document.getElementById("title-last-challenge");
-const lastChallengeSubtitle = document.getElementById("subtitle-last-challenge");
+const lastChallengeSubtitle = document.getElementById(
+  "subtitle-last-challenge",
+);
 const lastChallengeContent = document.getElementById("content-last-challenge");
 
 loadingIndicator.style.display = "none";
@@ -50,9 +54,6 @@ chatBtn.disabled = true;
 
 btnAddTheme.disabled = true;
 themeInput.disabled = true;
-
-
-
 
 function notificar() {
   notificacao.play().catch(console.error);
@@ -110,7 +111,6 @@ function renderParticipants(users) {
   });
 }
 
-// Lógica WebSocket
 socket.on("connect", () =>
   console.info("Conectado ao servidor Socket.io com ID:", socket.id),
 );
@@ -135,12 +135,11 @@ socket.on("ai_generated", () => {
   tip.innerText = "Luminha está pensando...";
 });
 
-
 function renderMessage(message) {
   const messageE = document.createElement("div");
-  
+
   const isMe = userData?.id === message?.userId;
-  const isAi = message?.isAi || message?.userId === 'ai';
+  const isAi = message?.isAi || message?.userId === "ai";
 
   if (isMe) {
     messageE.className = "message-sent";
@@ -158,33 +157,28 @@ function renderMessage(message) {
     minute: "2-digit",
   });
 
-
-  let innerContent = '';
+  let innerContent = "";
 
   if (isAi) {
-
     innerContent = `
       <div class="message-header">
         <span class="username">
-          <i class="fa-solid fa-robot"></i> ${message?.username || 'Luminha'}
+          <i class="fa-solid fa-robot"></i> ${message?.username || "Luminha"}
         </span>
         <span class="timestamp">${formattedDate}</span>
       </div>
       <div class="ai-card">
-        ${message?.title ? `<h4 class="ai-title">${message.title}</h4>` : ''}
-        ${message?.subtitle ? `<span class="ai-subtitle">${message.subtitle}</span>` : ''}
+        ${message?.title ? `<h4 class="ai-title">${message.title}</h4>` : ""}
+        ${message?.subtitle ? `<span class="ai-subtitle">${message.subtitle}</span>` : ""}
         <p class="content mt-2">${message?.text}</p>
       </div>
     `;
 
-    
-        lastChallengeCard.style.display = "block";
-        lastChallengeTitle.innerText = message.title || "";
-        lastChallengeSubtitle.innerText = message.subtitle || "";
-        lastChallengeContent.innerText = message.text || "";
-      
+    lastChallengeCard.style.display = "block";
+    lastChallengeTitle.innerText = message.title || "";
+    lastChallengeSubtitle.innerText = message.subtitle || "";
+    lastChallengeContent.innerText = message.text || "";
   } else {
-
     innerContent = `
       <div class="message-header">
         <span class="username">${message?.username}</span>
@@ -204,11 +198,15 @@ function renderMessage(message) {
 
 async function validateAi() {
   try {
-  const data = await window.sessionService.validate(currentSessionId);
-  console.log("Resposta da IA validada com sucesso." + JSON.stringify(data));
-  } catch(e) {
+    document.getElementById("btn-validate-ai").disabled = true;
+    const data = await window.sessionService.validate(currentSessionId);
+
+    console.log("Resposta da IA validada com sucesso." + JSON.stringify(data));
+  } catch (e) {
     console.error("Erro ao validar resposta da IA:", e);
     alert("Erro ao validar resposta da IA. Tente novamente.");
+  } finally {
+    document.getElementById("btn-validate-ai").disabled = false;
   }
 }
 
@@ -216,13 +214,49 @@ socket.on("receive_message", (message) => {
   renderMessage(message);
 });
 
+socket.on("validation_result", (result) => {
+  if (result.feedback) {
+    const messageE = document.createElement("div");
+    messageE.className = "message message-ai";
+
+    const formattedDate = new Date().toLocaleString("pt-BR", {
+      day: "2-digit",
+      month: "2-digit",
+      year: "numeric",
+      hour: "2-digit",
+      minute: "2-digit",
+    });
+
+    messageE.innerHTML = `
+      <div class="message-header">
+        <span class="username">
+          <i class="fa-solid fa-robot"></i> Luminha
+        </span>
+        <span class="timestamp">${formattedDate}</span>
+      </div>
+      <div class="ai-card">
+        <h4 class="ai-title">Feedback da Luminha ;)</h4>
+        <p class="content mt-2">${result.feedback}</p>
+      </div>
+    `;
+
+    chatContainer.appendChild(messageE);
+    chatContainer.scrollTo({
+      top: chatContainer.scrollHeight,
+      behavior: "smooth",
+    });
+  }
+});
+
 socket.on("timer_state", (data) => {
   console.log("Estado do timer atualizado:", data);
 
-  if (data.status === "running") btnResume.innerHTML = '<i class="fa-solid fa-pause"></i> Pausar';
+  if (data.status === "running")
+    btnResume.innerHTML = '<i class="fa-solid fa-pause"></i> Pausar';
   else btnResume.innerHTML = '<i class="fa-solid fa-play"></i> Retomar';
 
-  updateTimerDisplay(data.timeLeft)});
+  updateTimerDisplay(data.timeLeft);
+});
 
 function requestJoinSession(sessionId = null) {
   if (!window.sessionService) {
@@ -233,8 +267,6 @@ function requestJoinSession(sessionId = null) {
   loadingIndicator.style.display = "block";
   joinContainer.style.display = "none";
 
-
-  
   window.sessionService.join(sessionId, async (response) => {
     if (response.error) {
       alert("Erro: " + response.error);
@@ -258,8 +290,9 @@ function requestJoinSession(sessionId = null) {
       console.error("Erro ao buscar participantes:", err);
     }
 
-    try{
-      const themesData = await window.sessionService.getThemes(currentSessionId);
+    try {
+      const themesData =
+        await window.sessionService.getThemes(currentSessionId);
       if (themesData && themesData.length > 0) {
         themesList.innerHTML = "";
         themesData.forEach((theme) => {
@@ -273,26 +306,25 @@ function requestJoinSession(sessionId = null) {
         themesList.appendChild(themesPlaceholder);
         themesPlaceholder.style.display = "block";
       }
-    } catch(err){
+    } catch (err) {
       console.error("Erro ao buscar temas:", err);
     }
 
     try {
-      const lastChallengeData = await window.sessionService.getLastChallenge(currentSessionId);
+      const lastChallengeData =
+        await window.sessionService.getLastChallenge(currentSessionId);
       if (lastChallengeData) {
         lastChallengeCard.style.display = "block";
-        lastChallengeTitle.innerText = lastChallengeData.title || "Desafio sem título";
+        lastChallengeTitle.innerText =
+          lastChallengeData.title || "Desafio sem título";
         lastChallengeSubtitle.innerText = lastChallengeData.context || "";
         lastChallengeContent.innerText = lastChallengeData.question || "";
       } else {
         lastChallengeCard.style.display = "none";
-        
       }
     } catch (err) {
       console.error("Erro ao buscar último desafio:", err);
     }
-
-
 
     updateTimerDisplay(response.pomodoro.timeLeft);
     showTimerUI();
@@ -308,9 +340,9 @@ function sendMessage(text) {
   chatBtn.innerHTML = `<i class="fa-solid fa-spinner fa-spin"></i>`;
   window.sessionService.sendMessage(text, async (response) => {
     if (response.error) {
-       chatInput.value = "";
-    chatBtn.disabled = false;
-    chatBtn.innerHTML = `<i class="fa-solid fa-paper-plane"></i>`;
+      chatInput.value = "";
+      chatBtn.disabled = false;
+      chatBtn.innerHTML = `<i class="fa-solid fa-paper-plane"></i>`;
       alert("Erro: " + response.error);
       if (response.error.includes("Acesso negado")) window.location.href = "/";
       return;
@@ -378,10 +410,10 @@ btnJoin.addEventListener("click", () => {
   requestJoinSession(sessionIdToJoin);
 });
 
-async function addTheme(e){
+async function addTheme(e) {
   console.log("Adicionando tema...");
   e.preventDefault();
-   const newTheme = themeInput.value.trim();
+  const newTheme = themeInput.value.trim();
   if (!newTheme || !currentSessionId) return;
 
   try {
@@ -423,7 +455,6 @@ if (sessionIdFromURL) {
   requestJoinSession(sessionIdFromURL);
 }
 
-// Copiar Link
 btnCopyLink.addEventListener("click", () => {
   if (!currentSessionId) return;
   const shareUrl = `${window.location.origin}/session/?id=${currentSessionId}`;

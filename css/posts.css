@@ -1,0 +1,121 @@
+.post {
+  background: rgba(255, 255, 255, 0.85);
+  backdrop-filter: blur(16px);
+  border: 1px solid var(--border-glass);
+  border-radius: var(--radius-card);
+  padding: 20px 24px;
+  box-shadow: 0 3px 18px var(--shadow-glass);
+  transition:
+    transform 0.2s,
+    box-shadow 0.2s;
+  position: relative;
+  overflow: hidden;
+
+  cursor: pointer;
+}
+
+.post::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 4px;
+  background: var(--lumen-blue);
+}
+
+.post:hover {
+  box-shadow: 0 6px 24px rgba(74, 144, 226, 0.18);
+  transform: translateY(-2px);
+}
+
+.post-user {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.post-user i.avatar {
+  font-size: 40px;
+  color: #cccccc;
+}
+.post-user img {
+  width: 42px;
+  height: 42px;
+  background-color: var(--lumen-blue);
+  border-radius: 50%;
+}
+
+.user-data {
+  display: flex;
+  flex-direction: column;
+}
+
+.user-data strong {
+  font-family: "Sora", sans-serif;
+  font-size: 14px;
+  color: var(--text-dark);
+  font-weight: 700;
+}
+
+.user-data span {
+  font-size: 12px;
+  color: var(--text-light);
+}
+
+.post-info {
+  margin-left: auto;
+  text-align: right;
+  font-size: 11px;
+  color: var(--text-light);
+}
+
+.post-info a {
+  color: var(--lumen-blue);
+  text-decoration: none;
+  font-weight: 700;
+  transition: color 0.2s;
+}
+
+.post-info a:hover {
+  color: var(--lumen-hover);
+}
+
+.post-text {
+  font-size: 14px;
+  color: var(--text-mid);
+  line-height: 1.6;
+  margin-bottom: 16px;
+}
+
+.post-stats {
+  display: flex;
+  gap: 16px;
+  justify-content: flex-end;
+  padding-top: 14px;
+  border-top: 1px solid #eef1f4;
+}
+
+.post-stats > span,
+.btn-like {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 13px;
+  color: var(--text-light);
+  background: none;
+  border: none;
+  font-family: inherit;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.btn-like:hover,
+.post-stats > span:hover {
+  color: var(--lumen-blue);
+}
+
+.btn-like i.fa-solid {
+  color: var(--lumen-blue);
+  transform: scale(1.1);
+}

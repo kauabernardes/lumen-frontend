@@ -8,7 +8,6 @@ document.addEventListener("DOMContentLoaded", () => {
   const communityId = urlParams.get("id") || urlParams.get("communityId");
 
   btnPostar.addEventListener("click", async () => {
-    // Reseta estado de erro
     errorE.innerText = "";
     errorE.style.display = "none";
 
@@ -31,14 +30,12 @@ document.addEventListener("DOMContentLoaded", () => {
     btnPostar.disabled = true;
 
     try {
-    
       await window.postService.create(textarea.value.trim(), communityId);
 
       textarea.value = "";
       btnPostar.innerHTML = textoOriginal;
       btnPostar.disabled = false;
       location.href = `${location.origin}/comunidade/feed/?id=${communityId}`;
-
     } catch (error) {
       console.error("Erro ao publicar:", error);
       errorE.innerText = error.message || "Tente novamente mais tarde.";
@@ -66,9 +63,8 @@ document.addEventListener("DOMContentLoaded", () => {
         const box = document.createElement("div");
         box.className = "community-item";
 
-        // Verifica se é a comunidade atual para deixar "selecionada"
         if (c.id === communityId) {
-            box.classList.add("selected");
+          box.classList.add("selected");
         }
 
         box.innerHTML = `
@@ -92,7 +88,8 @@ document.addEventListener("DOMContentLoaded", () => {
       });
     } catch (error) {
       console.error("Erro ao carregar comunidades:", error);
-      communityList.innerHTML = "<p style='font-size: 13px; color: var(--text-light); padding: 10px;'>Erro ao carregar suas comunidades.</p>";
+      communityList.innerHTML =
+        "<p style='font-size: 13px; color: var(--text-light); padding: 10px;'>Erro ao carregar suas comunidades.</p>";
     }
   }
 

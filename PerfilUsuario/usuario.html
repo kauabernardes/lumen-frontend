@@ -6,7 +6,10 @@
     <title>Perfil - Lumen</title>
     <link rel="stylesheet" href="/PerfilUsuario/usuario.css" />
     <link rel="stylesheet" href="/css/header.css" />
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
+    />
   </head>
   <body>
     <header class="topbar">
@@ -19,14 +22,18 @@
         <a href="/agenda/agenda.html">agenda</a>
       </nav>
       <div class="divisao-header">
-        
         <div class="notif">
           <i class="fa-regular fa-bell icon-bell"></i>
           <span class="badge" id="badgeNotif">0</span>
           <div class="dropdown" id="dropdownNotificacao">
             <div class="dropdown-header">Notificações</div>
-            <div class="empty" id="emptyNotif">Você não possui notificações</div>
-            <div class="item"><span class="dot"></span><p>Alguém curtiu seu conteúdo</p></div>
+            <div class="empty" id="emptyNotif">
+              Você não possui notificações
+            </div>
+            <div class="item">
+              <span class="dot"></span>
+              <p>Alguém curtiu seu conteúdo</p>
+            </div>
           </div>
         </div>
       </div>
@@ -34,7 +41,7 @@
         <div class="user-menu">
           <div class="user-trigger">
             <i class="fa-regular fa-circle-user avatar"></i>
-            <span class="username">João A B</span>
+            <span class="username"></span>
           </div>
 
           <div class="user-dropdown" id="userDropdown">
@@ -58,28 +65,26 @@
       </div>
     </header>
 
-    <div class="perfil-layout">
-
-      <!-- HERO DO PERFIL -->
-      <div class="perfil-hero">
+    <main class="perfil-layout">
+      <header class="perfil-hero">
         <div class="perfil-hero-info">
           <div class="perfil-avatar-wrap">
             <i class="fa-regular fa-circle-user perfil-avatar-icon"></i>
           </div>
           <div class="perfil-dados">
-            <h1 id="nomeExibido">João A B</h1>
-            <span id="handleExibido">@joaoab</span>
+            <h1 id="nomeExibido"></h1>
+            <span id="handleExibido"></span>
             <div class="perfil-stats">
               <div class="stat">
-                <span class="stat-num">3</span>
+                <span class="stat-num" id="stat-comun">0</span>
                 <span class="stat-label">Comunidades</span>
               </div>
               <div class="stat">
-                <span class="stat-num">12</span>
+                <span class="stat-num">0</span>
                 <span class="stat-label">Contribuições</span>
               </div>
               <div class="stat">
-                <span class="stat-num">84</span>
+                <span class="stat-num">0</span>
                 <span class="stat-label">Dias de ofensiva</span>
               </div>
             </div>
@@ -88,143 +93,164 @@
         <button class="btn-editar" id="btnEditarPerfil">
           <i class="fa-solid fa-pen"></i> Editar perfil
         </button>
-      </div>
+      </header>
 
-      <!-- CONTEÚDO PRINCIPAL -->
       <div class="perfil-content">
+        
+        <div class="coluna-esq">
+          
+          <section class="perfil-section">
+            <h3 class="section-title">
+              <i class="fa-solid fa-users"></i> Minhas comunidades
+            </h3>
+            <div class="comunidades-grid" id="comunidades-list">
+              
+             
 
-        <!-- COMUNIDADES -->
-        <div class="perfil-section">
-          <h3 class="section-title"><i class="fa-solid fa-users"></i> Minhas comunidades</h3>
-          <div class="comunidades-grid">
-
-            <div class="comunidade-card">
-              <div class="comunidade-cover" style="background: linear-gradient(135deg, #3b9ede, #1e7cb8);">
-                <i class="fa-solid fa-graduation-cap"></i>
-                <span class="comunidade-nome-overlay">Loucos do ENEM</span>
-                <button class="btn-acessar">Acessar</button>
-              </div>
             </div>
+          </section>
 
-            <div class="comunidade-card">
-              <div class="comunidade-cover" style="background: linear-gradient(135deg, #6366f1, #4338ca);">
-                <i class="fa-solid fa-book-open"></i>
-                <span class="comunidade-nome-overlay">Alucinados pela FUVEST</span>
-                <button class="btn-acessar">Acessar</button>
-              </div>
+          <section class="perfil-section">
+            <h3 class="section-title">
+              <i class="fa-solid fa-chart-line"></i> Tempo de Estudo
+            </h3>
+            <div class="chart-container">
+              <canvas id="myChart"></canvas>
             </div>
+          </section>
 
-            <div class="comunidade-card">
-              <div class="comunidade-cover" style="background: linear-gradient(135deg, #2d9e6b, #1a7a4a);">
-                <i class="fa-solid fa-brain"></i>
-                <span class="comunidade-nome-overlay">Estuda que Passa</span>
-                <button class="btn-acessar">Acessar</button>
-              </div>
-            </div>
-
-          </div>
-        </div>
-
-        <!-- CONTRIBUIÇÕES -->
-        <div class="perfil-section">
-          <h3 class="section-title"><i class="fa-solid fa-comment-dots"></i> Minhas contribuições</h3>
-          <div class="contribuicoes-lista">
-
-            <div class="contribuicao-card">
-              <div class="contribuicao-header">
-                <div class="contribuicao-user">
-                  <i class="fa-regular fa-circle-user contrib-avatar"></i>
-                  <div>
-                    <strong id="nomeContrib1">João A B</strong>
-                    <span id="handleContrib1">@joaoab</span>
+        </div> <div class="coluna-dir">
+          
+          <section class="perfil-section">
+            <h3 class="section-title">
+              <i class="fa-solid fa-comment-dots"></i> Minhas contribuições
+            </h3>
+            <div class="contribuicoes-lista">
+              
+              <article class="contribuicao-card">
+                <div class="contribuicao-header">
+                  <div class="contribuicao-user">
+                    <i class="fa-regular fa-circle-user contrib-avatar"></i>
+                    <div>
+                      <strong id="nomeContrib1">João A B</strong>
+                      <span id="handleContrib1">@joaoab</span>
+                    </div>
+                  </div>
+                  <div class="contribuicao-meta">
+                    <span>Postado às <time>17h21m</time></span>
+                    <a href="#">Estuda que Passa</a>
                   </div>
                 </div>
-                <div class="contribuicao-meta">
-                  <span>Postado às 17h21m</span>
-                  <a href="#">Estuda que Passa</a>
+                <p class="contribuicao-texto">
+                  Ei pessoal, estou precisando de conteúdos de cálculo 1. Tem algum canal no YT para recomendar?
+                </p>
+                <div class="contribuicao-acoes">
+                  <span><i class="fa-regular fa-thumbs-up"></i> 210</span>
+                  <span><i class="fa-regular fa-comment"></i> 32</span>
                 </div>
-              </div>
-              <p class="contribuicao-texto">Ei pessoal, estou precisando de conteúdos de cálculo 1. Tem algum canal no YT para recomendar?</p>
-              <div class="contribuicao-acoes">
-                <span><i class="fa-regular fa-thumbs-up"></i> 210</span>
-                <span><i class="fa-regular fa-comment"></i> 32</span>
-              </div>
-            </div>
+              </article>
 
-            <div class="contribuicao-card">
-              <div class="contribuicao-header">
-                <div class="contribuicao-user">
-                  <i class="fa-regular fa-circle-user contrib-avatar"></i>
-                  <div>
-                    <strong id="nomeContrib2">João A B</strong>
-                    <span id="handleContrib2">@joaoab</span>
+              <article class="contribuicao-card">
+                <div class="contribuicao-header">
+                  <div class="contribuicao-user">
+                    <i class="fa-regular fa-circle-user contrib-avatar"></i>
+                    <div>
+                      <strong id="nomeContrib2">João A B</strong>
+                      <span id="handleContrib2">@joaoab</span>
+                    </div>
+                  </div>
+                  <div class="contribuicao-meta">
+                    <span>Postado às <time>11h34m</time></span>
+                    <a href="#">Loucos do ENEM</a>
                   </div>
                 </div>
-                <div class="contribuicao-meta">
-                  <span>Postado às 11h34m</span>
-                  <a href="#">Loucos do ENEM</a>
+                <p class="contribuicao-texto">
+                  Fiz um mapa mental bom demais sobre geometria analítica. Vou anexar nos comentários!
+                </p>
+                <div class="contribuicao-acoes">
+                  <span><i class="fa-regular fa-thumbs-up"></i> 1.4k</span>
+                  <span><i class="fa-regular fa-comment"></i> 78</span>
                 </div>
-              </div>
-              <p class="contribuicao-texto">Fiz um mapa mental bom demais sobre geometria analítica. Vou anexar nos comentários!</p>
-              <div class="contribuicao-acoes">
-                <span><i class="fa-regular fa-thumbs-up"></i> 1.4k</span>
-                <span><i class="fa-regular fa-comment"></i> 78</span>
-              </div>
-            </div>
+              </article>
 
-            <div class="contribuicao-card">
-              <div class="contribuicao-header">
-                <div class="contribuicao-user">
-                  <i class="fa-regular fa-circle-user contrib-avatar"></i>
-                  <div>
-                    <strong id="nomeContrib3">João A B</strong>
-                    <span id="handleContrib3">@joaoab</span>
+              <article class="contribuicao-card">
+                <div class="contribuicao-header">
+                  <div class="contribuicao-user">
+                    <i class="fa-regular fa-circle-user contrib-avatar"></i>
+                    <div>
+                      <strong id="nomeContrib3">João A B</strong>
+                      <span id="handleContrib3">@joaoab</span>
+                    </div>
+                  </div>
+                  <div class="contribuicao-meta">
+                    <span>Postado às <time>09h22m</time></span>
+                    <a href="#">Estuda que Passa</a>
                   </div>
                 </div>
-                <div class="contribuicao-meta">
-                  <span>Postado às 09h22m</span>
-                  <a href="#">Estuda que Passa</a>
+                <p class="contribuicao-texto">
+                  Tô precisando de um resumo sobre direito constitucional, alguém tem? Tenho uma prova amanhã.
+                </p>
+                <div class="contribuicao-acoes">
+                  <span><i class="fa-regular fa-thumbs-up"></i> 45</span>
+                  <span><i class="fa-regular fa-comment"></i> 12</span>
                 </div>
-              </div>
-              <p class="contribuicao-texto">Tô precisando de um resumo sobre direito constitucional, alguém tem? Tenho uma prova amanhã.</p>
-              <div class="contribuicao-acoes">
-                <span><i class="fa-regular fa-thumbs-up"></i> 45</span>
-                <span><i class="fa-regular fa-comment"></i> 12</span>
-              </div>
+              </article>
+
             </div>
+          </section>
+        </div> </div> </main>
 
-          </div>
-        </div>
-
-      </div> <!-- fim .perfil-content -->
-
-    </div> <!-- fim .perfil-layout -->
+      <!-- fim .perfil-content -->
+    </div>
+    <!-- fim .perfil-layout -->
 
     <!-- MODAL EDITAR PERFIL -->
     <div class="modal-overlay" id="modalOverlay">
       <div class="modal">
         <div class="modal-header">
           <h3><i class="fa-solid fa-pen"></i> Editar perfil</h3>
-          <button class="modal-fechar" id="btnFecharModal"><i class="fa-solid fa-xmark"></i></button>
+          <button class="modal-fechar" id="btnFecharModal">
+            <i class="fa-solid fa-xmark"></i>
+          </button>
         </div>
-        <div class="modal-body">
-          <div class="form-group">
-            <label>Nome</label>
-            <input type="text" id="inputNome" placeholder="Seu nome" value="João A B" />
-          </div>
-          <div class="form-group">
-            <label>Handle</label>
-            <input type="text" id="inputHandle" placeholder="@seuhandle" value="@joaoab" />
-          </div>
-          <div class="modal-actions">
-            <button class="btn-cancelar" id="btnCancelarModal">Cancelar</button>
-            <button class="btn-salvar" id="btnSalvarModal"><i class="fa-solid fa-floppy-disk"></i> Salvar</button>
-          </div>
-        </div>
+       
+          <div class="modal-body">
+  <div class="form-group">
+    <label for="inputFile"><i class="fa-solid fa-camera"></i> Foto de Perfil</label>
+    <input
+      type="file"
+      id="inputFile"
+      accept="image/png, image/jpeg, image/webp"
+      class="form-control"
+    />
+  </div>
+
+  <div class="form-group">
+    <label for="nome">Nome</label>
+    <input name="name" type="text" id="inputNome" placeholder="Seu nome" value="João A B" />
+  </div>
+  
+  <div class="form-group">
+    <label for="username">Handle</label>
+    <input name="username" type="text" id="inputHandle" placeholder="@seuhandle" value="@joaoab" />
+  </div>
+  
+  <div class="modal-actions">
+    <button class="btn-cancelar" id="btnCancelarModal">Cancelar</button>
+    <button class="btn-salvar" id="btnSalvarModal">
+      <i class="fa-solid fa-floppy-disk"></i> Salvar
+    </button>
+  </div>
+</div>
       </div>
     </div>
-
-    <script src="/PerfilUsuario/usuario.js"></script>
     <script src="/js/header.js"></script>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="/js/api/client.js"></script>
+    <script src="/js/api/services/authService.js"></script>
+    <script src="/js/api/services/userService.js"></script>
+       <script src="/js/api/services/communityService.js"></script>
+    <script src="/PerfilUsuario/usuario.js"></script>
   </body>
 </html>

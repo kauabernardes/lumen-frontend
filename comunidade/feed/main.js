@@ -1,37 +1,20 @@
-// ==========================================
-// 1. CONFIGURAÇÕES E UTILITÁRIOS GERAIS
-// ==========================================
 const urlParams = new URLSearchParams(window.location.search);
 const comunidadeId = urlParams.get("id");
 
-// Gerador de cor adaptado para tons mais alinhados ao tema base
+let paginaAtual = 1;
+const limitePorPagina = 5;
+let carregando = false;
+let temMaisPosts = true;
+
 function gerarCorPastel() {
-  const tonsBase = ['#f9c0d8', '#f28cb8', '#d4e8ff', '#fbc8e0', '#fce4ef'];
+  const tonsBase = ["#f9c0d8", "#f28cb8", "#d4e8ff", "#fbc8e0", "#fce4ef"];
   return tonsBase[Math.floor(Math.random() * tonsBase.length)];
 }
 
-// ==========================================
-// 2. INTERFACE DO USUÁRIO (MENU DROPDOWN)
-// ==========================================
-const userTrigger = document.querySelector(".user-trigger");
-const userDropdown = document.getElementById("dropdownNotificacao");
-
-if (userTrigger && userDropdown) {
-  userTrigger.addEventListener("click", () => {
-    userDropdown.classList.toggle("active");
-  });
-}
-
-// ==========================================
-// 3. LÓGICA DE POSTAGEM (EVENTO DE FORMULÁRIO)
-// ==========================================
 function newPost() {
   location.href = `${location.origin}/comunidade/post/new/?id=${comunidadeId}`;
 }
 
-// ==========================================
-// 4. BUSCA DE DADOS (COMUNIDADE E FEED)
-// ==========================================
 async function carregarComunidade() {
   if (!comunidadeId) return;
 
@@ -39,11 +22,14 @@ async function carregarComunidade() {
 
   try {
     const comunidade = await window.communityService.getById(comunidadeId);
-    const dataCriacao = new Date(comunidade.createdAt).toLocaleDateString("pt-BR", {
+    const dataCriacao = new Date(comunidade.createdAt).toLocaleDateString(
+      "pt-BR",
+      {
         day: "2-digit",
         month: "long",
         year: "numeric",
-    });
+      },
+    );
 
     const cardInfo = document.querySelector(".card-info");
     cardInfo.innerHTML = `
@@ -59,24 +45,37 @@ async function carregarComunidade() {
     `;
   } catch (error) {
     console.error("Erro ao carregar comunidade:", error);
-    document.querySelector(".card-info").innerHTML = "<p>Erro ao carregar dados.</p>";
+    document.querySelector(".card-info").innerHTML =
+      "<p>Erro ao carregar dados.</p>";
   }
 }
 
 async function carregarPosts(pagina = 1) {
-  const timeline = document.getElementById("timeline-posts");
-  if (!comunidadeId) return;
+  if (!comunidadeId || carregando || !temMaisPosts) return;
 
-  mostrarSkeletons();
+  const timeline = document.getElementById("timeline-posts");
+  carregando = true;
+
+  mostrarSkeletons(pagina > 1);
 
   try {
-    const result = await window.communityService.getPosts(comunidadeId, pagina, 10);
+    const result = await window.communityService.getPosts(
+      comunidadeId,
+      pagina,
+      limitePorPagina,
+    );
 
-    if (pagina === 1) timeline.innerHTML = "";
+    removerSkeletons();
 
-    if (result.data.length === 0) {
-      timeline.innerHTML = '<p style="text-align: center; color: var(--text-light); padding: 20px; font-style: italic;">Nenhum post encontrado nesta comunidade.</p>';
+    if (pagina === 1 && result.data.length === 0) {
+      timeline.innerHTML =
+        '<p style="text-align: center; color: var(--text-light); padding: 20px; font-style: italic;">Nenhum post encontrado nesta comunidade.</p>';
+      temMaisPosts = false;
       return;
+    }
+
+    if (!result.data || result.data.length < limitePorPagina) {
+      temMaisPosts = false;
     }
 
     result.data.forEach((post) => {
@@ -87,13 +86,16 @@ async function carregarPosts(pagina = 1) {
 
       const authorName = post.user ? post.user.username : "Usuário Oculto";
       const communityName = post.community ? post.community.name : "Comunidade";
+      const profileImage = post.user.profileImage
+        ? `<img src="${API_BASE_URL}/uploads/${post.user.profileImage}"></img>`
+        : '<i class="fa-regular fa-circle-user avatar"></i>';
 
       const article = document.createElement("article");
       article.className = "post";
       article.setAttribute("data-id", post.id);
       article.innerHTML = `
           <div class="post-user">
-              <i class="fa-regular fa-circle-user avatar"></i>
+              ${profileImage}
               <div class="user-data">
                   <strong>${authorName}</strong>
                   <span>@${authorName}</span>
@@ -112,38 +114,60 @@ async function carregarPosts(pagina = 1) {
               <span><i class="fa-regular fa-comment"></i> ${post.commentsCount || 0}</span>
           </div>
       `;
-      
-      article.querySelector(".btn-like").addEventListener("click", () =>
-        handleLike(post.id, article, post.likesCount || 0)
-      );
-      
+
+      article
+        .querySelector(".btn-like")
+        .addEventListener("click", () =>
+          handleLike(post.id, article, post.likesCount || 0),
+        );
+
       article.addEventListener("click", (e) => {
         if (e.target.closest(".btn-like")) return;
         location.href = `${location.origin}/comunidade/post/?id=${post.id}`;
       });
+
       timeline.appendChild(article);
     });
+
+    paginaAtual = pagina;
   } catch (error) {
     console.error("Erro ao carregar o feed:", error);
-    timeline.innerHTML = '<p style="text-align: center; color: var(--text-light);">Erro ao carregar o feed.</p>';
+    removerSkeletons();
+    if (pagina === 1) {
+      timeline.innerHTML =
+        '<p style="text-align: center; color: var(--text-light);">Erro ao carregar o feed.</p>';
+    }
+  } finally {
+    carregando = false;
   }
 }
 
-// ==========================================
-// 5. INICIALIZAÇÃO DA PÁGINA
-// ==========================================
 document.addEventListener("DOMContentLoaded", () => {
   if (!comunidadeId) {
     console.warn("Nenhum ID de comunidade detectado na URL.");
     return;
   }
+
   carregarComunidade();
-  carregarPosts(1);
+  carregarPosts(paginaAtual);
+
+  window.addEventListener("scroll", () => {
+    const { scrollTop, scrollHeight, clientHeight } = document.documentElement;
+    if (scrollTop + clientHeight >= scrollHeight - 50) {
+      carregarPosts(paginaAtual + 1);
+    }
+  });
 });
 
-function mostrarSkeletons() {
+function mostrarSkeletons(isAppending = false) {
   const timeline = document.getElementById("timeline-posts");
-  timeline.innerHTML = "";
+  if (!timeline) return;
+
+  if (!isAppending) {
+    timeline.innerHTML = "";
+  }
+  const wrapperSkel = document.createElement("div");
+  wrapperSkel.id = "feed-skeleton-wrapper";
 
   for (let i = 0; i < 3; i++) {
     const skel = document.createElement("div");
@@ -160,7 +184,16 @@ function mostrarSkeletons() {
         <div class="skeleton skeleton-text"></div>
         <div class="skeleton skeleton-text short"></div>
     `;
-    timeline.appendChild(skel);
+    wrapperSkel.appendChild(skel);
+  }
+
+  timeline.appendChild(wrapperSkel);
+}
+
+function removerSkeletons() {
+  const wrapper = document.getElementById("feed-skeleton-wrapper");
+  if (wrapper) {
+    wrapper.remove();
   }
 }
 
@@ -186,10 +219,12 @@ async function handleLike(postId, postElement) {
   try {
     if (likeIcon.classList.contains("fa-solid")) {
       likeIcon.classList.replace("fa-solid", "fa-regular");
-      likeCountSpan.textContent = Number.parseInt(likeCountSpan.textContent) - 1;
+      likeCountSpan.textContent =
+        Number.parseInt(likeCountSpan.textContent) - 1;
     } else {
       likeIcon.classList.replace("fa-regular", "fa-solid");
-      likeCountSpan.textContent = Number.parseInt(likeCountSpan.textContent) + 1;
+      likeCountSpan.textContent =
+        Number.parseInt(likeCountSpan.textContent) + 1;
     }
 
     btn.disabled = true;
@@ -210,4 +245,3 @@ async function handleLike(postId, postElement) {
     btn.disabled = false;
   }
 }
-

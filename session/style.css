@@ -165,8 +165,6 @@ body {
   padding: 24px;
 }
 
-
-
 /* Coluna Esquerda */
 .col-left {
   display: flex;
@@ -462,10 +460,11 @@ body {
 }
 
 .chat-card {
-  height: calc(100vh - 320px);
+  height: calc(100vh - 200px);
   display: flex;
   flex-direction: column;
-}.chat-messages {
+}
+.chat-messages {
   flex-grow: 1;
   overflow-y: auto;
   padding-right: 8px;
@@ -492,7 +491,8 @@ body {
 /* =========================================
    ESTILO BASE DAS MENSAGENS
    ========================================= */
-.message, .message-sent {
+.message,
+.message-sent {
   padding: 10px 14px;
   max-width: 85%; /* Impede que ocupe a tela toda */
   display: flex;
@@ -541,7 +541,7 @@ body {
 
 /* Destaca levemente o nome quando é você quem envia */
 .message-sent .username {
-  color: var(--green-dark); 
+  color: var(--green-dark);
 }
 
 .timestamp {
@@ -564,13 +564,13 @@ body {
 
 /* Destaca a mensagem da IA com uma cor de fundo sutil (um azul/roxo bem claro, por exemplo) */
 .message-ai {
-  background-color: #f4f7ff; 
+  background-color: #f4f7ff;
   border: 1px solid #dce5ff;
 }
 
 /* Colore o nome e o ícone da IA */
 .message-ai .username {
-  color: #4a72d4; 
+  color: #4a72d4;
   display: flex;
   align-items: center;
   gap: 6px;
@@ -607,7 +607,6 @@ body {
   margin-top: 8px;
 }
 
-
 .btn-send {
   background: var(--green-strong);
   border: none;
@@ -640,7 +639,6 @@ body {
   .session-main {
     grid-template-columns: 250px 1fr;
   }
- 
 }
 @media (max-width: 768px) {
   .session-main {
@@ -653,48 +651,91 @@ body {
   .col-center {
     order: 1;
   }
-  .col-right {order: 2;}
+  .col-right {
+    order: 2;
+  }
 }
 
 .loader {
   width: 45px;
   aspect-ratio: 2;
-  --_g: no-repeat radial-gradient(circle closest-side, var(--green-dark) 90%,#0000);
-  background: 
-    var(--_g) 0%   50%,
-    var(--_g) 50%  50%,
+  --_g: no-repeat
+    radial-gradient(circle closest-side, var(--green-dark) 90%, #0000);
+  background:
+    var(--_g) 0% 50%,
+    var(--_g) 50% 50%,
     var(--_g) 100% 50%;
-  background-size: calc(100%/3) 50%;
+  background-size: calc(100% / 3) 50%;
   animation: l3 1s infinite linear;
   margin: 8px auto 0;
 }
 @keyframes l3 {
-    20%{background-position:0%   0%, 50%  50%,100%  50%}
-    40%{background-position:0% 100%, 50%   0%,100%  50%}
-    60%{background-position:0%  50%, 50% 100%,100%   0%}
-    80%{background-position:0%  50%, 50%  50%,100% 100%}
+  20% {
+    background-position:
+      0% 0%,
+      50% 50%,
+      100% 50%;
+  }
+  40% {
+    background-position:
+      0% 100%,
+      50% 0%,
+      100% 50%;
+  }
+  60% {
+    background-position:
+      0% 50%,
+      50% 100%,
+      100% 0%;
+  }
+  80% {
+    background-position:
+      0% 50%,
+      50% 50%,
+      100% 100%;
+  }
 }
 
 .loader-small {
   width: 25px;
   aspect-ratio: 2;
-  --_g: no-repeat radial-gradient(circle closest-side, var(--green-dark) 90%,#0000);
-  background: 
-    var(--_g) 0%   50%,
-    var(--_g) 50%  50%,
+  --_g: no-repeat
+    radial-gradient(circle closest-side, var(--green-dark) 90%, #0000);
+  background:
+    var(--_g) 0% 50%,
+    var(--_g) 50% 50%,
     var(--_g) 100% 50%;
-  background-size: calc(100%/4) 50%;
+  background-size: calc(100% / 4) 50%;
   animation: l4 1s infinite linear;
-
 }
 @keyframes l4 {
-    20%{background-position:0%   0%, 50%  50%,100%  50%}
-    40%{background-position:0% 100%, 50%   0%,100%  50%}
-    60%{background-position:0%  50%, 50% 100%,100%   0%}
-    80%{background-position:0%  50%, 50%  50%,100% 100%}
+  20% {
+    background-position:
+      0% 0%,
+      50% 50%,
+      100% 50%;
+  }
+  40% {
+    background-position:
+      0% 100%,
+      50% 0%,
+      100% 50%;
+  }
+  60% {
+    background-position:
+      0% 50%,
+      50% 100%,
+      100% 0%;
+  }
+  80% {
+    background-position:
+      0% 50%,
+      50% 50%,
+      100% 100%;
+  }
 }
 
-.tip-indicator{
+.tip-indicator {
   display: flex;
   gap: 6px;
 }
@@ -702,24 +743,23 @@ body {
 .tip-text {
   font-size: 14px;
   color: var(--text-mid);
- 
 }
 
-.challenge-title{
+.challenge-title {
   font-size: 18px;
   font-weight: 700;
   color: var(--green-dark);
   margin-bottom: 6px;
   margin-top: 12px;
 }
-.challenge-subtitle{
+.challenge-subtitle {
   font-size: 16px;
 
   color: var(--dark);
   margin-bottom: 8px;
 }
 
-.challenge-content{
+.challenge-content {
   font-size: 14px;
   color: var(--text-dark);
   line-height: 1.4;
