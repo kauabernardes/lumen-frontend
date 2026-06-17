@@ -12,7 +12,6 @@ document.addEventListener("DOMContentLoaded", () => {
   const listaEventos = document.getElementById("listaEventos");
   const emptyState = document.getElementById("emptyState");
 
-  // Banco de dados simulado (Array de eventos iniciais baseados na sua imagem)
   let eventos = [
     {
       id: 1,
@@ -56,15 +55,14 @@ document.addEventListener("DOMContentLoaded", () => {
     emptyState.style.display = "none";
 
     eventos.forEach((evento) => {
-      // Formatação amigável da data (BR)
+  
       const dataFormatada = evento.data ? evento.data.split('-').reverse().join('/') : "";
       
-      // Montagem do texto de exibição do card
+     
       let textoExibicao = `${evento.titulo}`;
       if (dataFormatada) textoExibicao += ` - ${dataFormatada}`;
       if (evento.hora) textoExibicao += ` às ${evento.hora}`;
 
-      // Criar elemento HTML do item
       const item = document.createElement("div");
       item.classList.add("evento-item");
       item.innerHTML = `

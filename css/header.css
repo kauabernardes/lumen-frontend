@@ -298,14 +298,28 @@
   gap: 10px;
   padding-left: 6px;
   padding-bottom: 5px;
+  text-decoration: none; /* Garante que não terá sublinhado padrão de link */
+  color: #333; /* Mantém a cor padrão do texto */
 }
 
+/* Garante que o span herde a cor corretamente */
 .user-dropdown .user-info span {
   font-size: 14px;
-  color: #333;
-  display: inline; /* OU inline-block */
+  color: inherit;
+  display: inline-block;
 }
 
-.user-dropdown .user-info i {
-  font-size: 22px;
+/* Força todo o texto dos itens do menu a ficar azul */
+.topbar .user-dropdown .user-item:hover {
+  color: #006ab6 !important;
+}
+
+/* Força especificamente os ícones (Font Awesome) a ficarem azuis */
+.topbar .user-dropdown .user-item:hover i {
+  color: #006ab6 !important;
+}
+
+/* Força especificamente os textos dentro de spans a ficarem azuis */
+.topbar .user-dropdown .user-item:hover span {
+  color: #006ab6 !important;
 }

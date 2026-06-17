@@ -384,3 +384,8 @@ body {
     margin-top: 8px;
   }
 }
+
+.topbar .user-dropdown .user-item:hover,
+.topbar .user-dropdown .user-item:hover * {
+  color: #006ab6 !important;
+}

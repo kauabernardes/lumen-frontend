@@ -23,11 +23,11 @@
   <body>
     <header class="topbar">
       <div class="brand-side">
-        <img src="../img/LogoLumen2.svg" class="logo-img" alt="Lumen" />
+        <img src="../img/LogoLumen2.svg" alt="Lumen Logo" class="logo-img" />
       </div>
 
       <nav>
-        <a href="/home.html">home</a>
+        <a href="../home.html">home</a>
         <a href="/comunidade/" class="active">comunidades</a>
         <a href="../agenda/agenda.html">agenda</a>
       </nav>
@@ -39,11 +39,9 @@
 
           <div class="dropdown" id="dropdownNotificacao">
             <div class="dropdown-header">Notificações</div>
-
             <div class="empty" id="emptyNotif">
               Você não possui notificações
             </div>
-
             <div class="item">
               <span class="dot"></span>
               <p>Alguém curtiu seu conteúdo</p>
@@ -60,10 +58,13 @@
           </div>
 
           <div class="user-dropdown" id="userDropdown">
-            <div class="user-info">
+            <a
+              href="/PerfilUsuario/usuario.html"
+              class="user-info user-item user-profile-link"
+            >
               <i class="fa-regular fa-circle-user avatar"></i>
               <span>João A B</span>
-            </div>
+            </a>
 
             <div class="user-item">
               <i class="fa-solid fa-gear"></i>
