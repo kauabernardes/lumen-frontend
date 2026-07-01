@@ -1,9 +1,4 @@
-/* ============================================================
-   DAILY.CSS — Lumen Daily Check-in
-   Tema: rosa claro (#f9c0d8 → #fde8f2) com acentos em azul
-============================================================ */
 
-/* ===== VARIÁVEIS ===== */
 :root {
   --pink-light: #fde8f2;
   --pink-mid: #f9c0d8;
@@ -21,7 +16,7 @@
   --radius-sm: 10px;
 }
 
-/* ===== RESET ===== */
+
 *,
 *::before,
 *::after {
@@ -38,7 +33,7 @@ body {
   overflow-x: hidden;
 }
 
-/* ===== BOLHAS DECORATIVAS DE FUNDO ===== */
+
 .bg-blob {
   position: fixed;
   border-radius: 50%;
@@ -88,7 +83,7 @@ body {
   }
 }
 
-/* ===== LAYOUT PRINCIPAL ===== */
+
 .daily-main {
   position: relative;
   z-index: 1;
@@ -101,9 +96,7 @@ body {
   align-items: start;
 }
 
-/* ============================================================
-   ESTILOS COMPARTILHADOS — CARDS
-============================================================ */
+
 .streak-card,
 .week-card,
 .stats-card,
@@ -116,9 +109,6 @@ body {
   border: 1.5px solid rgba(249, 192, 216, 0.45);
 }
 
-/* ============================================================
-   COLUNA ESQUERDA
-============================================================ */
 .col-left {
   display: flex;
   flex-direction: column;
@@ -139,7 +129,7 @@ body {
   }
 }
 
-/* --- Streak Card --- */
+
 .streak-card {
   padding: 20px;
   background: linear-gradient(135deg, #fff0f7 0%, #ffffff 100%);
@@ -193,8 +183,6 @@ body {
   font-weight: 500;
 }
 
-.streak-bar-wrap {
-}
 
 .streak-bar-track {
   height: 7px;
@@ -216,7 +204,7 @@ body {
   color: var(--text-light);
 }
 
-/* --- Week Card --- */
+
 .week-card {
   padding: 16px 18px;
 }
@@ -280,7 +268,7 @@ body {
   font-weight: 700;
 }
 
-/* --- Stats Card --- */
+
 .stats-card {
   padding: 16px 18px;
 }
@@ -325,9 +313,7 @@ body {
   display: block;
 }
 
-/* ============================================================
-   COLUNA CENTRAL
-============================================================ */
+
 .col-center {
   display: flex;
   flex-direction: column;
@@ -346,7 +332,7 @@ body {
   }
 }
 
-/* --- Cabeçalho Daily --- */
+
 .daily-header {
   display: flex;
   align-items: center;
@@ -397,7 +383,7 @@ body {
   font-style: italic;
 }
 
-/* --- Step Cards --- */
+
 .step-card {
   padding: 20px 22px;
   position: relative;
@@ -444,7 +430,7 @@ body {
   margin-bottom: 12px;
 }
 
-/* Textarea */
+
 .step-textarea {
   width: 100%;
   border: 1.5px solid #f9c0d8;
@@ -472,7 +458,7 @@ body {
   color: #d4aec0;
 }
 
-/* Radio options "Atingiu?" */
+
 .radio-group {
   display: flex;
   gap: 10px;
@@ -526,7 +512,6 @@ body {
   color: var(--pink-dark);
 }
 
-/* Mood buttons */
 .mood-group {
   display: flex;
   gap: 8px;
@@ -558,7 +543,7 @@ body {
   transform: scale(1.12) translateY(-2px);
 }
 
-/* --- Botão Check-in --- */
+
 .btn-checkin {
   display: flex;
   align-items: center;
@@ -595,7 +580,6 @@ body {
   font-size: 18px;
 }
 
-/* --- Banner de sucesso --- */
 .success-banner {
   display: none;
   align-items: center;
@@ -669,7 +653,7 @@ body {
   text-transform: uppercase;
 }
 
-/* Ad card */
+
 .ad-card {
   overflow: hidden;
   transition:
@@ -736,7 +720,7 @@ body {
   opacity: 0.84;
 }
 
-/* Card motivacional */
+
 .motivation-card {
   padding: 18px;
   background: linear-gradient(135deg, #fff0f7 0%, #fde8f2 100%);
@@ -778,9 +762,7 @@ body {
   font-size: 11px;
 }
 
-/* ============================================================
-   RESPONSIVO
-============================================================ */
+
 @media (max-width: 1060px) {
   .daily-main {
     grid-template-columns: 230px 1fr;
@@ -807,7 +789,7 @@ body {
   justify-content: center;
 }
 
-/* HTML: <div class="loader"></div> */
+
 .loader {
   width: 50px;
   aspect-ratio: 1;

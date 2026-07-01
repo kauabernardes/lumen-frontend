@@ -17,7 +17,7 @@ function validarEmail(email) {
 function validarCampos() {
   let valido = true;
 
-  // Nome de usuário
+  
   if (!usernameInput.value) {
     usernameError.textContent = "O nome de usuário é obrigatório";
     usernameError.classList.add("active");
@@ -35,7 +35,7 @@ function validarCampos() {
     usernameInput.classList.add("valid");
   }
 
-  // E-mail
+ 
   if (!emailInput.value) {
     emailError.textContent = "O e-mail é obrigatório";
     emailError.classList.add("active");
@@ -53,7 +53,7 @@ function validarCampos() {
     emailInput.classList.add("valid");
   }
 
-  // Senha
+ 
   if (!passwordInput.value) {
     passwordError.textContent = "A senha é obrigatória";
     passwordError.classList.add("active");
@@ -71,7 +71,7 @@ function validarCampos() {
     passwordInput.classList.add("valid");
   }
 
-  // Confirmar senha
+
   if (!confirmPasswordInput.value) {
     confirmPasswordError.textContent = "Confirme sua senha";
     confirmPasswordError.classList.add("active");
@@ -92,14 +92,14 @@ function validarCampos() {
   registerBtn.disabled = !valido;
 }
 
-// Eventos
+
 usernameInput.addEventListener("input", validarCampos);
 emailInput.addEventListener("input", validarCampos);
 passwordInput.addEventListener("input", validarCampos);
 confirmPasswordInput.addEventListener("input", validarCampos);
 
 async function handleRegister(event) {
-  // PREVINE O RECARREGAMENTO DA PÁGINA
+  
   if (event) event.preventDefault();
 
   validarCampos();
@@ -113,7 +113,7 @@ async function handleRegister(event) {
       registerBtn.textContent = "Cadastrando...";
       registerBtn.disabled = true;
 
-      // USA O SERVIÇO GLOBAL (definido no authService.js via window)
+
       await window.authService.register({
         email: email,
         username: username,
@@ -121,7 +121,7 @@ async function handleRegister(event) {
       });
 
       alert("Conta criada com sucesso! Faça login.");
-      window.location.href = "/"; // Ou sua rota de login
+      window.location.href = "/"; 
     } catch (error) {
       console.error("Erro no cadastro:", error);
       emailError.textContent =

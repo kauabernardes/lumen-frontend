@@ -1,6 +1,3 @@
-// =========================
-// 🔔 NOTIFICAÇÕES
-// =========================
 
 const botao = document.querySelector(".icon-bell");
 const dropdown = document.getElementById("dropdownNotificacao");

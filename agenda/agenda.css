@@ -1,6 +1,4 @@
-/* ====================================
-   LAYOUT GERAL DA AGENDA
-   ==================================== */
+
 
 * {
   margin: 0;
@@ -23,7 +21,7 @@ body{
   
 }
 
-/* Coluna da esquerda (Lista) e Direita (Formulário) */
+
 .agenda-left {
   flex: 1.4;
 }
@@ -31,10 +29,9 @@ body{
 .agenda-right {
   flex: 0.8;
   position: sticky;
-  top: 100px; /* Mantém o form visível ao rolar a página */
+  top: 100px; 
 }
 
-/* Headers */
 .agenda-left-header {
   display: flex;
   justify-content: space-between;
@@ -59,9 +56,9 @@ body{
   font-size: 0.95rem;
 }
 
-/* Botão Novo Evento (Opcional, caso queira em telas menores) */
+
 .btn-new-event {
-  display: none; /* Escondido por padrão já que o form fica exposto ao lado */
+  display: none; 
   background-color: #5d9cec;
   color: #fff;
   border: none;
@@ -76,24 +73,22 @@ body{
   background-color: #4a8bee;
 }
 
-/* ====================================
-   LISTA DE EVENTOS
-   ==================================== */
+
 .eventos-lista {
   display: flex;
   flex-direction: column;
   gap: 0.75rem;
 }
 
-/* Card individual de evento */
+
 .evento-item {
   background-color: #e6f0ff;
-  border-radius: 25px; /* Bordas bem arredondadas como no mockup */
+  border-radius: 25px; 
   padding: 0.85rem 1.5rem;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  border-left: 5px solid #5d9cec; /* Um charmezinho lateral opcional */
+  border-left: 5px solid #5d9cec; 
   transition: transform 0.2s, box-shadow 0.2s;
 }
 
@@ -115,7 +110,6 @@ body{
   color: #666;
 }
 
-/* Botão de excluir item */
 .btn-deletar-evento {
   background: transparent;
   border: none;
@@ -131,7 +125,7 @@ body{
   background: rgba(255, 107, 107, 0.1);
 }
 
-/* Estado Vazio */
+
 .empty-state {
   text-align: center;
   padding: 3rem;
@@ -147,16 +141,14 @@ body{
   color: #bbb;
 }
 
-/* ====================================
-   FORMULÁRIO (COLUNA DIREITA)
-   ==================================== */
+
 .form-card {
-  background-color: transparent; /* No mockup o fundo é limpo */
+  background-color: transparent; 
 }
 
 .form-header h3 {
   font-size: 1.4rem;
-  color: #777; /* Texto em tom cinza suave igual ao mockup */
+  color: #777;
   margin: 0 0 1.5rem 0;
   font-weight: 500;
 }
@@ -191,19 +183,18 @@ body{
   border-color: #5d9cec;
 }
 
-/* Linha com Inputs Lado a Lado (Data e Hora) */
+
 .form-row {
   display: flex;
   gap: 1rem;
   margin-bottom: 1.5rem;
 }
 
-/* Botões de Ação */
 .btn-salvar {
   background-color: #649eff;
   color: white;
   border: none;
-  border-radius: 25px; /* Botão oval sutil da imagem */
+  border-radius: 25px; 
   padding: 0.75rem 2.5rem;
   font-size: 1.1rem;
   font-weight: bold;
@@ -236,7 +227,7 @@ body{
   color: #333;
 }
 
-/* Responsividade Básica */
+
 @media (max-width: 768px) {
   .agenda-layout {
     flex-direction: column;

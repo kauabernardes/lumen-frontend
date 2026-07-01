@@ -96,7 +96,7 @@ function adicionarEventosDeExclusao() {
   });
 }
 
-// Limpar os campos do formulário
+
 function limparFormulario() {
   inputTitulo.value = "";
   inputDescricao.value = "";
@@ -104,7 +104,7 @@ function limparFormulario() {
   inputHora.value = "";
 }
 
-// Ação do botão Cancelar
+
 btnCancelar.addEventListener("click", (e) => {
   e.preventDefault();
   limparFormulario();

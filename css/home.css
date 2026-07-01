@@ -1,6 +1,4 @@
-/* =========================================
-   VARIÁVEIS DE TEMA E PADRONIZAÇÃO
-   ========================================= */
+
 :root {
   --bg-body: #f1f5f9;
   --bg-card: #ffffff;
@@ -25,9 +23,7 @@
   --transition: all 0.25s ease;
 }
 
-/* =========================================
-   RESET GERAL
-   ========================================= */
+
 * {
   margin: 0;
   padding: 0;
@@ -39,7 +35,7 @@ body {
   background-color: var(--bg-body);
   color: var(--text-main);
   height: 100vh;
-  overflow: hidden; /* Trava o scroll da página, permitindo apenas interno */
+  overflow: hidden; 
 }
 
 a {
@@ -53,9 +49,7 @@ button {
   cursor: pointer;
 }
 
-/* =========================================
-   LAYOUT PRINCIPAL (GRID)
-   ========================================= */
+
 .layout {
   display: grid;
   grid-template-columns: 1fr 380px; /* Feed expansivo, lateral fixa */
@@ -66,9 +60,7 @@ button {
   height: calc(100vh - 70px); /* Subtrai a altura do Header */
 }
 
-/* =========================================
-   ÁREA DO FEED (ESQUERDA)
-   ========================================= */
+
 .feed {
   display: flex;
   flex-direction: column;
@@ -134,9 +126,7 @@ button {
   border-radius: 10px;
 }
 
-/* =========================================
-   PAINEL DIREITO (WIDGETS)
-   ========================================= */
+
 .right-panel {
   display: flex;
   flex-direction: column;
@@ -145,7 +135,7 @@ button {
   padding-right: 4px;
 }
 
-/* Padrão base para os blocos da lateral */
+
 .widget {
   background: var(--bg-card);
   border-radius: var(--border-radius-lg);
@@ -159,16 +149,14 @@ button {
   box-shadow: var(--shadow-hover);
 }
 
-/* Grid superior (Sessão e Checkin lado a lado) */
+
 .top-blocks {
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 16px;
 }
 
-/* =========================================
-   WIDGET: SESSÃO (POMODORO)
-   ========================================= */
+
 .session {
   background: linear-gradient(135deg, var(--success-color), #059669);
   color: white;
@@ -220,9 +208,7 @@ button {
   letter-spacing: 2px;
 }
 
-/* =========================================
-   WIDGET: CHECK-IN / PROGRESSO
-   ========================================= */
+
 .checkin {
   background: linear-gradient(135deg, #fc6ee4, #f01cc5);
   color: white;
@@ -280,12 +266,8 @@ button {
   opacity: 0.8;
 }
 
-/* =========================================
-   BOTÕES GERAIS DOS WIDGETS
-   ========================================= */
-.btn-primary,
-.btn-light,
-.btn-gold {
+
+.btn-primary,.btn-light,.btn-gold {
   width: 100%;
   padding: 10px;
   border-radius: var(--border-radius-sm);
@@ -329,9 +311,7 @@ button {
   transform: translateY(-2px);
 }
 
-/* =========================================
-   WIDGET: RECOMENDAÇÃO
-   ========================================= */
+
 .recommendation {
   background: linear-gradient(135deg, var(--primary-color), #2563eb);
   color: white;
@@ -355,9 +335,7 @@ button {
   padding: 8px 16px;
 }
 
-/* =========================================
-   WIDGET: EVENTOS
-   ========================================= */
+
 .events {
   display: flex;
   flex-direction: column;
@@ -428,9 +406,6 @@ button {
   color: var(--text-light);
 }
 
-/* =========================================
-   WIDGET: CONQUISTAS
-   ========================================= */
 .achievements {
   background: #fffbeb;
   border: 1px solid #fde68a;
@@ -457,22 +432,20 @@ button {
   margin-bottom: 12px;
 }
 
-/* =========================================
-   RESPONSIVIDADE
-   ========================================= */
+
 @media (max-width: 1024px) {
   .layout {
-    grid-template-columns: 1fr; /* Quebra em 1 coluna */
+    grid-template-columns: 1fr; 
     height: auto;
     overflow-y: auto;
   }
 
   body {
-    overflow-y: auto; /* Devolve o scroll pra página toda no celular */
+    overflow-y: auto; 
   }
 
   .feed {
-    overflow: visible; /* Tira o limite visual no mobile */
+    overflow: visible; 
   }
 
   .posts {

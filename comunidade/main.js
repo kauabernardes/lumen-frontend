@@ -1,30 +1,19 @@
-// ==========================================
-// ESTADOS GERAIS - COMUNIDADES
-// ==========================================
 let currentPage = 1;
 const limitPerPage = 5;
 let isLoading = false;
 let hasMore = true;
 
-// ==========================================
-// ESTADOS GERAIS - POSTS RECOMENDADOS
-// ==========================================
 let currentPostPage = 1;
 const postLimitPerPage = 5;
 let isPostsLoading = false;
 let hasMorePosts = true;
 
-// ==========================================
-// UTILITÁRIOS
-// ==========================================
 function gerarCorPastel() {
   const r = Math.floor(Math.random() * 127 + 128);
   const g = Math.floor(Math.random() * 127 + 128);
   const b = Math.floor(Math.random() * 127 + 128);
   return `#${r.toString(16).padStart(2, "0")}${g.toString(16).padStart(2, "0")}${b.toString(16).padStart(2, "0")}`;
 }
-
-// comunidades recomendadas
 
 function mostrarSkeletonsComunidades(isAppending = false) {
   const container = document.getElementById("comunidades-container");
@@ -126,7 +115,6 @@ async function acessarComunidade(id, isMember) {
   }
 }
 
-// recomendacoes de posts
 function mostrarSkeletonsPosts(isAppending = false) {
   const container = document.querySelector(".timeline");
   if (!container) return;
@@ -237,13 +225,11 @@ async function fetchRecommendedPosts(page = 1) {
           </div>
       `;
 
-      // Evento de curtir
       article.querySelector(".btn-like").addEventListener("click", (e) => {
         e.stopPropagation();
         handleLike(post.id, article);
       });
 
-      // Evento para abrir o post
       article.addEventListener("click", (e) => {
         if (e.target.closest(".btn-like") || e.target.closest("a")) return;
         location.href = `/comunidade/post/?id=${post.id}`;
@@ -299,9 +285,6 @@ async function handleLike(postId, postElement) {
   }
 }
 
-// ==========================================
-// INICIALIZAÇÃO E SCROLL
-// ==========================================
 document.addEventListener("DOMContentLoaded", async () => {
   try {
     await Promise.all([
@@ -325,12 +308,14 @@ document.addEventListener("DOMContentLoaded", async () => {
   }
 
   const postsContainer = document.getElementById("center");
-  postsContainer.addEventListener("scroll", () => {
-    if (
-      postsContainer.scrollTop + postsContainer.clientHeight >=
-      postsContainer.scrollHeight - 10
-    ) {
-      fetchRecommendedPosts(currentPostPage + 1);
-    }
-  });
+  if (postsContainer) {
+    postsContainer.addEventListener("scroll", () => {
+      if (
+        postsContainer.scrollTop + postsContainer.clientHeight >=
+        postsContainer.scrollHeight - 10
+      ) {
+        fetchRecommendedPosts(currentPostPage + 1);
+      }
+    });
+  }
 });

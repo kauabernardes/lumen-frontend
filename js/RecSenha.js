@@ -2,7 +2,7 @@ const emailField = document.getElementById('emailField');
 const emailError = document.getElementById('emailError');
 const sendBtn = document.querySelector('.btn-login');
 
-// Regex simples para validar e-mail
+
 function validarEmail(email) {
   const regex = /^[^@]+@[^@]+\.[^@]+$/;
   return regex.test(email);

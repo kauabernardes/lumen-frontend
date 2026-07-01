@@ -5,7 +5,7 @@ const loginError = document.getElementById("loginError");
 const passwordError = document.getElementById("passwordError");
 const togglePassword = document.getElementById("togglePassword");
 
-// Regex para validar e-mail
+
 function validarEmail(email) {
   const regex = /^[^@]+@[^@]+\.[^@]+$/;
   return regex.test(email);
@@ -14,7 +14,7 @@ function validarEmail(email) {
 function validarCampos() {
   let valido = true;
 
-  // Validação de login (e-mail OU usuário)
+  
   if (!loginField.value) {
     loginError.textContent = "O campo é obrigatório";
     loginError.classList.add("active");
@@ -33,7 +33,7 @@ function validarCampos() {
     loginField.classList.add("valid");
   }
 
-  // Validação de senha
+
   if (!passwordInput.value) {
     passwordError.textContent = "A senha é obrigatória";
     passwordError.classList.add("active");
@@ -58,7 +58,7 @@ loginField.addEventListener("input", validarCampos);
 passwordInput.addEventListener("input", validarCampos);
 
 async function handleLogin(event) {
-  // PREVINE O RECARREGAMENTO DA PÁGINA
+  
   event.preventDefault();
 
   validarCampos();
@@ -74,7 +74,7 @@ async function handleLogin(event) {
       passwordInput.disabled = true;
       loginField.disabled = true;
 
-      // USA O SERVIÇO GLOBAL (definido no authService.js via window)
+     
       await window.authService.login(identifier, password);
 
       window.location.href = "home.html";
@@ -97,7 +97,7 @@ async function handleLogin(event) {
   }
 }
 
-// Ícone inicial do olho (senha oculta)
+
 togglePassword.innerHTML = `
   <svg xmlns="http://www.w3.org/2000/svg" class="icon-eye" viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2">
     <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/>
@@ -105,7 +105,7 @@ togglePassword.innerHTML = `
   </svg>
 `;
 
-// Alternar visualização da senha com olhinho SVG
+
 togglePassword.addEventListener("click", function () {
   const type =
     passwordInput.getAttribute("type") === "password" ? "text" : "password";

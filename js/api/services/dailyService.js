@@ -8,5 +8,5 @@ const dailyService = {
   },
 };
 
-// Disponibiliza o serviço globalmente
+
 window.dailyService = dailyService;
