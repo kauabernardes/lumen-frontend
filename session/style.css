@@ -1,8 +1,3 @@
-/* ============================================================
-   SESSION.CSS — Baseado na estrutura do Check-in
-   Tema: Paleta Verde Esmeralda/Menta
-============================================================ */
-
 :root {
   --green-light: #e8fcf3;
   --green-mid: #a7f3d0;
@@ -38,7 +33,7 @@ body {
   overflow-x: hidden;
 }
 
-/* Utilitários Extras */
+
 .d-none {
   display: none !important;
 }
@@ -61,7 +56,7 @@ body {
   width: 100%;
 }
 
-/* Animação do Timer (Substituindo classes do Bootstrap) */
+
 @keyframes shake {
   0%,
   100% {
@@ -84,7 +79,7 @@ body {
   animation: shake 0.4s ease;
 }
 
-/* Bolhas / Blobs Decorativos */
+
 .bg-blob {
   position: fixed;
   border-radius: 50%;
@@ -131,7 +126,7 @@ body {
   }
 }
 
-/* Grid Principal */
+
 .session-main {
   position: relative;
   z-index: 1;
@@ -144,7 +139,7 @@ body {
   align-items: start;
 }
 
-/* Cards Genéricos */
+
 .side-card,
 .step-card {
   background: var(--white);
@@ -165,7 +160,7 @@ body {
   padding: 24px;
 }
 
-/* Coluna Esquerda */
+
 .col-left {
   display: flex;
   flex-direction: column;
@@ -200,7 +195,7 @@ body {
   font-style: italic;
 }
 
-/* Lista de Participantes */
+
 .participants-list {
   display: flex;
   flex-direction: column;
@@ -225,7 +220,7 @@ body {
   color: var(--text-dark);
 }
 
-/* Coluna Central */
+
 .col-center {
   display: flex;
   flex-direction: column;
@@ -282,7 +277,7 @@ body {
   font-style: italic;
 }
 
-/* Estilo Inputs */
+
 .step-badge {
   font-family: "Sora", sans-serif;
   font-size: 11px;
@@ -321,7 +316,7 @@ body {
   background: #fff;
 }
 
-/* Botões */
+
 .btn-group {
   display: flex;
   gap: 12px;
@@ -365,7 +360,7 @@ body {
   transform: translateY(-2px);
 }
 
-/* Componentes do Timer */
+
 #timer-container {
   position: relative;
   text-align: center;
@@ -471,7 +466,7 @@ body {
   margin-bottom: 16px;
   display: flex;
   flex-direction: column;
-  gap: 12px; /* Aumentei levemente o gap para respirar melhor */
+  gap: 12px; 
 }
 
 .chat-messages::-webkit-scrollbar {
@@ -488,58 +483,51 @@ body {
   gap: 8px;
 }
 
-/* =========================================
-   ESTILO BASE DAS MENSAGENS
-   ========================================= */
+
 .message,
 .message-sent {
   padding: 10px 14px;
-  max-width: 85%; /* Impede que ocupe a tela toda */
+  max-width: 85%; 
   display: flex;
   flex-direction: column;
-  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1); /* Sombra sutil no lugar da borda grossa */
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1); 
   position: relative;
 }
 
-/* =========================================
-   MENSAGEM RECEBIDA (Outros usuários/Bot)
-   ========================================= */
+
 .message {
-  align-self: flex-start; /* Alinha à esquerda */
-  background-color: #f0f2f5; /* Cinza bem claro e amigável */
-  border-radius: 12px 12px 12px 2px; /* Canto inferior esquerdo reto (formato de balão) */
-  border: 1px solid #e4e6eb; /* Borda bem clarinha só para dar contorno */
+  align-self: flex-start; 
+  background-color: #f0f2f5; 
+  border-radius: 12px 12px 12px 2px; 
+  border: 1px solid #e4e6eb; 
 }
 
-/* =========================================
-   MENSAGEM ENVIADA (Você)
-   ========================================= */
+
 .message-sent {
-  align-self: flex-end; /* Alinha à direita */
+  align-self: flex-end;
   background-color: var(--green-light);
-  border-radius: 12px 12px 2px 12px; /* Canto inferior direito reto (formato de balão) */
-  border: 1px solid var(--green-mid); /* Usa sua variável para manter a identidade */
+  border-radius: 12px 12px 2px 12px; 
+  border: 1px solid var(--green-mid); 
+
 }
 
-/* =========================================
-   CONTEÚDO INTERNO (Textos, Nomes, Horários)
-   ========================================= */
+
 .message-header {
   display: flex;
   justify-content: space-between;
   align-items: center;
   margin-bottom: 6px;
-  gap: 12px; /* Espaço entre nome e hora */
+  gap: 12px; 
 }
 
 .username {
   color: var(--dark);
   font-size: 13px;
-  font-weight: 600; /* Deixa o nome um pouco mais destacado */
+  font-weight: 600; 
   margin: 0;
 }
 
-/* Destaca levemente o nome quando é você quem envia */
+
 .message-sent .username {
   color: var(--green-dark);
 }
@@ -547,7 +535,7 @@ body {
 .timestamp {
   font-size: 11px;
   color: #888;
-  white-space: nowrap; /* Impede que a hora quebre de linha */
+  white-space: nowrap; 
 }
 
 .content {
@@ -558,17 +546,13 @@ body {
   color: #333;
 }
 
-/* =========================================
-   MENSAGEM DA IA (LUMINHA)
-   ========================================= */
 
-/* Destaca a mensagem da IA com uma cor de fundo sutil (um azul/roxo bem claro, por exemplo) */
 .message-ai {
   background-color: #f4f7ff;
   border: 1px solid #dce5ff;
 }
 
-/* Colore o nome e o ícone da IA */
+
 .message-ai .username {
   color: #4a72d4;
   display: flex;
@@ -576,14 +560,14 @@ body {
   gap: 6px;
 }
 
-/* Contêiner interno que separa o cabeçalho do conteúdo da pergunta */
+
 .ai-card {
   margin-top: 4px;
   padding-top: 8px;
   border-top: 1px solid rgba(74, 114, 212, 0.15); /* Linha divisória fina */
 }
 
-/* Título (ex: Tema - Dificuldade) */
+
 .ai-title {
   font-size: 13px;
   font-weight: 700;
@@ -592,7 +576,7 @@ body {
   line-height: 1.2;
 }
 
-/* Subtítulo (ex: Contexto) */
+
 .ai-subtitle {
   font-size: 11px;
   font-style: italic;
@@ -602,7 +586,6 @@ body {
   line-height: 1.3;
 }
 
-/* Utilitário de margem */
 .mt-2 {
   margin-top: 8px;
 }

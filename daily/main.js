@@ -1,11 +1,4 @@
-// ============================================================
-//  daily.js — Lumen Daily Check-in
-// ============================================================
-
 document.addEventListener("DOMContentLoaded", function () {
-  // ----------------------------------------------------------
-  // DATA DE HOJE no cabeçalho
-  // ----------------------------------------------------------
   var dateEl = document.getElementById("dailyDate");
   if (dateEl) {
     var now = new Date();
@@ -19,9 +12,6 @@ document.addEventListener("DOMContentLoaded", function () {
     dateEl.textContent = formatted.charAt(0).toUpperCase() + formatted.slice(1);
   }
 
-  // ----------------------------------------------------------
-  // FUNÇÃO PARA CARREGAR DADOS DA API
-  // ----------------------------------------------------------
   async function loadSummary() {
     const loading = document.getElementById("loading");
     const streakCard = document.getElementById("streak-card");
@@ -30,14 +20,12 @@ document.addEventListener("DOMContentLoaded", function () {
     streakCard.style.display = "none";
     weekCard.style.display = "none";
     try {
-      // Usa o service que acabamos de criar!
       const summary = await window.dailyService.getSummary();
 
       loading.style.display = "none";
       streakCard.style.display = "inline";
 
       weekCard.style.display = "inline";
-      // 1. Atualiza a Ofensiva (Streak)
       const streakEl = document.getElementById("streakCount");
       const streakFill = document.querySelector(".streak-bar-fill");
       const streakCaption = document.querySelector(".streak-bar-caption");
@@ -45,20 +33,19 @@ document.addEventListener("DOMContentLoaded", function () {
       if (streakEl) streakEl.textContent = summary.streak;
 
       if (streakFill && streakCaption) {
-        const target = 30; // Alvo fixo de 30 dias para a barra de progresso
+        const target = 30;
         const pct = Math.min((summary.streak / target) * 100, 100);
 
         setTimeout(() => {
           streakFill.style.width = pct + "%";
-        }, 400); // pequeno delay para a animação CSS acontecer
+        }, 400);
 
         streakCaption.innerHTML = `${summary.streak} de ${target} dias — continue assim! 🎯`;
       }
 
-      // 2. Atualiza o Calendário da Semana
       const weekDaysEl = document.getElementById("weekDays");
       if (weekDaysEl && summary.weekly) {
-        weekDaysEl.innerHTML = ""; // Limpa o conteúdo mockado
+        weekDaysEl.innerHTML = "";
 
         const names = ["Dom", "Seg", "Ter", "Qua", "Qui", "Sex", "Sáb"];
         const today = new Date();
@@ -70,7 +57,7 @@ document.addEventListener("DOMContentLoaded", function () {
           d.setDate(today.getDate() + diff);
 
           const isToday = i === dayOfWeek;
-          const isDone = summary.weekly[i]; // boolean retornado pela sua API
+          const isDone = summary.weekly[i];
 
           const dayEl = document.createElement("div");
           dayEl.className =
@@ -101,12 +88,8 @@ document.addEventListener("DOMContentLoaded", function () {
     }
   }
 
-  // Chama a função assim que a página carregar
   loadSummary();
 
-  // ----------------------------------------------------------
-  // RADIO "CONSEGUIU ATINGIR?" E HUMOR (Sem alterações)
-  // ----------------------------------------------------------
   var radioOptions = document.querySelectorAll(".radio-option");
   radioOptions.forEach(function (opt) {
     opt.addEventListener("click", function () {
@@ -132,9 +115,6 @@ document.addEventListener("DOMContentLoaded", function () {
     });
   });
 
-  // ----------------------------------------------------------
-  // LÓGICA DE CHECK-IN
-  // ----------------------------------------------------------
   var btnCheckin = document.getElementById("btnCheckin");
   var successBanner = document.getElementById("successBanner");
   var estudouOntem = document.getElementById("estudouOntem");
@@ -180,7 +160,6 @@ document.addEventListener("DOMContentLoaded", function () {
           '<i class="fa-solid fa-spinner fa-spin"></i> <span>Salvando...</span>';
         btnCheckin.disabled = true;
 
-        // Usa o service para fazer o POST!
         await window.dailyService.createCheckin(payload);
 
         btnCheckin.innerHTML =
@@ -191,8 +170,6 @@ document.addEventListener("DOMContentLoaded", function () {
 
         if (successBanner) successBanner.classList.add("visible");
 
-        // Recarrega os dados do painel lateral inteiro chamando a API de novo!
-        // Isso atualiza a ofensiva, os cards da semana e as estatísticas automaticamente.
         await loadSummary();
       } catch (error) {
         console.error("Erro ao fazer checkin:", error);
@@ -205,14 +182,11 @@ document.addEventListener("DOMContentLoaded", function () {
     });
   }
 
-  // ----------------------------------------------------------
-  // FRASES MOTIVACIONAIS E HELPERS
-  // ----------------------------------------------------------
   var frases = [
     '"Cada dia de estudo é um tijolo na construção do seu futuro."',
     '"A disciplina é a ponte entre metas e realizações."',
     '"Quem estuda ontem, vence amanhã."',
-    '"O sucesso é a soma de pequenos esforços repetidos dia após dia."',
+    '"O success é a soma de pequenos esforços repetidos dia após dia."',
     '"Não existe atalho para qualquer lugar que valha a pena ir."',
     '"Estude enquanto eles dormem. Vença enquanto eles descansam."',
     '"A aprovação começa aqui, neste momento, nesta revisão."',

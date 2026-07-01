@@ -1,4 +1,3 @@
-/* RESET */
 * {
   margin: 0;
   padding: 0;
@@ -12,10 +11,6 @@ body {
   overflow-x: hidden;
 }
 
-/* ========================= */
-/* LAYOUT PRINCIPAL */
-/* ========================= */
-
 .perfil-layout {
   max-width: 1100px;
   margin: 0 auto;
@@ -24,10 +19,6 @@ body {
   flex-direction: column;
   gap: 24px;
 }
-
-/* ========================= */
-/* HERO DO PERFIL */
-/* ========================= */
 
 .perfil-hero {
   background: white;
@@ -46,7 +37,6 @@ body {
   gap: 24px;
 }
 
-/* AVATAR */
 .perfil-avatar-wrap {
   width: 80px;
   height: 80px;
@@ -64,7 +54,6 @@ body {
   color: white;
 }
 
-/* DADOS */
 .perfil-dados h1 {
   font-size: 22px;
   font-weight: 800;
@@ -77,7 +66,6 @@ body {
   font-weight: 500;
 }
 
-/* STATS */
 .perfil-stats {
   display: flex;
   gap: 24px;
@@ -103,7 +91,6 @@ body {
   font-weight: 500;
 }
 
-/* BOTÃO EDITAR */
 .btn-editar {
   background: linear-gradient(135deg, #3b9ede, #1e7cb8);
   color: white;
@@ -126,20 +113,12 @@ body {
   box-shadow: 0 8px 20px rgba(30, 124, 184, 0.4);
 }
 
-/* ========================= */
-/* CONTEÚDO */
-/* ========================= */
-
 .perfil-content {
   display: grid;
   grid-template-columns: 1fr 1.4fr;
   gap: 20px;
   align-items: start;
 }
-
-/* ========================= */
-/* SEÇÕES */
-/* ========================= */
 
 .perfil-section {
   background: white;
@@ -168,23 +147,16 @@ body {
   font-size: 14px;
 }
 
-/* ========================= */
-/* COMUNIDADES */
-/* ========================= */
-
 .comunidades-grid {
   display: flex;
   flex-direction: column;
   gap: 12px;
-
-  /* Altura exata para 3 cards (3x 150px + 2x 12px de gap) */
   max-height: 300px;
-  overflow-y: auto; /* 'auto' é melhor que 'scroll' para não mostrar barra horizontal vazia */
+  overflow-y: auto;
   overflow-x: hidden;
-  padding-right: 8px; /* Afasta o conteúdo da barra de rolagem */
+  padding-right: 8px;
 }
 
-/* Scrollbar estilizada para manter o design clean */
 .comunidades-grid::-webkit-scrollbar {
   width: 6px;
 }
@@ -202,7 +174,7 @@ body {
 
 .comunidade-card {
   height: 100px;
-  flex-shrink: 0; /* IMPEDE que os cards encolham e força a div pai a rolar */
+  flex-shrink: 0;
   border-radius: 12px;
   overflow: hidden;
   transition: 0.3s ease;
@@ -225,7 +197,6 @@ body {
   overflow: hidden;
 }
 
-/* ícone decorativo de fundo */
 .comunidade-cover i {
   position: absolute;
   top: 50%;
@@ -235,7 +206,6 @@ body {
   color: rgba(255, 255, 255, 0.15);
 }
 
-/* gradiente escuro no rodapé */
 .comunidade-cover::after {
   content: "";
   position: absolute;
@@ -274,10 +244,6 @@ body {
   background: rgba(255, 255, 255, 0.4);
   transform: translateY(-1px);
 }
-
-/* ========================= */
-/* CONTRIBUIÇÕES */
-/* ========================= */
 
 .contribuicoes-lista {
   display: flex;
@@ -375,10 +341,6 @@ body {
 .contribuicao-acoes span:hover {
   color: #3b82f6;
 }
-
-/* ========================= */
-/* MODAL */
-/* ========================= */
 
 .modal-overlay {
   position: fixed;
@@ -547,5 +509,5 @@ body {
 .chart-container {
   position: relative;
   width: 100%;
-  height: 250px; /* Limita a altura para o gráfico não crescer infinitamente */
+  height: 250px;
 }

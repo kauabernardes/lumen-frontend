@@ -13,18 +13,13 @@ body {
     background-color: #84a9ff;
 }
 
-/* Fundo com listras diagonais */
 .background-pattern {
     width: 100%;
     height: 100%;
-    /* 1. Apontando para a sua imagem salva localmente na pasta img */
     background-image: url('../img/fundo-entrar.svg'); 
-    
-    /* 2. Propriedades para cobrir a tela perfeitamente */
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
-    
     display: flex;
     align-items: center;
     justify-content: center;
@@ -57,7 +52,6 @@ body {
     filter: drop-shadow(2px 4px 10px rgba(0,0,0,0.1));
 }
 
-/* Cartão de Login */
 .login-card {
     background: #f1f3f8;
     padding: 45px;
@@ -89,7 +83,6 @@ h2 {
     display: inline-block;
 }
 
-/* Formulário */
 .input-group {
     margin-bottom: 15px;
     position: relative;
@@ -104,17 +97,16 @@ label {
 
 input {
   width: 100%;
-  height: 50px;          /* altura fixa para padronizar */
-  padding: 0 15px;       /* padding lateral padrão */
+  height: 50px;
+  padding: 0 15px;
   border: none;
   border-radius: 10px;
   background-color: #e5ebf5;
   font-size: 14px;
   color: #556b8d;
-  box-sizing: border-box; /* garante que padding não altere tamanho */
+  box-sizing: border-box;
 }
 
-/* Visualização da senha */
 .password-wrapper {
   position: relative;
   display: flex;
@@ -124,13 +116,13 @@ input {
 
 .password-wrapper input {
   flex: 1;
-  padding-right: 4px; /* espaço para o ícone */
+  padding-right: 4px;
   width: 100%;
 }
 
 .toggle-password {
   position: absolute;
-  right: 10px;           /* encosta na borda direita */
+  right: 10px;
   top: 50%;
   transform: translateY(-50%);
   background: none;
@@ -147,12 +139,9 @@ input {
 }
 
 .icon-eye {
-  pointer-events: none; /* evita capturar clique no SVG */
+  pointer-events: none;
 }
 
-
-
-/* Link de Esqueceu a Senha */
 .forgot-password {
     text-align: center;
     font-size: 13px;
@@ -186,7 +175,6 @@ input {
     transform: translateY(-2px);
 }
 
-/* Mensagens de erro */
 .error-message {
     display: none;
     background-color: #ffe0e0;
@@ -198,7 +186,6 @@ input {
     border: 1px solid #f5a5a5;
     box-shadow: 0 2px 6px rgba(0,0,0,0.1);
     animation: fadeIn 0.3s ease-in-out;
-    
 }
 
 .error-message.active {
@@ -218,7 +205,6 @@ input.valid {
     border: 2px solid green;
 }
 
-/* Mobile */
 @media (max-width: 900px) {
     .brand-side { display: none; }
     .main-container { justify-content: center; padding: 20px; }

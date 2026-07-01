@@ -10,16 +10,15 @@ body {
     display: flex;
     align-items: center;
     justify-content: center;
-    background-color: #f7d37e; /* Amarelo base */
+    background-color: #f7d37e; 
 }
 
 .background-pattern {
     width: 100%;
     height: 100%;
-    /* 1. Apontando para a sua imagem salva localmente na pasta img */
     background-image: url('../img/Criar\ Conta-\ Web.svg'); 
     
-    /* 2. Propriedades para cobrir a tela perfeitamente */
+   
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
@@ -56,7 +55,7 @@ body {
     filter: drop-shadow(2px 4px 10px rgba(0,0,0,0.1));
 }
 
-/* Cartão de Criar Conta */
+
 .login-card {
     background: #fffdf7;
     padding: 40px;
@@ -88,7 +87,7 @@ h2 {
     display: inline-block;
 }
 
-/* Formulário */
+
 .input-group {
     margin-bottom: 15px;
 }
@@ -128,7 +127,7 @@ input {
     background-color: #e6b845;
 }
 
-/* Mensagens de erro como caixinhas */
+
 .error-message {
     display: none;
     background-color: #ffe0e0;
@@ -161,7 +160,7 @@ input.valid {
 
 
 
-/* Responsividade */
+
 @media (max-width: 1024px) {
   .main-container {
     flex-direction: column;
@@ -171,7 +170,7 @@ input.valid {
   }
 
   .brand-side {
-    display: none; /* esconde a logo lateral em telas menores */
+    display: none; 
   }
 
   .login-card {
